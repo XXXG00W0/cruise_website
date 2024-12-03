@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CYZ_SROOM_BOOK_INV_FKv1" directorySegmentName="seg_0" id="281B432B-8655-1AB4-53CE-C9D0336680F7">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:23:08 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<sourcePk>04A578AE-EA4D-289B-00AA-05BF3BFED35A</sourcePk>
+<targetPk>EF5A25D5-B375-D7D9-9C46-F5F97875093B</targetPk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>37042067-9471-F9AF-67A6-1DAE47F43C94</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>2882A861-BD46-FFAF-D9BB-A599560309EC</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

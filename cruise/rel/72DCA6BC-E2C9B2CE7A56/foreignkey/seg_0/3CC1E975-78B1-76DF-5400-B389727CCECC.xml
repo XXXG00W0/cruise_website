@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="3CC1E975-78B1-76DF-5400-B389727CCECC" containerWithKeyObject="A04FC492-BA48-783D-51AE-FFFB8CBA5184" localFKIndex="456734BB-64DB-58E4-E196-4AE1D2B95833" name="CYZ_PAC_SALE_CYZ_PAC_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>3FB4F08E-114B-4F5C-15E8-82BA4B569233</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_PACKAGE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>16C0359F-1A20-AD38-9BF0-170FCE8FB356</referredTableID>
+<keyObject>2F976C82-CBA2-B24F-C8D4-78191C68705D</keyObject>
+<referredKeyID>2F976C82-CBA2-B24F-C8D4-78191C68705D</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>PACKAGE_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

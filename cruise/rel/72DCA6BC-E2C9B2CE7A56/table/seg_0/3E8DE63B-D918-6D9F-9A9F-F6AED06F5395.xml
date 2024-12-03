@@ -1,0 +1,186 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3E8DE63B-D918-6D9F-9A9F-F6AED06F5395" name="CYZ_PASSENGER">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>47BDFE36-679E-1150-83B8-E864BAEA8848</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>passenger</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PASSENGER_ID" id="E1F52827-04E5-74D7-28D0-94324CBA67DC">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>29E88876-D7C5-8064-60B3-B9712050E5F6</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BIRTH_DATE" id="6F86D7C7-2D87-4712-BBCE-A95C203171C9">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>1B0E2E94-1B2D-A417-A2C7-D73BC13CEBB4</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GENDER" id="904365E2-0CBB-D28C-8CF8-8C3FAB0493A5">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>762C862E-6188-357F-870C-87816CA67198</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NATIONALITY" id="4DF89E45-70B2-4AA5-5966-FBA1E21B139D">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>0FE2DFAB-7A1D-D21B-A40A-CFF622544A4F</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PHONE" id="AF7D08E0-D594-35C3-6247-050E8A092D7F">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>D862B209-7719-45EA-0CFC-9446E2EE831C</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CYZ_ADDRESS_ADDR_ID" id="27265F57-B3E3-6A0A-4071-33B00EFCBD96">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>5D8B96DA-7013-DAFC-4630-5C9FC32AF69F</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A28B0553-1181-D5CC-036F-AE2D4B15644B" referredColumn="BF8841BC-9E82-00AC-2791-E0241E563ABB"/>
+</associations>
+</Column>
+<Column name="CYZ_GROUP_GROUP_ID" id="C470123C-C3DC-EA2D-F3E0-64E4F38731AB">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>AF024AE7-E46A-BE1C-18C9-D12347E5BD28</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4E54CCD0-03B9-41A8-22E6-2F500532095C" referredColumn="95276CCF-4941-DA4B-3BF1-07C3C267AA17"/>
+</associations>
+</Column>
+<Column name="PASSENGER_FNAME" id="1C1EB559-1ED9-F7CA-6DFA-BFCDD0A44DCC">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>A35DEDB8-51D4-023E-AAC2-2AF4500EFE16</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PASSENGER_lNAME" id="11C7A9D7-34A5-B318-24BE-8E19A637DE15">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>21D6AE99-D8F3-3794-F558-4C9A1167F586</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_ID" id="C4022593-10E3-3ACB-EA1B-33F9A3CDA20A">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>D7815A25-6EE1-F60D-8B44-2FF1DAB65D84</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6FF0FC0E-497D-E8F0-B4EB-3AD0ADDC29E9" referredColumn="C4ABFB90-E708-4F4D-C62E-F77F76882170"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4F34EF26-3A77-13D1-55E4-657ABE0DF680" name="CYZ_PASSENGER_PK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>F2D1D26C-383E-F1C0-3A13-622F46CD7139</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E1F52827-04E5-74D7-28D0-94324CBA67DC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7319807E-FC78-B227-19E5-0E4AE1F5382A" name="CYZ_PASSENGER_CYZ_ADDRESS_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>83AB5D8C-E103-354C-CD53-D78975CE8706</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="27265F57-B3E3-6A0A-4071-33B00EFCBD96"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="980A0C64-CE5C-41E1-6F2E-B826154E40EE" name="CYZ_PASSENGER_CYZ_GROUP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>C3A3AB76-74E9-4FC4-37CC-A55D53D1BFC7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C470123C-C3DC-EA2D-F3E0-64E4F38731AB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="15FBB7D1-EB4B-92ED-E1C1-E2A5683A39B3" name="CYZ_PASSENGER_CYZ_USER_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>66A20350-B8D5-CB3E-F126-2A71ECD3EEAD</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C4022593-10E3-3ACB-EA1B-33F9A3CDA20A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,107 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="817D7643-0AC8-495B-5E85-CC25E707395A" name="CYZ_ADMIN">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 23:59:00 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>table_18</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ADMIN_ID" id="3818BC3B-ACAA-69CE-82EE-C96DE3AD3BBB">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 23:59:49 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ADMIN_PHONE" id="2B86F8B4-C4DD-4A4B-C027-676C7AE3CF1D">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 00:11:08 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ADMIN_PASS" id="9DE64BAE-754B-5793-9753-6F8D4E35F0E7">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 00:12:32 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12</dataTypeSize>
+<ownDataTypeParameters>12,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_ID" id="20EA9CF7-FE0B-85AD-ABD5-AD5877A90DA1">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>D7815A25-6EE1-F60D-8B44-2FF1DAB65D84</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AD9A907F-5907-CD23-150C-1638F92D9580" referredColumn="C4ABFB90-E708-4F4D-C62E-F77F76882170"/>
+</associations>
+</Column>
+<Column name="ADMIN_FNAME" id="BF5C56D8-ADB4-6710-DDCF-713843271F7C">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>1D045AC2-5A63-CECA-C0BD-BEABF44EDD5D</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ADMIN_LNAME" id="4AC24DB0-A916-D5F6-62EF-FD6EEE153189">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>75499855-8C1F-65F8-8D4F-75711ADB3581</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3DA9D5EF-98AC-1E22-2CC4-A4D7A9D519FE" name="CYZ_ADMIN_PK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>F2D1D26C-383E-F1C0-3A13-622F46CD7139</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3818BC3B-ACAA-69CE-82EE-C96DE3AD3BBB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9782B047-A156-A22C-782E-F82BEE02BB7E" name="CYZ_ADMIN_CYZ_USER_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:45:37 UTC</createdTime>
+<generatorID>7ED92DA9-36D0-F08D-DEEF-1F52F4B99E1D</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="20EA9CF7-FE0B-85AD-ABD5-AD5877A90DA1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

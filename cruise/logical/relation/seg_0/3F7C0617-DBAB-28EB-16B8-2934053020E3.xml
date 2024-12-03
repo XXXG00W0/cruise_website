@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CYZ_ENTERTAINMENT_TRIP" directorySegmentName="seg_0" id="3F7C0617-DBAB-28EB-16B8-2934053020E3">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:31 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>CFC59246-1095-14F0-4A8F-A0F021E4F95D</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>124C1B5B-8379-1F70-78A3-5C3AA8CC4C47</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

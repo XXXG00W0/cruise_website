@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A04FC492-BA48-783D-51AE-FFFB8CBA5184" name="CYZ_PACKAGE_SALE">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>E7BE9601-5203-A19A-FA68-3B4330761010</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>package_sale</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PKG_SALE_ID" id="0E170928-E842-4CCB-5531-28FF341619F1">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>6964A978-0DDF-BD13-7339-A8FC59C70BFB</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PACKAGE_ID" id="419EBE7F-837D-9C79-EC06-6682CD1FB195">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>54DE6BD5-A3AB-BF69-DCF7-C4DB416FA184</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3CC1E975-78B1-76DF-5400-B389727CCECC" referredColumn="C17A89E6-37E1-52DE-9B86-04234A24AD01"/>
+</associations>
+</Column>
+<Column name="GROUP_ID" id="C52F8AEC-6D42-6BFB-1087-7D8BC1297D3C">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>C54904CE-DA49-3913-2927-44F64FE85E9A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BD1D15F9-4881-4C66-8E07-021353BDAB74" referredColumn="95276CCF-4941-DA4B-3BF1-07C3C267AA17"/>
+</associations>
+</Column>
+<Column name="INVOICE_ID" id="B0CC2372-310D-2FC1-C057-63DEE75F9314">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:54:03 UTC</createdTime>
+<generatorID>110B6EC7-E8BF-4867-0004-54BD5482C63B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3C5C02A2-252E-8AC5-C22B-037596B1CB5C" referredColumn="BA95E2F7-729B-5425-DF20-56B906647C6F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="ABCAA88C-2D39-47F1-591A-3A551AF44452" name="PACKAGE_SALE_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>F3247C7D-2884-7DAC-2C51-DCBE8917340B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0E170928-E842-4CCB-5531-28FF341619F1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="353DD043-5A9B-0B6F-9B41-5F8328097301" name="CYZ_PAC_SALE_CYZ_GROUP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>CA8F6FF5-044C-33EC-AF2D-8BF3A996582C</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C52F8AEC-6D42-6BFB-1087-7D8BC1297D3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="456734BB-64DB-58E4-E196-4AE1D2B95833" name="CYZ_PAC_SALE_CYZ_PAC_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>3FB4F08E-114B-4F5C-15E8-82BA4B569233</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="419EBE7F-837D-9C79-EC06-6682CD1FB195"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6CAF1F07-8344-8CC2-27EF-AC773F36F25E" name="CYZ_PAC_SALE_CYZ_INV_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:54:03 UTC</createdTime>
+<generatorID>F5E6E917-34FB-F6F3-CBC9-A00EC09C6E09</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B0CC2372-310D-2FC1-C057-63DEE75F9314"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

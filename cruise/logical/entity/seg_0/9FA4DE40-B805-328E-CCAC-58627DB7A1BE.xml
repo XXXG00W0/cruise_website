@@ -1,0 +1,110 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9FA4DE40-B805-328E-CCAC-58627DB7A1BE" name="CYZ_RESTAURANT">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 19:34:40 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="RESTAURANT_ID" id="E010AA29-914B-AE34-1A15-5AD9B4379C72">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:15:12 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="RESTAURANT_NAME" id="CCB44F6C-B9C6-E926-BE2B-0D8F5FEA6A03">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:15:24 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SERVE_TYPE" id="70DBC0B7-B1F1-2DF5-9D7D-2DF413DCCA5B">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:15:40 UTC</createdTime>
+<commentInRDBMS><![CDATA[Type of dish / drink served at a certain restaurant.]]></commentInRDBMS>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="OPENING_TIME" id="5B79C158-77E7-D65A-F849-9DEEB1C78F98">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:16:42 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CLOSING_TIME" id="31E456FF-CE1C-CF67-71DD-9E829D4A8A9F">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:19:35 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="AT_FLOOR" id="A4B1610A-3CD7-1710-E9FB-C48AFA094AEE">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 00:19:38 UTC</createdTime>
+<generatorID>D65C40A3-6960-3EC1-E330-28BDADBEE554</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="95D3E549-2516-DBDD-ACC1-33DB696AFE4E" name="RESTAURANT_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 20:15:22 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E010AA29-914B-AE34-1A15-5AD9B4379C72</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

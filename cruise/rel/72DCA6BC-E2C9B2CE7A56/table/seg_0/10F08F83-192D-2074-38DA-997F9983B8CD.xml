@@ -1,0 +1,113 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="10F08F83-192D-2074-38DA-997F9983B8CD" name="CYZ_ITINERARY">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>EEAB7F7D-BCFB-9528-03DE-DCBD78D1A492</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ITINERARY_ID" id="7C55E9E8-FD9C-5EC4-8622-DCA2F752A95A">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>04142C6E-E84C-700D-979B-19158423C6C7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ARRIVAL_DATE_TIME" id="11B23DE9-43A8-0C00-D8C1-8CAEF87ABD03">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>B8C57DCA-CE2C-3735-C9F9-A172EBF1F1B1</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LEAVING_DATE_TIME" id="369E8181-58E8-4B08-00DB-B7AC8888A5FF">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>00FE4462-15D3-11E9-24BA-5123C03A9F0A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TRIP_ID" id="F87ADBAE-708A-32BD-503B-07C0F45C760A">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>8BEC3EAB-62B2-2C60-8569-06471990AA3A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5534EB2D-6666-2531-7146-2302394EF89D" referredColumn="107F822A-DC9E-9428-267E-B5A9180F1B51"/>
+</associations>
+</Column>
+<Column name="PORT_ID" id="457E06E4-3D54-3FA1-EDE1-6C0084D28EDC">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:23:14 UTC</createdTime>
+<generatorID>25BCB24A-86C5-2C3C-463D-3D49F4CF9417</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="EE430D88-9A26-4D96-0F91-F02290D2F8D4" referredColumn="6CDE965E-049F-C434-1DC5-8D406BF197F4"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C34BBD78-F8C6-90A5-8C43-7E40A0532510" name="ITINERARY_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>5600405E-B7E8-1470-3918-45A20920FEF6</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7C55E9E8-FD9C-5EC4-8622-DCA2F752A95A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6EC750EF-D795-318A-C90F-EAD3D15AB032" name="CYZ_ITINERARY_CYZ_TRIP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>AC86C8FC-97D1-0F22-E1D2-FDCA0AAC8361</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F87ADBAE-708A-32BD-503B-07C0F45C760A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7ABCC1D8-5371-6BBE-BB00-B031644A7F92" name="Relation_24">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:23:14 UTC</createdTime>
+<generatorID>A0116512-48CC-C07E-1108-0C7E645C0F66</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="457E06E4-3D54-3FA1-EDE1-6C0084D28EDC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

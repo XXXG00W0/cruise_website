@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="16C0359F-1A20-AD38-9BF0-170FCE8FB356" name="CYZ_PACKAGE">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>194C83A7-B755-05CC-ACC7-1009738E30F0</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>package</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PACKAGE_ID" id="C17A89E6-37E1-52DE-9B86-04234A24AD01">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>FD532971-415B-709C-7DE0-E9F788C0D746</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PKG_CHARGE_TYPE" id="0A975467-232D-6709-A366-9832611B4EB0">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<commentInRDBMS><![CDATA[The way of a certain package is charged (per day or per trip).]]></commentInRDBMS>
+<generatorID>55F16D8B-228E-CA7C-FAE9-B5E892BB9646</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PKG_PRICE" id="939EDE6D-8FD5-491B-7BB5-5781E03471C1">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>724A094F-F6C2-C920-DD05-8F3894759A4E</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT043</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,7,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PKG_NAME" id="E455FB71-8734-D571-C800-5877F2F3B64F">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 18:41:37 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2F976C82-CBA2-B24F-C8D4-78191C68705D" name="PACKAGE_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>79BDDCAC-9D52-3A4A-F349-F148E000A613</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C17A89E6-37E1-52DE-9B86-04234A24AD01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

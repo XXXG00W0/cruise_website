@@ -1,0 +1,141 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C137E103-C8BC-2375-BCCA-D05FE129F1BD" name="CYZ_PORT">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 01:26:34 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="PORT_ID" id="0D8F5542-4C57-1399-AFE9-3476DCF554B1">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 02:17:02 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NEAREST_AIRPORT" id="68FB99AA-BEDF-F09F-8E1B-86143E967A09">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 02:31:52 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NUM_PARKING_SPOTS" id="56B916CB-47AA-E6EA-C084-03E08EDA02FC">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 02:32:43 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CYZ_ADDRESS_ADDR_ID" id="F4DC2CB6-9466-E831-E637-2D4AA0E03924">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 20:21:35 UTC</createdTime>
+<generatorID>C0CBF213-9CA2-1F71-333D-BC57178DCC8A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>6254F4B2-EA84-B846-9266-5B5FFCC706CE</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PORT_NAME" id="FB85AE8D-F4DC-1623-F986-9DF27861E959">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 23:01:45 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="TRIP_ID" id="49EBF033-2F3A-1ECF-D29C-3869920E29D4">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:16:54 UTC</createdTime>
+<generatorID>AB9B6F08-0157-7EA1-BCF8-FF14E72BF73E</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>17B90214-8481-0F5F-3FF4-A9D78C655003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="TRIP_ID1" id="AEA8C803-8ECE-FB44-5492-49C63C3B5488">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:17:01 UTC</createdTime>
+<generatorID>928F0C0D-C870-965D-E468-6D0C9E69D8F3</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>17B90214-8481-0F5F-3FF4-A9D78C655003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PORT_NAME" id="AD71B2F8-7890-E19A-02DC-F798465B21D6">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:59:51 UTC</createdTime>
+<generatorID>8AB01215-1B3D-5F7C-8A12-E3A1DEB5804B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="687D5CA9-625D-ED0F-76E7-CCC514E1D274" name="PORT_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 02:17:28 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>0D8F5542-4C57-1399-AFE9-3476DCF554B1</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="37042067-9471-F9AF-67A6-1DAE47F43C94" name="CYZ_STATEROOM_BOOKING">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:14:45 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="BOOKING_ID" id="A91A57AF-BCEA-D3DA-6203-8EF33F515192">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:17:10 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="GROUP_ID" id="14D43087-E6BF-5FAD-9F15-F50DC114141D">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:19:26 UTC</createdTime>
+<generatorID>32A066A8-7BF1-7D0F-F560-81D7E7918955</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>ACBEEDAA-EF34-882A-236D-1EFB39DEE73E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="INVOICE_ID" id="679E5C51-2039-2DFA-0073-6D21322D6C1C">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:23:36 UTC</createdTime>
+<generatorID>281B432B-8655-1AB4-53CE-C9D0336680F7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>DED87A8C-B180-DFC5-942A-54324BDF7F32</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PRICE_ID" id="C5FE53D4-702F-77A7-1E99-75C6224C3ECA">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 00:19:38 UTC</createdTime>
+<generatorID>43E0157E-840C-2AC4-641F-0EA3B6824EDF</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>E1A55ED0-E6D0-A49F-DB3C-7270559E8733</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="04A578AE-EA4D-289B-00AA-05BF3BFED35A" name="CYZ_STATEROOM_BOOKING_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:17:24 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>A91A57AF-BCEA-D3DA-6203-8EF33F515192</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

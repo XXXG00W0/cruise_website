@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A3CB7D75-9865-E345-796F-6C75C4EBBC28" containerWithKeyObject="37591D37-A282-8F65-4EF4-6AF2E1855AFC" localFKIndex="8FB6B580-2031-3407-475D-0FBB5BD2EA72" name="CYZ_SROOM_PRI_SROOM_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>46A989D6-1675-17E1-5842-F71CB8422244</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_STATEROOM</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>E8D1549C-A466-17F3-8A4B-F146A9C4AA3A</referredTableID>
+<keyObject>6C63FCF5-64EE-AF08-3F0A-C6E299497A46</keyObject>
+<referredKeyID>6C63FCF5-64EE-AF08-3F0A-C6E299497A46</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>STATEROOM_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

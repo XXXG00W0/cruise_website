@@ -1,0 +1,128 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2226FD69-EC11-4C59-9EFE-0CA4357FFFD8" name="CYZ_PAYMENT">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 22:14:32 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="PAYMENT_ID" id="9D283C4B-5DE6-FCB1-E41D-AE82543860AC">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:33:52 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PAYMENT_DATE" id="92448179-05AA-5D79-3467-28F1557F288F">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:32:53 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PAY_AMOUNT" id="C35A1056-160F-5329-840E-27FED78ABCFA">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:33:05 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT043</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,7,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PAYMENT_METHOD" id="52331A07-BE0D-D750-AE39-F2211F24204B">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 04:56:56 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="TRIP_ID" id="19F33DD6-A9CC-5BB6-1F84-CC628E740A38">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 03:42:02 UTC</createdTime>
+<generatorID>88AF2E48-B978-FDB0-39B6-73193BB0B30B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>17B90214-8481-0F5F-3FF4-A9D78C655003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CYZ_GROUP_GROUP_ID" id="1EA0C2D4-366B-1EDF-67EC-CD78C00E9336">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 03:43:51 UTC</createdTime>
+<generatorID>D41D9827-9DA0-26BF-3B06-9AD2BC6B03FF</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>ACBEEDAA-EF34-882A-236D-1EFB39DEE73E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="INVOICE_ID" id="EEB0D011-AFF7-E41F-F160-A0F8E713B72D">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 00:19:38 UTC</createdTime>
+<generatorID>36D75110-BCE5-A0DD-5E8D-F0D777B0D1E5</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>DED87A8C-B180-DFC5-942A-54324BDF7F32</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="5F19699D-AAE5-B4B3-B46C-220CEF5B94E7" name="PAYMENT_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:34:22 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<newElementsIDs>9D283C4B-5DE6-FCB1-E41D-AE82543860AC</newElementsIDs>
+<usedAttributes>
+<attributeRef>9D283C4B-5DE6-FCB1-E41D-AE82543860AC</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

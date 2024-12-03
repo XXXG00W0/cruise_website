@@ -1,0 +1,38 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9DD696D1-8919-AE84-2A05-9742D2506606" name="CYZ_GROUP">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>DDE16286-C158-53BF-CCBA-ACC4808847E0</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>group</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="GROUP_ID" id="95276CCF-4941-DA4B-3BF1-07C3C267AA17">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>ACBEEDAA-EF34-882A-236D-1EFB39DEE73E</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D2E30F30-3E1D-1273-0774-464F15B325DB" name="GROUP_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>5167BA2C-EAF3-4C3A-C2CC-5B4B827F9248</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="95276CCF-4941-DA4B-3BF1-07C3C267AA17"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

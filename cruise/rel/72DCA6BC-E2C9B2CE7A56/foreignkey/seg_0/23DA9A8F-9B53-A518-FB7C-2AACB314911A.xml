@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="23DA9A8F-9B53-A518-FB7C-2AACB314911A" containerWithKeyObject="852C1C43-FDA2-2576-C7BA-8D6A01C0D5D3" localFKIndex="96E06DFD-54CD-F84A-0366-C9AD5E2C0E3D" name="CYZ_SROOM_BOOK_INV_FKv1">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>281B432B-8655-1AB4-53CE-C9D0336680F7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_INVOICE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F8A8019A-87A4-F247-0F62-9AC810F837CA</referredTableID>
+<keyObject>9C36FF4D-7659-2979-ABD6-78F908F5F8E2</keyObject>
+<referredKeyID>9C36FF4D-7659-2979-ABD6-78F908F5F8E2</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>INVOICE_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0500E4CC-0E81-107B-77F7-331933E866A2" name="CYZ_PORT">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>C137E103-C8BC-2375-BCCA-D05FE129F1BD</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>port</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PORT_ID" id="6CDE965E-049F-C434-1DC5-8D406BF197F4">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>0D8F5542-4C57-1399-AFE9-3476DCF554B1</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NEAREST_AIRPORT" id="60CF15E4-7B8F-3258-BE3E-5038500843C8">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>68FB99AA-BEDF-F09F-8E1B-86143E967A09</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NUM_PARKING_SPOTS" id="FA2236E4-C1CA-6AAA-75AB-92C8D3385EDA">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>56B916CB-47AA-E6EA-C084-03E08EDA02FC</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CYZ_ADDRESS_ADDR_ID" id="7E455E9E-6A7E-9009-56E0-72E5398DDFD2">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>F4DC2CB6-9466-E831-E637-2D4AA0E03924</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="74AD2343-EA07-C0C9-3BCA-DF6E60024BAF" referredColumn="BF8841BC-9E82-00AC-2791-E0241E563ABB"/>
+</associations>
+</Column>
+<Column name="PORT_NAME" id="8AB01215-1B3D-5F7C-8A12-E3A1DEB5804B">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 23:01:36 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CD1E87D5-1196-2DA1-FA64-BA6FB124919B" name="PORT_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>687D5CA9-625D-ED0F-76E7-CCC514E1D274</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6CDE965E-049F-C434-1DC5-8D406BF197F4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A19B1D25-72D7-24C1-F0A5-60839E251508" name="CYZ_PORT_CYZ_ADDR_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>C0CBF213-9CA2-1F71-333D-BC57178DCC8A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7E455E9E-6A7E-9009-56E0-72E5398DDFD2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

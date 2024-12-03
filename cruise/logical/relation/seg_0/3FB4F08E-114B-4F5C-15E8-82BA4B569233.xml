@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CYZ_PAC_SALE_CYZ_PAC_FK" directorySegmentName="seg_0" id="3FB4F08E-114B-4F5C-15E8-82BA4B569233">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 01:26:02 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<sourcePk>79BDDCAC-9D52-3A4A-F349-F148E000A613</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>194C83A7-B755-05CC-ACC7-1009738E30F0</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E7BE9601-5203-A19A-FA68-3B4330761010</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

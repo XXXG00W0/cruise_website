@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="124C1B5B-8379-1F70-78A3-5C3AA8CC4C47" name="CYZ_TRIP">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 20:09:32 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="TRIP_ID" id="17B90214-8481-0F5F-3FF4-A9D78C655003">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 20:12:01 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="START_DATE" id="6A07A1C3-1A76-A49B-ECA5-DFBB9FB7C410">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:49:03 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="END_DATE" id="B40689D4-11D3-A60A-6E6F-04E6B091DF69">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-09 03:49:10 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PORT_ID" id="988605BA-8B57-E40D-DCC6-03D3325990BE">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:16:52 UTC</createdTime>
+<generatorID>AB9B6F08-0157-7EA1-BCF8-FF14E72BF73E</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>0D8F5542-4C57-1399-AFE9-3476DCF554B1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PORT_ID1" id="13972A34-EA6C-24A9-3258-E2606E9B5E10">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:16:58 UTC</createdTime>
+<generatorID>928F0C0D-C870-965D-E468-6D0C9E69D8F3</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<referedAttribute>0D8F5542-4C57-1399-AFE9-3476DCF554B1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="25277785-8ECE-57E5-CD09-505F994F2C41" name="TRIP_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-08 20:12:37 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>17B90214-8481-0F5F-3FF4-A9D78C655003</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

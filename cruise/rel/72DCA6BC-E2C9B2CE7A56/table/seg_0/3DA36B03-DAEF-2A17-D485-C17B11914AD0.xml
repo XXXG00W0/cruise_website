@@ -1,0 +1,152 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3DA36B03-DAEF-2A17-D485-C17B11914AD0" name="CYZ_PAYMENT">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>2226FD69-EC11-4C59-9EFE-0CA4357FFFD8</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>payment</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PAYMENT_ID" id="A9AC9216-45B6-7728-7A5B-81A464F35EFF">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>9D283C4B-5DE6-FCB1-E41D-AE82543860AC</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PAYMENT_DATE" id="D3E9022D-BA49-720A-09BB-7B787E23E7E2">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>92448179-05AA-5D79-3467-28F1557F288F</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PAY_AMOUNT" id="BEA9B8D9-5AE4-57BE-8698-3A0A98516011">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>C35A1056-160F-5329-840E-27FED78ABCFA</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT043</logicalDatatype>
+<dataTypePrecision>7</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,7,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PAYMENT_METHOD" id="330A1333-1206-AECE-0E0B-A54F3672258D">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>52331A07-BE0D-D750-AE39-F2211F24204B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TRIP_ID" id="FCC97248-163D-3142-768C-977A867D0CBC">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>19F33DD6-A9CC-5BB6-1F84-CC628E740A38</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="27A043DC-A3EE-AD44-AFDE-10F24C14B1A3" referredColumn="107F822A-DC9E-9428-267E-B5A9180F1B51"/>
+</associations>
+</Column>
+<Column name="CYZ_GROUP_GROUP_ID" id="1A7BFE8B-4C9E-7987-32D4-E819A9ADFCE5">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>1EA0C2D4-366B-1EDF-67EC-CD78C00E9336</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="378CA914-8F67-8040-A06B-2CF3FFB66228" referredColumn="95276CCF-4941-DA4B-3BF1-07C3C267AA17"/>
+</associations>
+</Column>
+<Column name="INVOICE_ID" id="9C4D8960-B54B-2BBD-5C22-7C84D42063D3">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>B6E69ED6-A577-7B59-0F31-22BD2E1AF7B0</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E48C8B6B-A6C4-465C-2BED-85C13847D636" referredColumn="BA95E2F7-729B-5425-DF20-56B906647C6F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7983E71A-D61C-0394-3423-4BC8FBDF79CD" name="PAYMENT_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:02:28 UTC</createdTime>
+<generatorID>5F19699D-AAE5-B4B3-B46C-220CEF5B94E7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A9AC9216-45B6-7728-7A5B-81A464F35EFF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4E7F750C-8542-A701-067D-CA45FDE0ACC5" name="CYZ_PAYMENT_CYZ_GROUP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>D41D9827-9DA0-26BF-3B06-9AD2BC6B03FF</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A7BFE8B-4C9E-7987-32D4-E819A9ADFCE5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A9036F01-9EE5-4163-3C20-C60832760911" name="CYZ_PAYMENT_CYZ_INV_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>36D75110-BCE5-A0DD-5E8D-F0D777B0D1E5</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9C4D8960-B54B-2BBD-5C22-7C84D42063D3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C852DEFC-23B7-DB48-7A73-D101B3CB75D1" name="CYZ_PAYMENT_CYZ_TRIP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>88AF2E48-B978-FDB0-39B6-73193BB0B30B</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FCC97248-163D-3142-768C-977A867D0CBC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

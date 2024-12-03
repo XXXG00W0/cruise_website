@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CYZ_SROOM_PRI_TRIP_FK" directorySegmentName="seg_0" id="2D16923B-AFE3-EC25-9BA3-95A0C7D2A5BF">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 19:52:00 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<sourcePk>25277785-8ECE-57E5-CD09-505F994F2C41</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>124C1B5B-8379-1F70-78A3-5C3AA8CC4C47</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>172FFD45-1CB5-48CF-D5D4-CDE1701AD569</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2597165A-E7F8-DF10-73CB-FDF77A4B5712" containerWithKeyObject="62919E16-80CE-3D73-E4DD-153810720B82" localFKIndex="7346C3C5-BC62-25B2-931E-2A6AA9949EAB" name="CYZ_ENTER_TRIP_ENTER_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<generatorID>3F7C0617-DBAB-28EB-16B8-2934053020E3</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_ENTERTAINMENT</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4C4AEDCC-5901-9B1B-2810-960E9D6FAA27</referredTableID>
+<keyObject>5E0C55C5-4887-396A-1BEB-E292FED2B81B</keyObject>
+<referredKeyID>5E0C55C5-4887-396A-1BEB-E292FED2B81B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ENTERTAIN_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

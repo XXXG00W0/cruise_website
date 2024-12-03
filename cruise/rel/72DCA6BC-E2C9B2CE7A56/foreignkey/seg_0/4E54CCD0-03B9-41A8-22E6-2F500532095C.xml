@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="4E54CCD0-03B9-41A8-22E6-2F500532095C" containerWithKeyObject="3E8DE63B-D918-6D9F-9A9F-F6AED06F5395" localFKIndex="980A0C64-CE5C-41E1-6F2E-B826154E40EE" name="CYZ_PASSENGER_CYZ_GROUP_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 06:03:00 UTC</createdTime>
+<generatorID>C3A3AB76-74E9-4FC4-37CC-A55D53D1BFC7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_GROUP</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>9DD696D1-8919-AE84-2A05-9742D2506606</referredTableID>
+<keyObject>D2E30F30-3E1D-1273-0774-464F15B325DB</keyObject>
+<referredKeyID>D2E30F30-3E1D-1273-0774-464F15B325DB</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>GROUP_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

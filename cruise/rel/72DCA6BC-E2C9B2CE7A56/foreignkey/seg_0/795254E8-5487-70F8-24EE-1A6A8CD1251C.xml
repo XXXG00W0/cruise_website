@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="795254E8-5487-70F8-24EE-1A6A8CD1251C" containerWithKeyObject="852C1C43-FDA2-2576-C7BA-8D6A01C0D5D3" localFKIndex="B2868878-DA25-B4A9-263C-9AC2A1AB5BDB" name="CYZ_SROOM_BOOK_PRI_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 22:08:12 UTC</createdTime>
+<generatorID>D5F11B69-B859-922F-4FD0-21268A167000</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_STATEROOM_PRICE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>37591D37-A282-8F65-4EF4-6AF2E1855AFC</referredTableID>
+<keyObject>DE2489D1-9E82-3DD6-166C-6DBFD2082BC1</keyObject>
+<referredKeyID>DE2489D1-9E82-3DD6-166C-6DBFD2082BC1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>PRICE_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

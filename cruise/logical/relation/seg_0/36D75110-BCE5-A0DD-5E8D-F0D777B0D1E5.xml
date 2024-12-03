@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CYZ_PAYMENT_CYZ_INV_FK" directorySegmentName="seg_0" id="36D75110-BCE5-A0DD-5E8D-F0D777B0D1E5">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 03:45:36 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<engineerTo>
+<item key="72DCA6BC-7EFA-048F-AB54-E2C9B2CE7A56" value="true"/>
+</engineerTo>
+<sourcePk>EF5A25D5-B375-D7D9-9C46-F5F97875093B</sourcePk>
+<dominantRole>2882A861-BD46-FFAF-D9BB-A599560309EC</dominantRole>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>2882A861-BD46-FFAF-D9BB-A599560309EC</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2226FD69-EC11-4C59-9EFE-0CA4357FFFD8</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0E93681C-B186-9C7E-B7CE-716470858797" name="CYZ_RESTAURANT_TRIP">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>relation_20</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="RESTAURANT_ID" id="13EAA9AA-2611-2AC6-EF12-A5DAFDC823C6">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CED5CB45-DFB2-B911-38C6-E0EB08F406FE" referredColumn="EFE28DB4-4FC6-9A0B-E15F-5C3EA0A178DB"/>
+</associations>
+</Column>
+<Column name="TRIP_ID" id="A9A9A22B-994B-A2D2-3F33-CC83A48AB4C0">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1932B60B-60D3-A5E9-A677-5E2D43C114AA" referredColumn="107F822A-DC9E-9428-267E-B5A9180F1B51"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0ABF14CE-DFC1-67D1-6C49-D518DB616E7C" name="REST_TRIP_PK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="13EAA9AA-2611-2AC6-EF12-A5DAFDC823C6"/>
+<colUsage columnID="A9A9A22B-994B-A2D2-3F33-CC83A48AB4C0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="30CB63F0-96EB-8FD4-1C23-8EA6E4CAAC44" name="CYZ_REST_TRIP_REST_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<generatorID>CFDBD974-5608-4587-5E78-EEB3BB590F97</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="13EAA9AA-2611-2AC6-EF12-A5DAFDC823C6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="19E66610-8026-9B21-8269-95727D3BFFCB" name="CYZ_REST_TRIP_TRIP_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-02 02:34:50 UTC</createdTime>
+<generatorID>CFDBD974-5608-4587-5E78-EEB3BB590F97</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A9A9A22B-994B-A2D2-3F33-CC83A48AB4C0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

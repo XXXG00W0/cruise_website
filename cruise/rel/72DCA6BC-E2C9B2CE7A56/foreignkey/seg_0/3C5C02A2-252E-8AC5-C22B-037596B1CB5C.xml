@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="3C5C02A2-252E-8AC5-C22B-037596B1CB5C" containerWithKeyObject="A04FC492-BA48-783D-51AE-FFFB8CBA5184" localFKIndex="6CAF1F07-8344-8CC2-27EF-AC773F36F25E" name="CYZ_PAC_SALE_CYZ_INV_FK">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 02:54:03 UTC</createdTime>
+<generatorID>F5E6E917-34FB-F6F3-CBC9-A00EC09C6E09</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<referredTableLongName>CYZ_INVOICE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F8A8019A-87A4-F247-0F62-9AC810F837CA</referredTableID>
+<keyObject>9C36FF4D-7659-2979-ABD6-78F908F5F8E2</keyObject>
+<referredKeyID>9C36FF4D-7659-2979-ABD6-78F908F5F8E2</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>INVOICE_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

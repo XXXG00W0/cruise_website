@@ -1,0 +1,115 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="852C1C43-FDA2-2576-C7BA-8D6A01C0D5D3" name="CYZ_STATEROOM_BOOKING">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>37042067-9471-F9AF-67A6-1DAE47F43C94</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<ordsAlias>cyz_stateroom_bookingv1</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BOOKING_ID" id="37045453-BECF-36D8-B44B-8633B9631DA4">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>A91A57AF-BCEA-D3DA-6203-8EF33F515192</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GROUP_ID" id="0D06635D-B1B7-04C2-3F68-92ACA6CB61B5">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>14D43087-E6BF-5FAD-9F15-F50DC114141D</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B44F9D83-CBFE-8D02-1439-F81D6A7BD172" referredColumn="95276CCF-4941-DA4B-3BF1-07C3C267AA17"/>
+</associations>
+</Column>
+<Column name="INVOICE_ID" id="7FD94A8A-2D3F-A1BE-BE8B-FF9AA9E6D096">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>679E5C51-2039-2DFA-0073-6D21322D6C1C</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="23DA9A8F-9B53-A518-FB7C-2AACB314911A" referredColumn="BA95E2F7-729B-5425-DF20-56B906647C6F"/>
+</associations>
+</Column>
+<Column name="PRICE_ID" id="5F3A59FF-66E1-E766-71F0-999CC670C2F3">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 22:08:12 UTC</createdTime>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="795254E8-5487-70F8-24EE-1A6A8CD1251C" referredColumn="6639C7C7-1F95-0864-1D5C-A1C873291F26"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F0B44791-F8BA-9257-D2B8-5BDC1A4A3413" name="CYZ_STATEROOM_BOOKING_PK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>04A578AE-EA4D-289B-00AA-05BF3BFED35A</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="37045453-BECF-36D8-B44B-8633B9631DA4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="96E06DFD-54CD-F84A-0366-C9AD5E2C0E3D" name="CYZ_SROOM_BOOK_INV_FKv1">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 20:46:00 UTC</createdTime>
+<generatorID>281B432B-8655-1AB4-53CE-C9D0336680F7</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7FD94A8A-2D3F-A1BE-BE8B-FF9AA9E6D096"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B2868878-DA25-B4A9-263C-9AC2A1AB5BDB" name="CYZ_SROOM_BOOK_PRI_FK">
+<createdBy>hower</createdBy>
+<createdTime>2024-11-10 22:08:12 UTC</createdTime>
+<generatorID>D5F11B69-B859-922F-4FD0-21268A167000</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5F3A59FF-66E1-E766-71F0-999CC670C2F3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="787B8803-F318-9A2F-9ED6-A5C2543C33FC" name="CYZ_SROOM_BOOK_GROUP_FKv1">
+<createdBy>15196</createdBy>
+<createdTime>2024-12-03 03:23:14 UTC</createdTime>
+<generatorID>32A066A8-7BF1-7D0F-F560-81D7E7918955</generatorID>
+<ownerDesignName>cruise_v4</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0D06635D-B1B7-04C2-3F68-92ACA6CB61B5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
