@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import *
 from utils import *
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a strong secret key
@@ -58,14 +59,27 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        # User inputs
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         user_type = "passenger"  # Default user_type set to 'passenger'
 
+        # Passenger-specific inputs
+        passenger_fname = request.form.get('first_name')
+        passenger_lname = request.form.get('last_name')
+        birth_date = request.form.get('birth_date')  # Assume YYYY-MM-DD format
+        gender = request.form.get('gender')
+        nationality = request.form.get('nationality')
+        phone = request.form.get('phone')
+        address_id = request.form.get('address_id')  # Assume this is provided
+        group_id = request.form.get('group_id')  # Optional, can handle None
+
         # Validate form inputs
-        if not username or not email or not password or not confirm_password:
+        if not all([username, email, password, confirm_password,
+                    passenger_fname, passenger_lname, birth_date, gender,
+                    nationality, phone, address_id]):
             flash("All fields are required.", 'danger')
             return render_template('register.html')
         if password != confirm_password:
@@ -90,6 +104,23 @@ def register():
 
             # Add and commit the new user to the database
             db.session.add(new_user)
+            db.session.flush()  # Flush to get the new user's user_id
+
+            # Create a new passenger instance linked to the new user
+            new_passenger = Passenger(
+                birth_date=datetime_to_unix(datetime.strptime(birth_date, '%Y-%m-%d')),
+                gender=gender,
+                nationality=nationality,
+                phone=phone,
+                cyz_address_addr_id=int(address_id),
+                cyz_group_group_id=int(group_id) if group_id else None,
+                passenger_fname=passenger_fname,
+                passenger_lname=passenger_lname,
+                user_id=new_user.user_id
+            )
+
+            # Add and commit the new passenger to the database
+            db.session.add(new_passenger)
             db.session.commit()
 
             flash('Registration successful! You can now log in.', 'success')
@@ -98,7 +129,7 @@ def register():
             db.session.rollback()
             flash(f"An error occurred during registration: {e}", 'danger')
 
-    return render_template('Regist.html')
+    return render_template('register.html')
 
 
 @app.route('/logout')
@@ -127,7 +158,7 @@ def passenger_information(id):
             'id': passenger.passenger_id,
             'first_name': passenger.passenger_fname,
             'last_name': passenger.passenger_lname,
-            'birth_date': passenger.birth_date.strftime('%Y-%m-%d'),
+            'birth_date': unix_to_datetime(passenger.birth_date,include_time=False),
             'gender': passenger.gender,
             'nationality': passenger.nationality,
             'phone': passenger.phone,
@@ -255,6 +286,70 @@ def edit_passenger_information(id):
         return redirect(url_for('home'))
 
 
+@app.route('/trip/<int:passenger_id>', methods=['GET'])
+def view_my_trip(passenger_id):
+    """
+    Fetch and display trip information for a given passenger.
+    """
+    if 'user_id' not in session:
+        flash('You need to log in first.', 'warning')
+        return redirect(url_for('login'))
+
+    try:
+        # Fetch the passenger by ID
+        passenger = Passenger.query.get_or_404(passenger_id)
+
+        # Query trips associated with the passenger's group
+        trips = Trip.query.join(Payment, Trip.trip_id == Payment.trip_id)\
+                          .filter(Payment.cyz_group_group_id == passenger.cyz_group_group_id)\
+                          .all()
+
+        # Prepare data for the frontend
+        trip_data = []
+        for trip in trips:
+            payment = Payment.query.filter_by(trip_id=trip.trip_id).first()
+            trip_data.append({
+                'trip_id': trip.trip_id,
+                'start_date': unix_to_datetime(trip.start_date),
+                'end_date': unix_to_datetime(trip.end_date),
+                'start_port_id': trip.start_port_id,
+                'end_port_id': trip.end_port_id,
+                'payment_amount': float(payment.pay_amount) if payment else None,
+                'payment_method': payment.payment_method if payment else 'N/A',
+                'payment_date': unix_to_datetime(payment.payment_date) if payment else 'N/A'
+            })
+
+        return render_template('view_trip.html', trip_data=trip_data)
+    except Exception as e:
+        flash(f"An error occurred while retrieving trip information: {e}", 'danger')
+        return redirect(url_for('home'))
+
+
+
+@app.route('/admin_dashboard/manage_users', methods=['GET', 'POST'])
+def admin_manage_users():
+    # Ensure only admins can access this route
+    if session.get('user_type') != 'admin':
+        flash('Access denied. Admins only.', 'danger')
+        return redirect(url_for('login'))
+
+    # Handle delete passenger request
+    if request.method == 'POST' and 'delete_passenger_id' in request.form:
+        passenger_id = request.form.get('delete_passenger_id')
+        passenger = Passenger.query.get(passenger_id)
+        if passenger:
+            db.session.delete(passenger)
+            db.session.commit()
+            flash(f'Passenger with ID {passenger_id} deleted successfully.', 'success')
+        else:
+            flash('Passenger not found.', 'danger')
+
+    # Retrieve all passengers for display
+    passengers = Passenger.query.all()
+
+    # Render the updated front-end template
+    return render_template('/admin_dashboard/manage_users.html', passengers=passengers)
+
 
 
 # @app.route('/api/passenger', methods=['POST'])
@@ -290,21 +385,21 @@ def edit_passenger_information(id):
 #         return jsonify({'message': f'Error: {e}'}), 400
 
 
-@app.route('/api/passenger/<int:id>', methods=['PUT'])
-def update_passenger(id):
-    if 'user_id' not in session:
-        return jsonify({'message': 'Unauthorized'}), 401
-    try:
-        data = request.json
-        passenger = Passenger.query.get_or_404(id)
-        passenger.name = data.get('name', passenger.name)
-        passenger.email = data.get('email', passenger.email)
-        passenger.phone = data.get('phone', passenger.phone)
-        db.session.commit()
-        return jsonify({'message': 'Passenger updated successfully!'})
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'message': f'Error: {e}'}), 400
+# @app.route('/api/passenger/<int:id>', methods=['PUT'])
+# def update_passenger(id):
+#     if 'user_id' not in session:
+#         return jsonify({'message': 'Unauthorized'}), 401
+#     try:
+#         data = request.json
+#         passenger = Passenger.query.get_or_404(id)
+#         passenger.name = data.get('name', passenger.name)
+#         passenger.email = data.get('email', passenger.email)
+#         passenger.phone = data.get('phone', passenger.phone)
+#         db.session.commit()
+#         return jsonify({'message': 'Passenger updated successfully!'})
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({'message': f'Error: {e}'}), 400
 
 # Database Initialization
 @app.before_first_request

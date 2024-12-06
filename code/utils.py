@@ -1,5 +1,6 @@
 from datetime import datetime
 
+# NOTE: Remember to add function name here!
 __all__ = ['datetime_to_unix', 'unix_to_datetime']
 
 # Function to convert datetime string to Unix time (INTEGER)
@@ -20,7 +21,7 @@ def datetime_to_unix(datetime_str):
     return int(dt_object.timestamp())
 
 # Function to convert Unix time (INTEGER) to datetime string
-def unix_to_datetime(unix_time, include_time=True):
+def unix_to_datetime(unix_time, include_time=False):
     """
     Converts Unix time (INTEGER) to a datetime string (YYYY-MM-DD HH:MM:SS or YYYY-MM-DD).
     

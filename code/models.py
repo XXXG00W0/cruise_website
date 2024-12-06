@@ -19,7 +19,6 @@ class Admin(db.Model):
     __tablename__ = 'cyz_admin'
     admin_id = db.Column(db.Integer, primary_key=True)
     admin_phone = db.Column(db.String(30), nullable=False)
-    admin_pass = db.Column(db.String(12), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('cyz_user.user_id'), nullable=False)
     admin_fname = db.Column(db.String(255), nullable=False)
     admin_lname = db.Column(db.String(255), nullable=False)
@@ -167,7 +166,7 @@ class User(db.Model):
     __tablename__ = 'cyz_user'
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), nullable=False, unique=True)
-    password = db.Column(db.String(12), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     user_type = db.Column(db.String(10), nullable=False)
 
