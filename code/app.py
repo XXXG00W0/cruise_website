@@ -111,7 +111,7 @@ def register():
 
         # Create a new passenger instance linked to the new user
         new_passenger = Passenger(
-            birth_date=datetime_to_unix(datetime.strptime(birth_date, '%Y-%m-%d')),
+            birth_date=datetime_to_unix(datetime_str=birth_date),
             gender=gender,
             nationality=nationality,
             phone=phone,
