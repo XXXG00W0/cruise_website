@@ -1,6 +1,7 @@
 from werkzeug.security import check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import *
 from utils import *
@@ -12,14 +13,14 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a strong secret key
 
 # Configure CORS
-CORS(app, resources={r"/*": {"origins": "http://localhost:5174"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 
 # Configure SQLAlchemy for SQLite
 # SQLite database file
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cruise_management.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cruise.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+db.init_app(app)
 
 # Configure JWT
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Replace with a strong secret key
