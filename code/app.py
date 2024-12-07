@@ -79,13 +79,19 @@ def register():
     gender = data.get('gender')
     nationality = data.get('nationality')
     phone = data.get('phone')
-    address_id = data.get('address_id')  # Assume this is provided
+    street = data.get('street')
+    addr_line_2 = data.get('addr_line_2')
+    neighborhood = data.get('neighborhood')
+    city = data.get('city')
+    state_province = data.get('state_province')
+    postal_code = data.get('postal_code')
+    country = data.get('country')
     group_id = data.get('group_id')  # Optional, can handle None
 
     # Validate inputs
     if not all([username, email, password, confirm_password,
                 passenger_fname, passenger_lname, birth_date, gender,
-                nationality, phone, address_id]):
+                nationality, phone, street, city, state_province, postal_code, country]):
         return jsonify({"message": "All fields are required."}), 400
 
     if password != confirm_password:
@@ -109,17 +115,29 @@ def register():
         db.session.add(new_user)
         db.session.flush()  # Flush to get the new user's user_id
 
+        # Create a new address instance
+        new_address = Address(street=street, addr_line_2=addr_line_2,
+                              neighborhood=neighborhood, city=city,
+                              state_province=state_province, postal_code=postal_code,
+                              country=country)
+        db.session.add(new_address)
+        db.session.flush()
+        # Get address id
+        address_id = new_address.addr_id
+        print(address_id)
+
         # Create a new passenger instance linked to the new user
         new_passenger = Passenger(
             birth_date=datetime_to_unix(datetime_str=birth_date),
             gender=gender,
             nationality=nationality,
             phone=phone,
-            cyz_address_addr_id=int(address_id),
-            cyz_group_group_id=int(group_id) if group_id else None,
+            addr_id=int(address_id),
+            group_id=int(group_id) if group_id else None,
             passenger_fname=passenger_fname,
             passenger_lname=passenger_lname,
             user_id=new_user.user_id
+
         )
 
         # Add and commit the new passenger to the database

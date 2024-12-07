@@ -1,4 +1,3 @@
-
 CREATE TABLE cyz_address (
     addr_id        INTEGER PRIMARY KEY,
     street         TEXT NOT NULL,
@@ -41,13 +40,13 @@ CREATE TABLE cyz_group (
 CREATE TABLE cyz_invoice (
     invoice_id        INTEGER PRIMARY KEY,
     payment_due       REAL NOT NULL,
-    billing_date_time TEXT NOT NULL
+    billing_date_time INTEGER NOT NULL
 );
 
 CREATE TABLE cyz_itinerary (
     itinerary_id      INTEGER PRIMARY KEY,
-    arrival_date_time TEXT,
-    leaving_date_time TEXT,
+    arrival_date_time INTEGER,
+    leaving_date_time INTEGER,
     trip_id           INTEGER,
     port_id           INTEGER,
     FOREIGN KEY (trip_id) REFERENCES cyz_trip (trip_id),
@@ -73,8 +72,8 @@ CREATE TABLE cyz_package_sale (
 
 CREATE TABLE cyz_passenger (
     passenger_id        INTEGER PRIMARY KEY,
-    birth_date          TEXT NOT NULL,
-    gender              TEXT CHECK (gender IN ('F', 'M', 'O')) NOT NULL, -- Female male or other
+    birth_date          INTEGER NOT NULL,
+    gender              TEXT CHECK (gender IN ('female', 'male', 'other')) NOT NULL, -- Female male or other
     nationality         TEXT NOT NULL,
     phone               TEXT NOT NULL,
     addr_id             INTEGER,
@@ -89,7 +88,7 @@ CREATE TABLE cyz_passenger (
 
 CREATE TABLE cyz_payment (
     payment_id         INTEGER PRIMARY KEY,
-    payment_date       TEXT NOT NULL,
+    payment_date       INTEGER NOT NULL,
     pay_amount         REAL NOT NULL,
     payment_method     TEXT NOT NULL,
     trip_id            INTEGER NOT NULL,
@@ -159,8 +158,8 @@ CREATE TABLE cyz_stateroom_price (
 
 CREATE TABLE cyz_trip (
     trip_id       INTEGER PRIMARY KEY,
-    start_date    TEXT NOT NULL,
-    end_date      TEXT NOT NULL,
+    start_date    INTEGER NOT NULL,
+    end_date      INTEGER NOT NULL,
     start_port_id INTEGER NOT NULL,
     end_port_id   INTEGER NOT NULL,
     FOREIGN KEY (start_port_id) REFERENCES cyz_port (port_id),
@@ -274,16 +273,16 @@ VALUES
 
 INSERT INTO cyz_itinerary (itinerary_id, arrival_date_time, leaving_date_time, trip_id, port_id)
 VALUES
-(1, '2025-01-01 08:00:00', '2025-01-01 18:00:00', 1, 1),
-(2, '2025-01-02 08:00:00', '2025-01-02 18:00:00', 1, 2),
-(3, '2025-01-03 08:00:00', '2025-01-03 18:00:00', 1, 3),
-(4, '2025-01-04 08:00:00', '2025-01-04 18:00:00', 1, 4),
-(5, '2025-01-05 08:00:00', '2025-01-05 18:00:00', 1, 5),
-(6, '2025-01-06 08:00:00', '2025-01-06 18:00:00', 2, 5),
-(7, '2025-01-07 08:00:00', '2025-01-07 18:00:00', 2, 4),
-(8, '2025-01-08 08:00:00', '2025-01-08 18:00:00', 2, 3),
-(9, '2025-01-09 08:00:00', '2025-01-09 18:00:00', 2, 2),
-(10, '2025-01-10 08:00:00', '2025-01-10 18:00:00', 2, 1);
+(1, 1735718400, 1735754400, 1, 1),
+(2, 1735804800, 1735840800, 1, 2),
+(3, 1735891200, 1735927200, 1, 3),
+(4, 1735977600, 1736013600, 1, 4),
+(5, 1736064000, 1736100000, 1, 5),
+(6, 1736150400, 1736186400, 2, 5),
+(7, 1736236800, 1736272800, 2, 4),
+(8, 1736323200, 1736359200, 2, 3),
+(9, 1736409600, 1736445600, 2, 2),
+(10, 1736496000, 1736532000, 2, 1);
 
 INSERT INTO cyz_stateroom_price (price_id, stateroom_id, price_per_night, trip_id, is_vacant)
 VALUES
@@ -361,10 +360,10 @@ VALUES
 
 INSERT INTO cyz_passenger (passenger_id, birth_date, gender, nationality, phone, addr_id, group_id, passenger_fname, passenger_lname, user_id)
 VALUES
-(1, '1990-01-01', 'F', 'USA', '1234567890', 1, 1, 'Jane', 'Doe', 3),
-(2, '1985-06-15', 'M', 'Canada', '2345678901', 2, 1, 'John', 'Smith', 4),
-(3, '2000-03-20', 'O', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
-(4, '2020-12-25', 'F', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 10);
+(1, 631152000, 'female', 'USA', '1234567890', 1, 1, 'Jane', 'Doe', 3),
+(2, 487641600, 'male', 'Canada', '2345678901', 2, 1, 'John', 'Smith', 4),
+(3, 953683200, 'other', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
+(4, 1608854400, 'female', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 10);
 
 INSERT INTO cyz_group (group_id)
 VALUES
@@ -378,13 +377,13 @@ VALUES
 
 INSERT INTO cyz_invoice (invoice_id, payment_due, billing_date_time)
 VALUES
-(1, 1000, '2024-12-01 12:00:00'),
-(2, 1000, '2024-08-01 12:00:00');
+(1, 1000, 1733054400),
+(2, 1000, 1722801600);
 
 INSERT INTO cyz_payment (payment_id, payment_date, pay_amount, payment_method, trip_id, group_id, invoice_id)
 VALUES
-(1, '2024-12-01 18:00:00', 1000, 'credit card', 1, 1, 1),
-(2, '2024-08-15 12:00:00', 1000, 'credit card', 2, 2, 2);
+(1, 1733076000, 1000, 'credit card', 1, 1, 1),
+(2, 1723732800, 1000, 'credit card', 2, 2, 2);
 
 INSERT INTO cyz_entertainment_trip (entertain_id, trip_id)
 VALUES
