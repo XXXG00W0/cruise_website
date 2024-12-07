@@ -350,12 +350,12 @@ VALUES
 
 INSERT INTO cyz_user (user_id, username, password, email, user_type)
 VALUES
-(1, 'admin1', 'admin1', 'admin123@email.com', 'admin'),
-(2, 'admin2', 'admin2', 'admin234@email.com', 'admin'),
-(3, 'passenger1', 'passenger1', 'passenger1@email.com', 'passenger'),
-(4, 'passenger2', 'passenger2', 'passenger2@email.com', 'passenger'),
-(5, 'passenger3', 'passenger3', 'passenger3@email.com', 'passenger'),
-(6, 'passenger4', 'passenger4', 'passenger4@email.com', 'passenger');
+(1, 'admin1', 'pbkdf2:sha256:1000000$eB33M5nkfbrfjSCx$35222bcadbc86d016a44dbd9442e72e45000b5a1e980d1a5a0432228f7e42182', 'admin123@email.com', 'admin'),
+(2, 'admin2', 'pbkdf2:sha256:1000000$w1WdtDFpOxIXWpCt$75b338e28f9fd518998f2975320c81987daa3adbfed13d1d362087ea0cf7591a', 'admin234@email.com', 'admin'),
+(3, 'passenger1', 'pbkdf2:sha256:1000000$8xWbsuv9NVx9I04a$0013a2f48cc0234f3bef10f192441c73b812cec91fb23002193547eb4cc93cb7', 'passenger1@email.com', 'passenger'),
+(4, 'passenger2', 'pbkdf2:sha256:1000000$a117d6Kg7K8Lx38R$07903237b1de2e4eb6041fccf5d552a94ef49aa4b91ac52501890a384e28aa3d', 'passenger2@email.com', 'passenger'),
+(5, 'passenger3', 'pbkdf2:sha256:1000000$GiS0yVvgnvJ33pjb$7f515bcacf83bbe79b6f7b416448ef5d403eda7b4b055092a4e43095a64c3ad9', 'passenger3@email.com', 'passenger'),
+(6, 'passenger4', 'pbkdf2:sha256:1000000$7TTTAOhtyOYOSIET$955d2e5e1d078eb1dd6b3f69e7694718ba4c824aefcb947e1c67a62877ac369e', 'passenger4@email.com', 'passenger');
 
 
 INSERT INTO cyz_passenger (passenger_id, birth_date, gender, nationality, phone, addr_id, group_id, passenger_fname, passenger_lname, user_id)
