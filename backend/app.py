@@ -1,5 +1,6 @@
 from werkzeug.security import check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -21,6 +22,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cruise.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+migrate = Migrate(app, db)
 
 # Configure JWT
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Replace with a strong secret key
@@ -42,11 +44,13 @@ def login():
 
         # Query the database for the user by username (assumes username is unique)
         user = User.query.filter_by(username=username).first()
-
+        print(User.query.all())
         # Validate the user and the hashed password
         if user and check_password_hash(user.password, password):
             # Generate JWT token
             token = create_access_token(identity={"id": user.user_id, "username": user.username, "user_type": user.user_type})
+            # Store the user ID in the session
+            session['user_id'] = user.user_id
             return jsonify({
                 "message": "Login successful",
                 "token": token,
@@ -163,14 +167,16 @@ def get_passenger(id):
     Fetch and display passenger's information, including address details, by ID.
     """
     # First check if a user is logged in via session or token
+    print(id)
     current_user = get_jwt_identity()
+    print(current_user)
     if not current_user and 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
 
     try:
         # Query the database for the passenger
         passenger = Passenger.query.get_or_404(id)
-        address = Address.query.get_or_404(passenger.cyz_address_addr_id)
+        address = Address.query.get_or_404(passenger.addr_id)
 
         # Prepare the passenger data for the frontend
         passenger_data = {
@@ -212,7 +218,7 @@ def group_information(passenger_id):
             return jsonify({"message": "Passenger not found."}), 404
 
         # Query all group members belonging to the same group
-        group_members = Passenger.query.filter_by(cyz_group_group_id=passenger.cyz_group_group_id).all()
+        group_members = Passenger.query.filter_by(group_id=passenger.group_id).all()
 
         # Prepare the data for the frontend
         group_data = [
@@ -224,7 +230,7 @@ def group_information(passenger_id):
         ]
 
         return jsonify({
-            "group_id": passenger.cyz_group_group_id,
+            "group_id": passenger.group_id,
             "group_members": group_data
         }), 200
 
@@ -240,7 +246,7 @@ def edit_passenger_information(id):
     """
     current_user = get_jwt_identity()
     passenger = Passenger.query.get_or_404(id)
-    old_address = Address.query.get_or_404(passenger.cyz_address_addr_id)
+    old_address = Address.query.get_or_404(passenger.addr_id)
 
     # Ensure the logged-in user is authorized to edit this passenger's information
     if current_user["id"] != passenger.user_id:
@@ -277,16 +283,16 @@ def edit_passenger_information(id):
 
         if new_address:
             # If the new address exists, update the passenger's address ID
-            passenger.cyz_address_addr_id = new_address.addr_id
+            passenger.addr_id = new_address.addr_id
         else:
             # If the new address does not exist, create it
             new_address = Address(**new_address_data)
             db.session.add(new_address)
             db.session.commit()  # Commit to get the new address ID
-            passenger.cyz_address_addr_id = new_address.addr_id
+            passenger.addr_id = new_address.addr_id
 
         # Check if the old address is used by other passengers
-        other_passengers = Passenger.query.filter_by(cyz_address_addr_id=old_address.addr_id).count()
+        other_passengers = Passenger.query.filter_by(addr_id=old_address.addr_id).count()
         if other_passengers == 0:
             # If no other passengers use the old address, delete it
             db.session.delete(old_address)
@@ -320,7 +326,7 @@ def view_my_trip(passenger_id):
 
         # Query trips associated with the passenger's group
         trips = Trip.query.join(Payment, Trip.trip_id == Payment.trip_id)\
-                          .filter(Payment.cyz_group_group_id == passenger.cyz_group_group_id)\
+                          .filter(Payment.group_id == passenger.group_id)\
                           .all()
 
         # Prepare data for the frontend
