@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // 创建 Axios 实例
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/', // API 基础地址
   timeout: 10000, // 请求超时时间（毫秒）
 });
 

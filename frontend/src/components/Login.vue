@@ -22,7 +22,7 @@ async function login() {
   }
 
   try {
-    const response = await request.post('/login', {
+    const response = await request.post('/api/login', {
       username: loginUser.username,
       password: loginUser.password
     })

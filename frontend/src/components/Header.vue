@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import request from '../utils/request'
 
 // 路由
 const route = useRoute()
@@ -30,10 +31,24 @@ function goToAdmin() {
 }
 
 // 登出功能
-function logout() {
-  localStorage.removeItem('username') // 清除本地存储
-  router.push('/login') // 跳转到登录
+async function logout() {
+  try {
+    // 调用后端的登出接口
+    await request.post('/api/logout');
+    
+    // 清除本地存储
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+
+    // 跳转到登录页面
+    router.push('/login');
+    alert('Logged out successfully.');
+  } catch (error) {
+    console.error('Error during logout:', error);
+    alert('An error occurred while logging out. Please try again.');
+  }
 }
+
 </script>
 
 <template>

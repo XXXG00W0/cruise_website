@@ -235,7 +235,7 @@ async function regist() {
 
   if (isValid) {
     try {
-      const response = await request.post('http://127.0.0.1:5000/register', {
+      const response = await request.post('/api/register', {
         username: registUser.username,
         email: registUser.email,
         password: registUser.password,
