@@ -12,7 +12,8 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a strong secret key
 
 # Configure CORS
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5174"}})
+
 
 # Configure SQLAlchemy for SQLite
 # SQLite database file
@@ -24,12 +25,12 @@ db = SQLAlchemy(app)
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Replace with a strong secret key
 jwt = JWTManager(app)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
-    return render_template('Home.html')
+    return jsonify({"message": "Welcome to the Cruise Management System!"}), 200
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/api/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -372,10 +373,12 @@ def admin_manage_users():
 
 
 # Database Initialization
-@app.before_first_request
 def create_tables():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
+
 
 
 if __name__ == '__main__':
+    create_tables()
     app.run(debug=True)
