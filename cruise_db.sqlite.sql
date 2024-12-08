@@ -247,8 +247,8 @@ VALUES
 
 INSERT INTO cyz_trip (trip_id, start_date, end_date, start_port_id, end_port_id)
 VALUES
-(1, '2025-01-01', '2025-01-05', 1, 5),
-(2, '2025-01-06', '2025-01-10', 5, 1);
+(1, 1735689600, 1736044800, 1, 5),
+(2, 1736131200, 1736486400, 5, 1);
 
 INSERT INTO cyz_port (port_id, nearest_airport, num_parking_spots, addr_id, port_name)
 VALUES
