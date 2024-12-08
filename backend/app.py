@@ -178,6 +178,10 @@ def get_or_modify_passenger():
     """
     Fetch and display passenger's information (GET) or update it (POST) by ID.
     """
+    # check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+    
     session_user_id = session.get('user_id')
     print(session_user_id,type(session_user_id))
 
@@ -284,6 +288,10 @@ def view_my_trip():
     """
     Fetch and return trip information for a given passenger as JSON.
     """
+    # check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+    
     try:
         passenger_id=session.get('user_id')
         # Fetch the passenger by ID
