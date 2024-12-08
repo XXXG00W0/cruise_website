@@ -363,7 +363,7 @@ VALUES
 (1, 631152000, 'female', 'USA', '1234567890', 1, 1, 'Jane', 'Doe', 3),
 (2, 487641600, 'male', 'Canada', '2345678901', 2, 1, 'John', 'Smith', 4),
 (3, 953683200, 'other', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
-(4, 1608854400, 'female', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 10);
+(4, 1608854400, 'female', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 6);
 
 INSERT INTO cyz_group (group_id)
 VALUES

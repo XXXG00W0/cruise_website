@@ -188,7 +188,7 @@ def get_or_modify_passenger():
     if request.method == 'GET':
         try:
             # Query the database for the passenger
-            passenger = Passenger.query.get_or_404(session_user_id)
+            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
             if not passenger:
                 return jsonify({"message": "Passenger not found"}), 404
             
@@ -223,8 +223,10 @@ def get_or_modify_passenger():
     elif request.method == 'PUT':
         try:
             # Ensure the logged-in user is authorized to edit this passenger's information
-            passenger = Passenger.query.get_or_404(session_user_id)
+            print(session_user_id, Passenger.query.get(session_user_id))
+            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
             old_address = Address.query.get_or_404(passenger.addr_id)
+            print(session_user_id, passenger.user_id)
 
             if session_user_id != passenger.user_id:
                 return jsonify({"message": "You are not authorized to edit this information."}), 403
@@ -293,14 +295,16 @@ def view_my_trip():
         return jsonify({"message": "You need to log in first."}), 401
     
     try:
-        passenger_id=session.get('user_id')
+        user_id=session.get('user_id')
         # Fetch the passenger by ID
-        passenger = Passenger.query.get_or_404(passenger_id)
+        passenger = Passenger.query.filter_by(user_id=user_id).first_or_404()
 
+        
+        print(passenger.user_id,session.get('user_id'))
         # Ensure the current user is authorized to view this passenger's trips
-        if passenger.user_id not in session.get("user_id"):
+        if passenger.user_id != session.get("user_id"):
             return jsonify({"message": "Unauthorized access."}), 403
-
+        
         # Query trips associated with the passenger's group
         trips = Trip.query.join(Payment, Trip.trip_id == Payment.trip_id)\
                           .filter(Payment.group_id == passenger.group_id)\
