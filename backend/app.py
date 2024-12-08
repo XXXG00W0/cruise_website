@@ -54,15 +54,19 @@ def login():
         if user and check_password_hash(user.password, password):
             # Generate JWT token
             token = create_access_token(identity={"id": user.user_id, "username": user.username, "user_type": user.user_type})
+            # Ensure the token is a string
+            if isinstance(token, bytes):
+                token = token.decode('utf-8')
             # Store the user ID in the session
             session['user_id'] = user.user_id
+            session['user_type']=user.user_type
             return jsonify({
                 "message": "Login successful",
                 "token": token,
                 "user": {
-                    "user_id": user.user_id,
-                    "username": user.username,
-                    "user_type": user.user_type
+                    "user_id": int(user.user_id),
+                    "username": str(user.username),
+                    "user_type": str(user.user_type)
                 }
             }), 200
         else:
@@ -169,28 +173,24 @@ def logout():
     return jsonify({"message": "Logged out successfully."}), 200
 
 
-@app.route('/Passenger/Self/<int:id>', methods=['GET', 'PUT'])
-@jwt_required(optional=True)  # Allow optional JWT to check either token or session
-def get_or_modify_passenger(id):
+@app.route('/Passenger/Self', methods=['GET', 'PUT'])
+def get_or_modify_passenger():
     """
     Fetch and display passenger's information (GET) or update it (POST) by ID.
     """
-    current_user = get_jwt_identity()
     session_user_id = session.get('user_id')
-
-    # Authorization checks
-    if current_user and int(current_user) != id:
-        return jsonify({"message": "You are not authorized to access this passenger's information."}), 403
-    elif not current_user and session_user_id != id:
-        return jsonify({"message": "You are not authorized to access this passenger's information."}), 403
-    elif not current_user and 'user_id' not in session:
-        return jsonify({"message": "You need to log in first."}), 401
+    print(session_user_id,type(session_user_id))
 
     if request.method == 'GET':
         try:
             # Query the database for the passenger
-            passenger = Passenger.query.get_or_404(id)
+            passenger = Passenger.query.get_or_404(session_user_id)
+            if not passenger:
+                return jsonify({"message": "Passenger not found"}), 404
+            
             address = Address.query.get_or_404(passenger.addr_id)
+            if not address:
+                return jsonify({"message": "Address not found"}), 404
 
             # Prepare the passenger data for the frontend
             passenger_data = {
@@ -219,10 +219,10 @@ def get_or_modify_passenger(id):
     elif request.method == 'PUT':
         try:
             # Ensure the logged-in user is authorized to edit this passenger's information
-            passenger = Passenger.query.get_or_404(id)
+            passenger = Passenger.query.get_or_404(session_user_id)
             old_address = Address.query.get_or_404(passenger.addr_id)
 
-            if current_user["id"] != passenger.user_id:
+            if session_user_id != passenger.user_id:
                 return jsonify({"message": "You are not authorized to edit this information."}), 403
 
             # Retrieve updated information from the request body
@@ -278,52 +278,14 @@ def get_or_modify_passenger(id):
             return jsonify({"message": f"An error occurred while editing your information: {e}"}), 500
         
 
-@app.route('/api/group/<int:passenger_id>', methods=['GET'])
-@jwt_required()
-def group_information(passenger_id):
-    """
-    Fetch and return information of group members for a given passenger.
-    """
-    current_user = get_jwt_identity()  # Validate the current user's identity
-    try:
-        # Fetch the passenger by ID
-        passenger = Passenger.query.get_or_404(passenger_id)
 
-        # Ensure the passenger exists
-        if not passenger:
-            return jsonify({"message": "Passenger not found."}), 404
-
-        # Query all group members belonging to the same group
-        group_members = Passenger.query.filter_by(group_id=passenger.group_id).all()
-
-        # Prepare the data for the frontend
-        group_data = [
-            {
-                'passenger_id': member.passenger_id,
-                'name': f"{member.passenger_fname} {member.passenger_lname}"
-            }
-            for member in group_members
-        ]
-
-        return jsonify({
-            "group_id": passenger.group_id,
-            "group_members": group_data
-        }), 200
-
-    except Exception as e:
-        return jsonify({"message": f"An error occurred while retrieving group information: {e}"}), 500
-
-
-@app.route('/Passenger/MyTrip/<int:passenger_id>', methods=['GET'])
-#@jwt_required()
-def view_my_trip(passenger_id):
+@app.route('/Passenger/MyTrip', methods=['GET'])
+def view_my_trip():
     """
     Fetch and return trip information for a given passenger as JSON.
     """
     try:
-        # Validate the current user
-        #current_user = get_jwt_identity()
-
+        passenger_id=session.get('user_id')
         # Fetch the passenger by ID
         passenger = Passenger.query.get_or_404(passenger_id)
 
@@ -363,14 +325,14 @@ def view_my_trip(passenger_id):
 @jwt_required()
 def admin_manage_users():
     # Ensure only admins can access this route
-    current_user = get_jwt_identity()
-    if current_user['user_type'] != 'admin':
+    if session['user_type'] != 'admin':
         return jsonify({"message": "Access denied. Admins only."}), 403
 
+    data = request.json
+    passenger_id = data.get('passenger_id')
     # Handle the DELETE request to remove a passenger
     if request.method == 'DELETE':
-        data = request.json
-        passenger_id = data.get('passenger_id')
+        
         passenger = Passenger.query.get(passenger_id)
 
         if not passenger:
@@ -385,28 +347,25 @@ def admin_manage_users():
             return jsonify({"message": f"Error: {e}"}), 500
 
     # Handle the GET request to retrieve all passengers
-    passengers = Passenger.query.all()
-    passengers_data = [
-        {
-            "id": passenger.passenger_id,
-            "first_name": passenger.passenger_fname,
-            "last_name": passenger.passenger_lname,
-            "phone": passenger.phone,
-            "gender": passenger.gender,
-            "nationality": passenger.nationality
-        }
-        for passenger in passengers
-    ]
+    if request.method == 'GET':
+        passengers = Passenger.query.all()
+        passengers_data = [
+            {
+                "id": passenger.passenger_id,
+                "first_name": passenger.passenger_fname,
+                "last_name": passenger.passenger_lname,
+                "phone": passenger.phone,
+                "gender": passenger.gender,
+                "nationality": passenger.nationality
+            }
+            for passenger in passengers
+        ]
 
-    return jsonify({"passengers": passengers_data}), 200
+        return jsonify({"passengers": passengers_data}), 200
 
 @app.route('/Passenger/Trip', methods=['GET'])
-#@jwt_required()
 def get_trips_by_date():
     """Fetch trips based on start and end dates."""
-    # Check if the user is logged in
-    #current_user = get_jwt_identity()
-    #print(current_user)
     print(session)
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
@@ -459,6 +418,10 @@ def get_packages():
     """
     Fetch all package details.
     """
+    # check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+    
     try:
         packages = Package.query.all()
         package_list = [
@@ -479,6 +442,10 @@ def get_entertainments():
     """
     Fetch all entertainment details.
     """
+    # check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+    
     try:
         entertainments = Entertainment.query.all()
         entertainment_list = [
@@ -499,6 +466,10 @@ def get_restaurants():
     """
     Fetch all restaurant details.
     """
+    # check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+    
     try:
         restaurants = Restaurant.query.all()
         restaurant_list = [
