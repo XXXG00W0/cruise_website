@@ -1,7 +1,8 @@
 from datetime import datetime
+import re
 
 # NOTE: Remember to add function name here!
-__all__ = ['datetime_to_unix', 'unix_to_datetime']
+__all__ = ['datetime_to_unix', 'unix_to_datetime','sanitize_input']
 
 # Function to convert datetime string to Unix time (INTEGER)
 def datetime_to_unix(datetime_str):
@@ -38,4 +39,24 @@ def unix_to_datetime(unix_time, include_time=False):
     dt_format = "%Y-%m-%d %H:%M:%S" if include_time else "%Y-%m-%d"
     return dt_object.strftime(dt_format)
 
+def sanitize_input(input_str=None, max_len=100):
+    """
+    Sanitize user input by removing special symbols using regex and limiting its length.
 
+    Args:
+        input_str (str): The input string to sanitize. Defaults to None.
+        max_len (int): The maximum allowed length for the input string. Defaults to 100.
+
+    Returns:
+        str: The sanitized input string.
+    """
+    if input_str is None:
+        return None
+
+    # Use regex to remove special symbols
+    sanitized_str = re.sub(r'[<>&"\'`;|{}$]', '', input_str)
+
+    # Truncate the string to the maximum allowed length
+    sanitized_str = sanitized_str[:max_len]
+
+    return sanitized_str

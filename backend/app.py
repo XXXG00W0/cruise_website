@@ -43,9 +43,9 @@ def login():
     if request.method == 'POST':
         data = request.json
         # Retrieve the username from the form
-        username = data.get('username')
+        username = sanitize_input(data.get('username'))
         # Retrieve the password from the form
-        password = data.get('password')
+        password = sanitize_input(data.get('password'))
 
         # Query the database for the user by username (assumes username is unique)
         user = User.query.filter_by(username=username).first()
@@ -79,27 +79,27 @@ def register():
     data = request.json  # Parse JSON input from frontend
     
     # Extract user inputs
-    username = data.get('username')
-    email = data.get('email')
-    password = data.get('password')
-    confirm_password = data.get('confirm_password')
+    username = sanitize_input(data.get('username'))
+    email = sanitize_input(data.get('email'))
+    password = sanitize_input(data.get('password'))
+    confirm_password = sanitize_input(data.get('confirm_password'))
     user_type = "passenger"  # Default user_type set to 'passenger'
 
     # Passenger-specific inputs
-    passenger_fname = data.get('first_name')
-    passenger_lname = data.get('last_name')
-    birth_date = data.get('birth_date')  # Assume YYYY-MM-DD format
-    gender = data.get('gender')
-    nationality = data.get('nationality')
-    phone = data.get('phone')
-    street = data.get('street')
-    addr_line_2 = data.get('addr_line_2')
-    neighborhood = data.get('neighborhood')
-    city = data.get('city')
-    state_province = data.get('state_province')
-    postal_code = data.get('postal_code')
-    country = data.get('country')
-    group_id = data.get('group_id')  # Optional, can handle None
+    passenger_fname = sanitize_input(data.get('first_name'))
+    passenger_lname = sanitize_input(data.get('last_name'))
+    birth_date = sanitize_input(data.get('birth_date'))  # Assume YYYY-MM-DD format
+    gender = sanitize_input(data.get('gender'))
+    nationality = sanitize_input(data.get('nationality'))
+    phone = sanitize_input(data.get('phone'))
+    street = sanitize_input(data.get('street'))
+    addr_line_2 = sanitize_input(data.get('addr_line_2'))
+    neighborhood = sanitize_input(data.get('neighborhood'))
+    city = sanitize_input(data.get('city'))
+    state_province = sanitize_input(data.get('state_province'))
+    postal_code = sanitize_input(data.get('postal_code'))
+    country = sanitize_input(data.get('country'))
+    group_id = sanitize_input(data.get('group_id'))  # Optional, can handle None
 
     # Validate inputs
     if not all([username, email, password, confirm_password,
@@ -233,19 +233,19 @@ def get_or_modify_passenger():
 
             # Retrieve updated information from the request body
             data = request.json
-            passenger.passenger_fname = data.get('first_name', passenger.passenger_fname)
-            passenger.passenger_lname = data.get('last_name', passenger.passenger_lname)
-            passenger.phone = data.get('phone', passenger.phone)
+            passenger.passenger_fname = sanitize_input(data.get('first_name', passenger.passenger_fname))
+            passenger.passenger_lname = sanitize_input(data.get('last_name', passenger.passenger_lname))
+            passenger.phone = sanitize_input(data.get('phone', passenger.phone))
 
             # Get new address details
             new_address_data = {
-                'street': data.get('street'),
-                'addr_line_2': data.get('addr_line_2'),
-                'neighborhood': data.get('neighborhood'),
-                'city': data.get('city'),
-                'state_province': data.get('state_province'),
-                'postal_code': data.get('postal_code'),
-                'country': data.get('country'),
+                'street': sanitize_input(data.get('street')),
+                'addr_line_2': sanitize_input(data.get('addr_line_2')),
+                'neighborhood': sanitize_input(data.get('neighborhood')),
+                'city': sanitize_input(data.get('city')),
+                'state_province': sanitize_input(data.get('state_province')),
+                'postal_code': sanitize_input(data.get('postal_code')),
+                'country': sanitize_input(data.get('country')),
             }
 
             # Search for an existing address with the same details
@@ -370,7 +370,7 @@ def admin_manage_users():
     # Handle the DELETE request to remove a passenger
     if request.method == 'DELETE':
         data = request.json
-        passenger_id = data.get('passenger_id')
+        passenger_id = sanitize_input(data.get('passenger_id'))
         passenger = Passenger.query.get(passenger_id)
 
         if not passenger:
@@ -410,9 +410,9 @@ def admin_manage_room_prices():
     # Handle the PUT request to update the price of a stateroom
     if request.method == 'PUT':
         data = request.json
-        price_id = data.get('price_id')
-        new_price = data.get('price_per_night')
-        is_vacant = data.get('is_vacant')
+        price_id = sanitize_input(data.get('price_id'))
+        new_price = sanitize_input(data.get('price_per_night'))
+        is_vacant = sanitize_input(data.get('is_vacant'))
 
         stateroom_price = StateroomPrice.query.get(price_id)
 
@@ -627,9 +627,9 @@ def purchase_package():
         if field not in data:
             return jsonify({"message": f"Missing required field: {field}"}), 400
 
-    package_id = data["package_id"]
-    trip_id = data["trip_id"]
-    payment_method = data.get("payment_method","Unknown")
+    package_id = sanitize_input(data["package_id"])
+    trip_id = sanitize_input(data["trip_id"])
+    payment_method = sanitize_input(data.get("payment_method","Unknown"))
 
     try:
         # Fetch group_id based on the user_id
