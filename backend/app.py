@@ -38,7 +38,7 @@ def home():
     return jsonify({"message": "Welcome to the Cruise Management System!"}), 200
 
 
-@app.route('/Login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -74,7 +74,7 @@ def login():
 
 
 
-@app.route('/Regist', methods=['POST'])
+@app.route('/regist', methods=['POST'])
 def register():
     data = request.json  # Parse JSON input from frontend
     

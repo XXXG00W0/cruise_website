@@ -93,8 +93,9 @@ function checkConfirmPassword() {
     'Passwords do not match',
     registUser.password === registUser.confirm_password
   )
-  return confirmPasswordMsg.value === 'Passwords match'
+  return confirmPasswordMsg.value === 'Valid' 
 }
+
 
 function checkFirstName() {
   firstNameMsg.value = checkField(
@@ -260,7 +261,7 @@ async function regist() {
         alert('Registration successful! You can now log in.')
         router.push('/login')
       } else {
-        alert(response.data.message || 'Register failed')
+        alert(response.message || 'Register failed')
       }
     } catch (err) {
       console.error(err)
@@ -315,7 +316,8 @@ async function regist() {
                 <input class="input" type="password" v-model="registUser.confirm_password" @blur="checkConfirmPassword()" placeholder="Confirm password" />
               </td>
             </tr>
-            <tr><td colspan="2"><span :class="['message', confirmPasswordMsg === 'Passwords match' ? 'valid' : 'invalid']">{{ confirmPasswordMsg }}</span></td></tr>
+            <tr><td colspan="2"><span :class="['message', confirmPasswordMsg === 'Valid' ? 'valid' : 'invalid']">{{ confirmPasswordMsg }}</span>
+            </td></tr>
 
             <!-- First Name -->
             <tr>
