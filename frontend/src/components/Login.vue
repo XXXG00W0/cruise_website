@@ -40,12 +40,12 @@ async function login() {
 
       // 根据用户角色跳转
       if (user.user_type === 'admin') {
-        router.push('/admin')
+        router.push('/Board')
       } else {
-        router.push('/home')
+        router.push('/Main')
       }
     } else {
-      alert(response.data.message || 'Login failed')
+      alert(response.message || 'Login failed')
     }
   } catch (err) {
     console.error(err)
