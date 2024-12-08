@@ -455,15 +455,9 @@ def get_trips_by_date():
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
 
-    # Parse JSON data from the request body
-    data = request.json
-    print(data)
-    if not data:
-        return jsonify({'error': 'Request body must be JSON'}), 400
-
-    # Retrieve startDate and endDate from the JSON payload
-    start_date = data.get('start_date')
-    end_date = data.get('end_date')
+    # Retrieve startDate and endDate
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
     print(start_date,end_date)
 
     # convert the date from YYYY-MM-DD to int
