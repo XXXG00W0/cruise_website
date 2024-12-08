@@ -373,6 +373,53 @@ def admin_manage_users():
 
         return jsonify({"passengers": passengers_data}), 200
 
+@app.route('/Admin/RoomPriceManage', methods=['GET', 'PUT'])
+def admin_manage_room_prices():
+    # Ensure only admins can access this route
+    if session.get('user_type') != 'admin':
+        return jsonify({"message": "Access denied. Admins only."}), 403
+
+    # Handle the PUT request to update the price of a stateroom
+    if request.method == 'PUT':
+        data = request.json
+        price_id = data.get('price_id')
+        new_price = data.get('price_per_night')
+        is_vacant = data.get('is_vacant')
+
+        stateroom_price = StateroomPrice.query.get(price_id)
+
+        if not stateroom_price:
+            return jsonify({"message": f"Stateroom price with ID {price_id} not found."}), 404
+
+        try:
+            if new_price is not None:
+                stateroom_price.price_per_night = new_price
+            if is_vacant is not None:
+                stateroom_price.is_vacant = is_vacant
+
+            db.session.commit()
+            return jsonify({"message": f"Stateroom price with ID {price_id} updated successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+
+    # Handle the GET request to retrieve all stateroom prices
+    if request.method == 'GET':
+        stateroom_prices = StateroomPrice.query.all()
+        stateroom_prices_data = [
+            {
+                "price_id": price.price_id,
+                "stateroom_id": price.stateroom_id,
+                "price_per_night": price.price_per_night,
+                "trip_id": price.trip_id,
+                "is_vacant": price.is_vacant
+            }
+            for price in stateroom_prices
+        ]
+
+        return jsonify({"stateroom_prices": stateroom_prices_data}), 200
+
+
 @app.route('/Passenger/Trip', methods=['GET'])
 def get_trips_by_date():
     """Fetch trips based on start and end dates."""
