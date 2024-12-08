@@ -175,7 +175,15 @@ def get_passenger(id):
     print(id)
     current_user = get_jwt_identity()
     print(current_user)
-    if not current_user and 'user_id' not in session:
+    print(session)
+    session_user_id = session.get('user_id')
+
+    # Ensure the logged-in user is authorized to access this resource
+    if current_user and int(current_user) != id:
+        return jsonify({"message": "You are not authorized to view this passenger's information."}), 403
+    elif not current_user and session_user_id != id:
+        return jsonify({"message": "You are not authorized to view this passenger's information."}), 403
+    elif not current_user and 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
 
     try:
@@ -313,20 +321,20 @@ def edit_passenger_information(id):
 
 
 @app.route('/api/trip/<int:passenger_id>', methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def view_my_trip(passenger_id):
     """
     Fetch and return trip information for a given passenger as JSON.
     """
     try:
         # Validate the current user
-        current_user = get_jwt_identity()
+        #current_user = get_jwt_identity()
 
         # Fetch the passenger by ID
         passenger = Passenger.query.get_or_404(passenger_id)
 
         # Ensure the current user is authorized to view this passenger's trips
-        if current_user['id'] != passenger.user_id:
+        if passenger.user_id not in session.get("user_id"):
             return jsonify({"message": "Unauthorized access."}), 403
 
         # Query trips associated with the passenger's group
@@ -398,7 +406,59 @@ def admin_manage_users():
 
     return jsonify({"passengers": passengers_data}), 200
 
+@app.route('/trips', methods=['GET'])
+#@jwt_required()
+def get_trips_by_date():
+    """Fetch trips based on start and end dates."""
+    # Check if the user is logged in
+    #current_user = get_jwt_identity()
+    #print(current_user)
+    print(session)
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
 
+    # Parse JSON data from the request body
+    data = request.json
+    print(data)
+    if not data:
+        return jsonify({'error': 'Request body must be JSON'}), 400
+
+    # Retrieve startDate and endDate from the JSON payload
+    start_date = data.get('start_date')
+    end_date = data.get('end_date')
+    print(start_date,end_date)
+
+    # convert the date from YYYY-MM-DD to int
+    start_date=datetime_to_unix(start_date)
+    end_date=datetime_to_unix(end_date)
+
+    if not start_date or not end_date:
+        return jsonify({'error': 'startDate and endDate are required'}), 400
+
+    # Query trips within the date range
+    trips = Trip.query.filter(
+        Trip.start_date >= start_date,
+        Trip.end_date <= end_date
+    ).all()
+
+    if not trips:
+        return jsonify({'error': 'No trips available for the given dates'}), 404
+
+    # Fetch port names and return response
+    trip_data = []
+    for trip in trips:
+        start_port = Port.query.get(trip.start_port_id)
+        end_port = Port.query.get(trip.end_port_id)
+
+        trip_data.append({
+            'trip_id': trip.trip_id,
+            'start_date': unix_to_datetime(trip.start_date),
+            'end_date': unix_to_datetime(trip.end_date),
+            'start_port_name': start_port.port_name if start_port else None,
+            'end_port_name': end_port.port_name if end_port else None
+        })
+
+    return jsonify(trip_data), 200
 
 
 
