@@ -30,8 +30,10 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 # Configure JWT
-app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Replace with a strong secret key
+# Replace with a strong secret key
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
 jwt = JWTManager(app)
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -53,13 +55,14 @@ def login():
         # Validate the user and the hashed password
         if user and check_password_hash(user.password, password):
             # Generate JWT token
-            token = create_access_token(identity={"id": user.user_id, "username": user.username, "user_type": user.user_type})
+            token = create_access_token(identity={
+                                        "id": user.user_id, "username": user.username, "user_type": user.user_type})
             # Ensure the token is a string
             if isinstance(token, bytes):
                 token = token.decode('utf-8')
             # Store the user ID in the session
             session['user_id'] = user.user_id
-            session['user_type']=user.user_type
+            session['user_type'] = user.user_type
             return jsonify({
                 "message": "Login successful",
                 "token": token,
@@ -73,11 +76,10 @@ def login():
             return jsonify({"message": "Invalid username or password"}), 401
 
 
-
-@app.route('/regist', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def register():
     data = request.json  # Parse JSON input from frontend
-    
+
     # Extract user inputs
     username = sanitize_input(data.get('username'))
     email = sanitize_input(data.get('email'))
@@ -88,7 +90,8 @@ def register():
     # Passenger-specific inputs
     passenger_fname = sanitize_input(data.get('first_name'))
     passenger_lname = sanitize_input(data.get('last_name'))
-    birth_date = sanitize_input(data.get('birth_date'))  # Assume YYYY-MM-DD format
+    # Assume YYYY-MM-DD format
+    birth_date = sanitize_input(data.get('birth_date'))
     gender = sanitize_input(data.get('gender'))
     nationality = sanitize_input(data.get('nationality'))
     phone = sanitize_input(data.get('phone'))
@@ -99,7 +102,8 @@ def register():
     state_province = sanitize_input(data.get('state_province'))
     postal_code = sanitize_input(data.get('postal_code'))
     country = sanitize_input(data.get('country'))
-    group_id = sanitize_input(data.get('group_id'))  # Optional, can handle None
+    # Optional, can handle None
+    group_id = sanitize_input(data.get('group_id'))
 
     # Validate inputs
     if not all([username, email, password, confirm_password,
@@ -140,7 +144,8 @@ def register():
         print(address_id)
         # Determine group_id if not provided
         if not group_id:
-            max_group_id = db.session.query(db.func.max(Passenger.group_id)).scalar()
+            max_group_id = db.session.query(
+                db.func.max(Passenger.group_id)).scalar()
             group_id = (max_group_id + 1) if max_group_id is not None else 1
 
         # Create a new passenger instance linked to the new user
@@ -181,17 +186,18 @@ def get_or_modify_passenger():
     # check login state
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
-    
+
     session_user_id = session.get('user_id')
-    print(session_user_id,type(session_user_id))
+    print(session_user_id, type(session_user_id))
 
     if request.method == 'GET':
         try:
             # Query the database for the passenger
-            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
+            passenger = Passenger.query.filter_by(
+                user_id=session_user_id).first_or_404()
             if not passenger:
                 return jsonify({"message": "Passenger not found"}), 404
-            
+
             address = Address.query.get_or_404(passenger.addr_id)
             if not address:
                 return jsonify({"message": "Address not found"}), 404
@@ -223,19 +229,25 @@ def get_or_modify_passenger():
     elif request.method == 'PUT':
         try:
             # Ensure the logged-in user is authorized to edit this passenger's information
-            print(session_user_id, Passenger.query.get(session_user_id))
-            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
+            print("Session user ID:", session_user_id)
+            passenger = Passenger.query.filter_by(
+                user_id=session_user_id).first_or_404()
             old_address = Address.query.get_or_404(passenger.addr_id)
-            print(session_user_id, passenger.user_id)
+            print("Passenger fetched:", passenger)
+            print("Old address fetched:", old_address)
 
             if session_user_id != passenger.user_id:
                 return jsonify({"message": "You are not authorized to edit this information."}), 403
 
             # Retrieve updated information from the request body
             data = request.json
-            passenger.passenger_fname = sanitize_input(data.get('first_name', passenger.passenger_fname))
-            passenger.passenger_lname = sanitize_input(data.get('last_name', passenger.passenger_lname))
-            passenger.phone = sanitize_input(data.get('phone', passenger.phone))
+            print("Received update data:", data)
+            passenger.passenger_fname = sanitize_input(
+                data.get('first_name', passenger.passenger_fname))
+            passenger.passenger_lname = sanitize_input(
+                data.get('last_name', passenger.passenger_lname))
+            passenger.phone = sanitize_input(
+                data.get('phone', passenger.phone))
 
             # Get new address details
             new_address_data = {
@@ -247,6 +259,7 @@ def get_or_modify_passenger():
                 'postal_code': sanitize_input(data.get('postal_code')),
                 'country': sanitize_input(data.get('country')),
             }
+            print("New address data:", new_address_data)
 
             # Search for an existing address with the same details
             new_address = Address.query.filter_by(
@@ -261,28 +274,35 @@ def get_or_modify_passenger():
 
             if new_address:
                 # If the new address exists, update the passenger's address ID
+                print("Existing address found:", new_address)
                 passenger.addr_id = new_address.addr_id
             else:
                 # If the new address does not exist, create it
+                print("Creating a new address.")
                 new_address = Address(**new_address_data)
                 db.session.add(new_address)
                 db.session.commit()  # Commit to get the new address ID
                 passenger.addr_id = new_address.addr_id
+                print("New address created with ID:", new_address.addr_id)
 
             # Check if the old address is used by other passengers
-            other_passengers = Passenger.query.filter_by(addr_id=old_address.addr_id).count()
+            other_passengers = Passenger.query.filter_by(
+                addr_id=old_address.addr_id).count()
+            print("Other passengers using old address:", other_passengers)
             if other_passengers == 0:
+                print("Deleting unused old address:", old_address)
                 # If no other passengers use the old address, delete it
                 db.session.delete(old_address)
 
             # Commit the changes to the database
             db.session.commit()
+            print("Passenger and address information updated successfully.")
             return jsonify({"message": "Your information has been updated successfully!"}), 200
 
         except Exception as e:
             db.session.rollback()
+            print("Error during PUT request:", str(e))
             return jsonify({"message": f"An error occurred while editing your information: {e}"}), 500
-        
 
 
 @app.route('/Passenger/MyTrip', methods=['GET'])
@@ -293,7 +313,7 @@ def view_my_trip():
     # Check login state
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
-    
+
     try:
         user_id = session.get('user_id')
         # Fetch the passenger by ID
@@ -302,7 +322,7 @@ def view_my_trip():
         # Ensure the current user is authorized to view this passenger's trips
         if passenger.user_id != session.get("user_id"):
             return jsonify({"message": "Unauthorized access."}), 403
-        
+
         # Query trips associated with the passenger's group
         trips = Trip.query.join(Payment, Trip.trip_id == Payment.trip_id)\
                           .filter(Payment.group_id == passenger.group_id)\
@@ -312,15 +332,16 @@ def view_my_trip():
         for trip in trips:
             # Fetch associated stateroom bookings
             stateroom_bookings = StateroomBooking.query.join(StateroomPrice)\
-                                    .filter(StateroomPrice.trip_id == trip.trip_id)\
-                                    .filter(StateroomBooking.group_id == passenger.group_id)\
-                                    .all()
-            
+                .filter(StateroomPrice.trip_id == trip.trip_id)\
+                .filter(StateroomBooking.group_id == passenger.group_id)\
+                .all()
+
             # Gather details for each stateroom
             staterooms_info = []
             for booking in stateroom_bookings:
                 stateroom_price = StateroomPrice.query.get(booking.price_id)
-                stateroom = Stateroom.query.get(stateroom_price.stateroom_id) if stateroom_price else None
+                stateroom = Stateroom.query.get(
+                    stateroom_price.stateroom_id) if stateroom_price else None
                 if stateroom:
                     staterooms_info.append({
                         "stateroom_type": stateroom.stateroom_type,
@@ -337,8 +358,8 @@ def view_my_trip():
             ports_info = [
                 {
                     "port_name": Port.query.get(itinerary_item.port_id).port_name,
-                    "arrival_date_time": unix_to_datetime(itinerary_item.arrival_date_time,True),
-                    "leaving_date_time": unix_to_datetime(itinerary_item.leaving_date_time,True)
+                    "arrival_date_time": unix_to_datetime(itinerary_item.arrival_date_time, True),
+                    "leaving_date_time": unix_to_datetime(itinerary_item.leaving_date_time, True)
                 }
                 for itinerary_item in itinerary
             ] if itinerary else [{"message": "No itinerary available for this port."}]
@@ -359,14 +380,12 @@ def view_my_trip():
         return jsonify({"message": f"An error occurred while retrieving trip information: {e}"}), 500
 
 
-
-
-@app.route('/Admin/Board', methods=['GET', 'DELETE'])
+@app.route('/Admin/UserManage', methods=['GET', 'DELETE'])
 def admin_manage_users():
     # Ensure only admins can access this route
     if session['user_type'] != 'admin':
         return jsonify({"message": "Access denied. Admins only."}), 403
-    
+
     # Handle the DELETE request to remove a passenger
     if request.method == 'DELETE':
         data = request.json
@@ -400,6 +419,7 @@ def admin_manage_users():
         ]
 
         return jsonify({"passengers": passengers_data}), 200
+
 
 @app.route('/Admin/RoomPriceManage', methods=['GET', 'PUT'])
 def admin_manage_room_prices():
@@ -458,12 +478,12 @@ def get_trips_by_date():
     # Retrieve startDate and endDate
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
-    print(start_date,end_date)
+    print(start_date, end_date)
 
     # convert the date from YYYY-MM-DD to int
-    start_date=datetime_to_unix(start_date)
-    end_date=datetime_to_unix(end_date)
-    print(start_date,end_date)
+    start_date = datetime_to_unix(start_date)
+    end_date = datetime_to_unix(end_date)
+    print(start_date, end_date)
 
     if not start_date or not end_date:
         return jsonify({'error': 'startDate and endDate are required'}), 400
@@ -493,6 +513,7 @@ def get_trips_by_date():
 
     return jsonify(trip_data), 200
 
+
 @app.route('/Passenger/Package', methods=['GET'])
 def get_packages():
     """
@@ -501,7 +522,7 @@ def get_packages():
     # check login state
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
-    
+
     try:
         packages = Package.query.all()
         package_list = [
@@ -516,7 +537,8 @@ def get_packages():
         return jsonify(package_list), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+
 @app.route('/Passenger/Entertainment', methods=['GET'])
 def get_entertainments():
     """
@@ -525,7 +547,7 @@ def get_entertainments():
     # check login state
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
-    
+
     try:
         entertainments = Entertainment.query.all()
         entertainment_list = [
@@ -541,6 +563,7 @@ def get_entertainments():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @app.route('/Passenger/Restaurant', methods=['GET'])
 def get_restaurants():
     """
@@ -549,7 +572,7 @@ def get_restaurants():
     # check login state
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
-    
+
     try:
         restaurants = Restaurant.query.all()
         restaurant_list = [
@@ -580,7 +603,7 @@ def get_room_details():
     try:
         # Query all staterooms from the database
         staterooms = Stateroom.query.all()
-        
+
         # Convert the stateroom objects into dictionaries
         stateroom_list = [
             {
@@ -603,7 +626,7 @@ def get_room_details():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/Passenger/Package/Purchase', methods=['POST'])
+@app.route('/Passenger/PurchasePackage', methods=['GET', 'POST'])
 def purchase_package():
     """
     Handle the purchase of a package.
@@ -613,78 +636,279 @@ def purchase_package():
         return jsonify({"message": "You need to log in first."}), 401
 
     user_id = session['user_id']
-    data = request.get_json()
+    if request.method=='GET':
+        try:
+            # Fetch passenger details
+            passenger = Passenger.query.filter_by(user_id=user_id).first()
+            if not passenger:
+                return jsonify({"message": "Passenger not found for the given user ID."}), 404
 
-    # Validate input
-    required_fields = ["package_id", "trip_id"]
-    for field in required_fields:
-        if field not in data:
-            return jsonify({"message": f"Missing required field: {field}"}), 400
+            # Fetch available packages
+            available_packages = Package.query.all()
+            packages_info = [
+                {
+                    "package_id": pkg.package_id,
+                    "name": pkg.name,
+                    "description": pkg.description,
+                    "price": pkg.pkg_price,
+                }
+                for pkg in available_packages
+            ]
 
-    package_id = sanitize_input(data["package_id"])
-    trip_id = sanitize_input(data["trip_id"])
-    payment_method = sanitize_input(data.get("payment_method","Unknown"))
+            return jsonify({
+                "message": "Available packages retrieved successfully.",
+                "packages": packages_info
+            }), 200
 
-    try:
-        # Fetch group_id based on the user_id
-        passenger = Passenger.query.filter_by(user_id=user_id).first()
-        if not passenger:
-            return jsonify({"message": "Passenger not found for the given user ID."}), 404
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-        group_id = passenger.group_id
+    if request.method == 'POST':
+        data = request.get_json()
 
-        # Fetch package details
-        package = Package.query.filter_by(package_id=package_id).first()
-        if not package:
-            return jsonify({"message": "Package not found."}), 404
+        # Validate input
+        required_fields = ["package_id", "trip_id"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"message": f"Missing required field: {field}"}), 400
 
-        # Calculate the billing date and payment due
-        billing_date_time = int(datetime.now(timezone.utc).timestamp())
-        payment_due = package.pkg_price
+        package_id = sanitize_input(data["package_id"])
+        trip_id = sanitize_input(data["trip_id"])
+        payment_method = sanitize_input(data.get("payment_method", "Unknown"))
 
-        # Create a new invoice
-        new_invoice = Invoice(
-            payment_due=payment_due,
-            billing_date_time=billing_date_time
-        )
-        db.session.add(new_invoice)
-        db.session.flush()  # Generate the invoice ID
+        try:
+            # Fetch group_id based on the user_id
+            passenger = Passenger.query.filter_by(user_id=user_id).first()
+            if not passenger:
+                return jsonify({"message": "Passenger not found for the given user ID."}), 404
 
-        # Create a new package sale entry
-        new_package_sale = PackageSale(
-            package_id=package_id,
-            group_id=group_id,
-            invoice_id=new_invoice.invoice_id
-        )
-        db.session.add(new_package_sale)
+            group_id = passenger.group_id
 
-        # Create a new payment
-        payment_date = billing_date_time
-        new_payment = Payment(
-            payment_date=payment_date,
-            pay_amount=payment_due,
-            payment_method=payment_method,
-            trip_id=trip_id,
-            group_id=group_id,
-            invoice_id=new_invoice.invoice_id
-        )
-        db.session.add(new_payment)
+            # Fetch package details
+            package = Package.query.filter_by(package_id=package_id).first()
+            if not package:
+                return jsonify({"message": "Package not found."}), 404
 
-        # Commit all changes to the database
-        db.session.commit()
+            # Calculate the billing date and payment due
+            billing_date_time = int(datetime.now(timezone.utc).timestamp())
+            payment_due = package.pkg_price
 
-        return jsonify({"message": "Package purchased successfully.", "invoice_id": new_invoice.invoice_id}), 201
+            # Create a new invoice
+            new_invoice = Invoice(
+                payment_due=payment_due,
+                billing_date_time=billing_date_time
+            )
+            db.session.add(new_invoice)
+            db.session.flush()  # Generate the invoice ID
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+            # Create a new package sale entry
+            new_package_sale = PackageSale(
+                package_id=package_id,
+                group_id=group_id,
+                invoice_id=new_invoice.invoice_id
+            )
+            db.session.add(new_package_sale)
+
+            # Create a new payment
+            payment_date = billing_date_time
+            new_payment = Payment(
+                payment_date=payment_date,
+                pay_amount=payment_due,
+                payment_method=payment_method,
+                trip_id=trip_id,
+                group_id=group_id,
+                invoice_id=new_invoice.invoice_id
+            )
+            db.session.add(new_payment)
+
+            # Commit all changes to the database
+            db.session.commit()
+
+            return jsonify({"message": "Package purchased successfully.", "invoice_id": new_invoice.invoice_id}), 201
+
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 500
+
+
+@app.route('/Passenger/RoomOrder', methods=['GET', 'POST'])
+def handle_room_order():
+    """
+    Handles fetching stateroom price details (GET) and booking a stateroom (POST).
+    """
+    # Check login state
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+
+    if request.method == 'GET':
+        # Handle GET: Fetch stateroom price details
+        trip_id = request.args.get('tripId', type=int)
+        if not trip_id:
+            return jsonify({"message": "tripId is required."}), 400
+
+        try:
+            # Fetch trip details to calculate trip length
+            trip = Trip.query.get(trip_id)
+            if not trip:
+                return jsonify({"message": "Trip not found."}), 404
+
+            # Calculate trip length (in days)
+            trip_length = (trip.end_date - trip.start_date) // (24 * 60 * 60)  # Convert seconds to days
+
+            # Fetch stateroom prices for the trip
+            stateroom_prices = StateroomPrice.query.filter_by(trip_id=trip_id).all()
+            if not stateroom_prices:
+                return jsonify({"message": "No stateroom prices found for this trip."}), 404
+
+            # Compile stateroom details
+            staterooms_data = []
+            for stateroom_price in stateroom_prices:
+                # Calculate the total price for the trip
+                actual_price = stateroom_price.price_per_night * trip_length
+
+                # Fetch stateroom details
+                stateroom = Stateroom.query.get(stateroom_price.stateroom_id)
+                if not stateroom:
+                    continue  # Skip if stateroom details are missing
+
+                # Fetch bookings for this stateroom in the trip
+                bookings = StateroomBooking.query.filter_by(price_id=stateroom_price.price_id).all()
+
+                # Compile booking details
+                booking_details = [{
+                    "bookingId": booking.booking_id,
+                    "groupId": booking.group_id,
+                    "invoiceId": booking.invoice_id
+                } for booking in bookings]
+
+                # Compile stateroom details
+                staterooms_data.append({
+                    "stateroomId": stateroom.stateroom_id,
+                    "roomNumber": stateroom.room_number,
+                    "stateroomType": stateroom.stateroom_type,
+                    "location": stateroom.location,
+                    "numBed": stateroom.num_bed,
+                    "numBathroom": stateroom.num_bathroom,
+                    "numBalcony": stateroom.num_balcony,
+                    "sizeSqFt": stateroom.size_sqft,
+                    "isVacant": stateroom_price.is_vacant,
+                    "pricePerNight": stateroom_price.price_per_night,
+                    "actualPrice": actual_price,
+                    "bookings": booking_details
+                })
+
+            return jsonify({"code": 200, "tripLengthDays": trip_length, "staterooms": staterooms_data}), 200
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    elif request.method == 'POST':
+        # Handle POST: Book a stateroom
+        try:
+            # Retrieve and sanitize inputs
+            stateroom_id = sanitize_input(request.args.get('stateroomId'))
+            trip_id = sanitize_input(request.args.get('tripId'))
+            pay_amount = sanitize_input(request.args.get('pay_amount'))
+            payment_method = sanitize_input(request.args.get('payment_method'))
+            
+            # Ensure required fields are provided
+            required_fields = {'stateroomId': stateroom_id, 'tripId': trip_id, 'pay_amount': pay_amount, 'payment_method': payment_method}
+            missing_fields = [key for key, value in required_fields.items() if not value]
+            if missing_fields:
+                return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+
+            # Convert numeric fields to appropriate types
+            try:
+                trip_id = int(trip_id)
+                pay_amount = float(pay_amount)
+            except ValueError:
+                return jsonify({"message": "Invalid data format for numeric fields."}), 400
+
+            # Fetch trip details to calculate trip length
+            trip = Trip.query.filter_by(trip_id=trip_id).first()
+            if not trip:
+                return jsonify({"message": "Trip not found."}), 400
+
+            trip_length = trip.end_date - trip.start_date
+            if trip_length <= 0:
+                return jsonify({"message": "Invalid trip dates."}), 400
+
+            # Fetch stateroom price details
+            stateroom_price = StateroomPrice.query.filter_by(
+                stateroom_id=stateroom_id, trip_id=trip_id).first()
+            if not stateroom_price or not stateroom_price.is_vacant:
+                return jsonify({"message": "Stateroom is not available for booking."}), 400
+
+            # Calculate total cost
+            calculated_cost = stateroom_price.price_per_night * trip_length
+            if abs(pay_amount - calculated_cost) > 1e-2:  # Allow minor rounding differences
+                return jsonify({
+                    "message": f"Payment amount mismatch. Expected: {calculated_cost}, Provided: {pay_amount}"
+                }), 400
+
+            # Create invoice
+            new_invoice = Invoice(
+                payment_due=pay_amount,
+                billing_date_time=int(datetime.now().timestamp())
+            )
+            db.session.add(new_invoice)
+            db.session.flush()  # Generate invoice ID
+
+            # Create stateroom booking
+            new_booking = StateroomBooking(
+                group_id=session['user_id'],  # Assuming user_id represents group_id
+                invoice_id=new_invoice.invoice_id,
+                price_id=stateroom_price.price_id,
+            )
+            db.session.add(new_booking)
+
+            # Create payment record
+            new_payment = Payment(
+                payment_date=int(datetime.now().timestamp()),
+                pay_amount=pay_amount,
+                payment_method=payment_method,
+                trip_id=trip_id,
+                group_id=session['user_id'],
+                invoice_id=new_invoice.invoice_id
+            )
+            db.session.add(new_payment)
+
+            # Update stateroom availability
+            stateroom_price.is_vacant = False
+            db.session.commit()
+
+            # Return response with booking and payment details
+            return jsonify({
+                "code": 200,
+                "message": "Booking successful.",
+                "data": {
+                    "invoice": {
+                        "invoice_id": new_invoice.invoice_id,
+                        "billing_date_time": new_invoice.billing_date_time,
+                        "payment_due": new_invoice.payment_due,
+                    },
+                    "payment": {
+                        "payment_id": new_payment.payment_id,
+                        "payment_date": new_payment.payment_date,
+                        "pay_amount": new_payment.pay_amount,
+                        "payment_method": new_payment.payment_method,
+                    },
+                    "group": {
+                        "group_id": new_booking.group_id,
+                    }
+                }
+            }), 200
+
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 500
+
 
 
 # Database Initialization
 def create_tables():
     with app.app_context():
         db.create_all()
-
 
 
 if __name__ == '__main__':
