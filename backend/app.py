@@ -334,17 +334,15 @@ def view_my_trip():
 
 
 @app.route('/Admin/Board', methods=['GET', 'DELETE'])
-@jwt_required()
 def admin_manage_users():
     # Ensure only admins can access this route
     if session['user_type'] != 'admin':
         return jsonify({"message": "Access denied. Admins only."}), 403
-
-    data = request.json
-    passenger_id = data.get('passenger_id')
+    
     # Handle the DELETE request to remove a passenger
     if request.method == 'DELETE':
-        
+        data = request.json
+        passenger_id = data.get('passenger_id')
         passenger = Passenger.query.get(passenger_id)
 
         if not passenger:
@@ -396,6 +394,7 @@ def get_trips_by_date():
     # convert the date from YYYY-MM-DD to int
     start_date=datetime_to_unix(start_date)
     end_date=datetime_to_unix(end_date)
+    print(start_date,end_date)
 
     if not start_date or not end_date:
         return jsonify({'error': 'startDate and endDate are required'}), 400
