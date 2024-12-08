@@ -38,7 +38,7 @@ def home():
     return jsonify({"message": "Welcome to the Cruise Management System!"}), 200
 
 
-@app.route('/api/login', methods=['GET', 'POST'])
+@app.route('/Login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -70,7 +70,7 @@ def login():
 
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/Regist', methods=['POST'])
 def register():
     data = request.json  # Parse JSON input from frontend
     
@@ -134,6 +134,10 @@ def register():
         # Get address id
         address_id = new_address.addr_id
         print(address_id)
+        # Determine group_id if not provided
+        if not group_id:
+            max_group_id = db.session.query(db.func.max(Passenger.group_id)).scalar()
+            group_id = (max_group_id + 1) if max_group_id is not None else 1
 
         # Create a new passenger instance linked to the new user
         new_passenger = Passenger(
@@ -142,7 +146,7 @@ def register():
             nationality=nationality,
             phone=phone,
             addr_id=int(address_id),
-            group_id=int(group_id) if group_id else None,
+            group_id=int(group_id),
             passenger_fname=passenger_fname,
             passenger_lname=passenger_lname,
             user_id=new_user.user_id
@@ -165,55 +169,114 @@ def logout():
     return jsonify({"message": "Logged out successfully."}), 200
 
 
-@app.route('/api/passenger/<int:id>', methods=['GET'])
+@app.route('/Passenger/Self/<int:id>', methods=['GET', 'PUT'])
 @jwt_required(optional=True)  # Allow optional JWT to check either token or session
-def get_passenger(id):
+def get_or_modify_passenger(id):
     """
-    Fetch and display passenger's information, including address details, by ID.
+    Fetch and display passenger's information (GET) or update it (POST) by ID.
     """
-    # First check if a user is logged in via session or token
-    print(id)
     current_user = get_jwt_identity()
-    print(current_user)
-    print(session)
     session_user_id = session.get('user_id')
 
-    # Ensure the logged-in user is authorized to access this resource
+    # Authorization checks
     if current_user and int(current_user) != id:
-        return jsonify({"message": "You are not authorized to view this passenger's information."}), 403
+        return jsonify({"message": "You are not authorized to access this passenger's information."}), 403
     elif not current_user and session_user_id != id:
-        return jsonify({"message": "You are not authorized to view this passenger's information."}), 403
+        return jsonify({"message": "You are not authorized to access this passenger's information."}), 403
     elif not current_user and 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
 
-    try:
-        # Query the database for the passenger
-        passenger = Passenger.query.get_or_404(id)
-        address = Address.query.get_or_404(passenger.addr_id)
+    if request.method == 'GET':
+        try:
+            # Query the database for the passenger
+            passenger = Passenger.query.get_or_404(id)
+            address = Address.query.get_or_404(passenger.addr_id)
 
-        # Prepare the passenger data for the frontend
-        passenger_data = {
-            'id': passenger.passenger_id,
-            'first_name': passenger.passenger_fname,
-            'last_name': passenger.passenger_lname,
-            'birth_date': unix_to_datetime(passenger.birth_date, include_time=False),
-            'gender': passenger.gender,
-            'nationality': passenger.nationality,
-            'phone': passenger.phone,
-            'address': {
-                'street': address.street,
-                'addr_line_2': address.addr_line_2 or '',
-                'neighborhood': address.neighborhood or '',
-                'city': address.city,
-                'state_province': address.state_province,
-                'postal_code': address.postal_code,
-                'country': address.country
+            # Prepare the passenger data for the frontend
+            passenger_data = {
+                'id': passenger.passenger_id,
+                'first_name': passenger.passenger_fname,
+                'last_name': passenger.passenger_lname,
+                'birth_date': unix_to_datetime(passenger.birth_date, include_time=False),
+                'gender': passenger.gender,
+                'nationality': passenger.nationality,
+                'phone': passenger.phone,
+                'address': {
+                    'street': address.street,
+                    'addr_line_2': address.addr_line_2 or '',
+                    'neighborhood': address.neighborhood or '',
+                    'city': address.city,
+                    'state_province': address.state_province,
+                    'postal_code': address.postal_code,
+                    'country': address.country
+                }
             }
-        }
 
-        return jsonify({"passenger": passenger_data}), 200
-    except Exception as e:
-        return jsonify({"message": f"An error occurred: {e}"}), 500
+            return jsonify({"passenger": passenger_data}), 200
+        except Exception as e:
+            return jsonify({"message": f"An error occurred: {e}"}), 500
+
+    elif request.method == 'PUT':
+        try:
+            # Ensure the logged-in user is authorized to edit this passenger's information
+            passenger = Passenger.query.get_or_404(id)
+            old_address = Address.query.get_or_404(passenger.addr_id)
+
+            if current_user["id"] != passenger.user_id:
+                return jsonify({"message": "You are not authorized to edit this information."}), 403
+
+            # Retrieve updated information from the request body
+            data = request.json
+            passenger.passenger_fname = data.get('first_name', passenger.passenger_fname)
+            passenger.passenger_lname = data.get('last_name', passenger.passenger_lname)
+            passenger.phone = data.get('phone', passenger.phone)
+
+            # Get new address details
+            new_address_data = {
+                'street': data.get('street'),
+                'addr_line_2': data.get('addr_line_2'),
+                'neighborhood': data.get('neighborhood'),
+                'city': data.get('city'),
+                'state_province': data.get('state_province'),
+                'postal_code': data.get('postal_code'),
+                'country': data.get('country'),
+            }
+
+            # Search for an existing address with the same details
+            new_address = Address.query.filter_by(
+                street=new_address_data['street'],
+                addr_line_2=new_address_data.get('addr_line_2'),
+                neighborhood=new_address_data.get('neighborhood'),
+                city=new_address_data['city'],
+                state_province=new_address_data['state_province'],
+                postal_code=new_address_data['postal_code'],
+                country=new_address_data['country']
+            ).first()
+
+            if new_address:
+                # If the new address exists, update the passenger's address ID
+                passenger.addr_id = new_address.addr_id
+            else:
+                # If the new address does not exist, create it
+                new_address = Address(**new_address_data)
+                db.session.add(new_address)
+                db.session.commit()  # Commit to get the new address ID
+                passenger.addr_id = new_address.addr_id
+
+            # Check if the old address is used by other passengers
+            other_passengers = Passenger.query.filter_by(addr_id=old_address.addr_id).count()
+            if other_passengers == 0:
+                # If no other passengers use the old address, delete it
+                db.session.delete(old_address)
+
+            # Commit the changes to the database
+            db.session.commit()
+            return jsonify({"message": "Your information has been updated successfully!"}), 200
+
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"An error occurred while editing your information: {e}"}), 500
+        
 
 @app.route('/api/group/<int:passenger_id>', methods=['GET'])
 @jwt_required()
@@ -251,76 +314,7 @@ def group_information(passenger_id):
         return jsonify({"message": f"An error occurred while retrieving group information: {e}"}), 500
 
 
-@app.route('/api/passenger/<int:id>/edit', methods=['PUT'])
-@jwt_required()
-def edit_passenger_information(id):
-    """
-    Allow a passenger to modify their personal information, including managing address updates.
-    """
-    current_user = get_jwt_identity()
-    passenger = Passenger.query.get_or_404(id)
-    old_address = Address.query.get_or_404(passenger.addr_id)
-
-    # Ensure the logged-in user is authorized to edit this passenger's information
-    if current_user["id"] != passenger.user_id:
-        return jsonify({"message": "You are not authorized to edit this information."}), 403
-
-    try:
-        # Retrieve updated information from the request body
-        data = request.json
-        passenger.passenger_fname = data.get('first_name', passenger.passenger_fname)
-        passenger.passenger_lname = data.get('last_name', passenger.passenger_lname)
-        passenger.phone = data.get('phone', passenger.phone)
-
-        # Get new address details
-        new_address_data = {
-            'street': data.get('street'),
-            'addr_line_2': data.get('addr_line_2'),
-            'neighborhood': data.get('neighborhood'),
-            'city': data.get('city'),
-            'state_province': data.get('state_province'),
-            'postal_code': data.get('postal_code'),
-            'country': data.get('country'),
-        }
-
-        # Search for an existing address with the same details
-        new_address = Address.query.filter_by(
-            street=new_address_data['street'],
-            addr_line_2=new_address_data.get('addr_line_2'),
-            neighborhood=new_address_data.get('neighborhood'),
-            city=new_address_data['city'],
-            state_province=new_address_data['state_province'],
-            postal_code=new_address_data['postal_code'],
-            country=new_address_data['country']
-        ).first()
-
-        if new_address:
-            # If the new address exists, update the passenger's address ID
-            passenger.addr_id = new_address.addr_id
-        else:
-            # If the new address does not exist, create it
-            new_address = Address(**new_address_data)
-            db.session.add(new_address)
-            db.session.commit()  # Commit to get the new address ID
-            passenger.addr_id = new_address.addr_id
-
-        # Check if the old address is used by other passengers
-        other_passengers = Passenger.query.filter_by(addr_id=old_address.addr_id).count()
-        if other_passengers == 0:
-            # If no other passengers use the old address, delete it
-            db.session.delete(old_address)
-
-        # Commit the changes to the database
-        db.session.commit()
-        return jsonify({"message": "Your information has been updated successfully!"}), 200
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"message": f"An error occurred while editing your information: {e}"}), 500
-
-
-
-@app.route('/api/trip/<int:passenger_id>', methods=['GET'])
+@app.route('/Passenger/MyTrip/<int:passenger_id>', methods=['GET'])
 #@jwt_required()
 def view_my_trip(passenger_id):
     """
@@ -354,7 +348,7 @@ def view_my_trip(passenger_id):
                 'end_port_id': trip.end_port_id,
                 'payment_amount': float(payment.pay_amount) if payment else None,
                 'payment_method': payment.payment_method if payment else 'N/A',
-                'payment_date': unix_to_datetime(payment.payment_date) if payment else 'N/A'
+                'payment_date': unix_to_datetime(payment.payment_date) if payment else 0
             })
 
         # Return the trip data as JSON
@@ -365,7 +359,7 @@ def view_my_trip(passenger_id):
 
 
 
-@app.route('/api/admin/manage_users', methods=['GET', 'DELETE'])
+@app.route('/Admin/Board', methods=['GET', 'DELETE'])
 @jwt_required()
 def admin_manage_users():
     # Ensure only admins can access this route
@@ -406,7 +400,7 @@ def admin_manage_users():
 
     return jsonify({"passengers": passengers_data}), 200
 
-@app.route('/trips', methods=['GET'])
+@app.route('/Passenger/Trip', methods=['GET'])
 #@jwt_required()
 def get_trips_by_date():
     """Fetch trips based on start and end dates."""
@@ -460,7 +454,69 @@ def get_trips_by_date():
 
     return jsonify(trip_data), 200
 
+@app.route('/Passenger/Package', methods=['GET'])
+def get_packages():
+    """
+    Fetch all package details.
+    """
+    try:
+        packages = Package.query.all()
+        package_list = [
+            {
+                "package_id": package.package_id,
+                "pkg_charge_type": package.pkg_charge_type,
+                "pkg_price": package.pkg_price,
+                "pkg_name": package.pkg_name,
+            }
+            for package in packages
+        ]
+        return jsonify(package_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/Passenger/Entertainment', methods=['GET'])
+def get_entertainments():
+    """
+    Fetch all entertainment details.
+    """
+    try:
+        entertainments = Entertainment.query.all()
+        entertainment_list = [
+            {
+                "entertain_id": entertainment.entertain_id,
+                "entertain_name": entertainment.entertain_name,
+                "num_units": entertainment.num_units,
+                "at_floor": entertainment.at_floor,
+            }
+            for entertainment in entertainments
+        ]
+        return jsonify(entertainment_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
+@app.route('/Passenger/Restaurant', methods=['GET'])
+def get_restaurants():
+    """
+    Fetch all restaurant details.
+    """
+    try:
+        restaurants = Restaurant.query.all()
+        restaurant_list = [
+            {
+                "restaurant_id": restaurant.restaurant_id,
+                "restaurant_name": restaurant.restaurant_name,
+                "serve_type": restaurant.serve_type,
+                "opening_time": restaurant.opening_time,
+                "closing_time": restaurant.closing_time,
+                "at_floor": restaurant.at_floor,
+            }
+            for restaurant in restaurants
+        ]
+        return jsonify(restaurant_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    
 
 # Database Initialization
 def create_tables():
