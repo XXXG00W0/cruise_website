@@ -1,3 +1,4 @@
+import os
 from werkzeug.security import check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_migrate import Migrate
@@ -19,7 +20,11 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # Configure SQLAlchemy for SQLite
 # SQLite database file
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cruise.db'
+# Get the directory of the current file (app.py)
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# Configure the SQLite database URI to use the 'cruise.db' in the same directory
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'cruise.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
