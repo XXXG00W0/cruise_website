@@ -188,7 +188,7 @@ def get_or_modify_passenger():
     if request.method == 'GET':
         try:
             # Query the database for the passenger
-            passenger = Passenger.query.get_or_404(session_user_id)
+            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
             if not passenger:
                 return jsonify({"message": "Passenger not found"}), 404
             
@@ -223,7 +223,7 @@ def get_or_modify_passenger():
     elif request.method == 'PUT':
         try:
             # Ensure the logged-in user is authorized to edit this passenger's information
-            passenger = Passenger.query.get_or_404(session_user_id)
+            passenger = Passenger.query.filter_by(user_id=session_user_id).first_or_404()
             old_address = Address.query.get_or_404(passenger.addr_id)
 
             if session_user_id != passenger.user_id:
@@ -495,7 +495,41 @@ def get_restaurants():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-    
+
+@app.route('/Passenger/RoomDetail', methods=['GET'])
+def get_room_details():
+    """
+    Fetch all stateroom details.
+    """
+    # Check if the user is logged in
+    if 'user_id' not in session:
+        return jsonify({"message": "You need to log in first."}), 401
+
+    try:
+        # Query all staterooms from the database
+        staterooms = Stateroom.query.all()
+        
+        # Convert the stateroom objects into dictionaries
+        stateroom_list = [
+            {
+                "stateroom_id": stateroom.stateroom_id,
+                "stateroom_type": stateroom.stateroom_type,
+                "location": stateroom.location,
+                "num_bed": stateroom.num_bed,
+                "num_bathroom": stateroom.num_bathroom,
+                "num_balcony": stateroom.num_balcony,
+                "size_sqft": stateroom.size_sqft,
+                "room_number": stateroom.room_number,
+            }
+            for stateroom in staterooms
+        ]
+
+        # Return the room details as a JSON response
+        return jsonify(stateroom_list), 200
+    except Exception as e:
+        # Handle any errors during the process
+        return jsonify({"error": str(e)}), 500
+
 
 # Database Initialization
 def create_tables():
