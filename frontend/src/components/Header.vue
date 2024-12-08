@@ -22,12 +22,12 @@ if (localStorage.getItem('username')) {
 
 // 跳转到 Home 
 function goToHome() {
-  router.push('/home')
+  router.push('/Main')
 }
 
 // 跳转到 Admin 
 function goToAdmin() {
-  router.push('/admin')
+  router.push('/Admin')
 }
 
 // 登出功能
@@ -79,12 +79,12 @@ async function logout() {
     </div>
     <div class="user-info">
       <template v-if="isAuthPage">
-        <button class="btn" @click="goToHome">Home</button>
+        <button class="btn" @click="goToHome">Main</button>
         <button class="btn" @click="goToAdmin">Admin</button>
       </template>
       <template v-else>
         <span class="greeting">Hello, {{ username }}</span>
-        <button class="btn" @click="goToHome">Home</button>
+        <button class="btn" @click="goToHome">Main</button>
         <button class="btn" @click="goToAdmin">Admin</button>
         <button class="logout-btn" @click="logout">Logout</button>
       </template>
