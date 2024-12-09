@@ -639,19 +639,29 @@ def get_restaurants():
 
 
 @app.route('/Passenger/RoomDetail', methods=['GET'])
-def get_room_details():
+def get_room_details_by_trip():
     """
-    Fetch all stateroom details.
+    Fetch stateroom details and their prices for a specific trip ID.
     """
     # Check if the user is logged in
     if 'user_id' not in session:
         return jsonify({"message": "You need to log in first."}), 401
 
-    try:
-        # Query all staterooms from the database
-        staterooms = Stateroom.query.all()
+    # Get  trip_id from the request arguments
+    trip_id = request.args.get('trip_id', type=int)
+    if not trip_id:
+        return jsonify({"message": "Trip ID is required."}), 400
 
-        # Convert the stateroom objects into dictionaries
+    try:
+        # Query the staterooms and their prices for the given trip ID
+        stateroom_prices = db.session.query(Stateroom, StateroomPrice).join(
+            StateroomPrice, Stateroom.stateroom_id == StateroomPrice.stateroom_id
+        ).filter(StateroomPrice.trip_id == trip_id).all()
+
+        if not stateroom_prices:
+            return jsonify({"message": f"No staterooms found for trip ID {trip_id}."}), 404
+
+        # Convert the results into a structured list
         stateroom_list = [
             {
                 "stateroom_id": stateroom.stateroom_id,
@@ -662,8 +672,10 @@ def get_room_details():
                 "num_balcony": stateroom.num_balcony,
                 "size_sqft": stateroom.size_sqft,
                 "room_number": stateroom.room_number,
+                "price_per_night": price.price_per_night,
+                "is_vacant": price.is_vacant,
             }
-            for stateroom in staterooms
+            for stateroom, price in stateroom_prices
         ]
 
         # Return the room details as a JSON response
