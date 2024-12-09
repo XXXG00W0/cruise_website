@@ -115,7 +115,7 @@
   
       async function fetchPriceInfo() {
         try {
-          const response = await request.get(`/api/stateroom-price/${stateroomId}`, {
+          const response = await request.get(`/api/Passenger/RoomOrder`, {
             params: { tripId: tripId }
           })
           isLoading.value = false
