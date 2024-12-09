@@ -18,6 +18,7 @@ const username = ref('')
 // 如果用户已登录，从本地存储加载用户名
 if (localStorage.getItem('username')) {
   username.value = localStorage.getItem('username')
+  console.log('Username:', username.value)
 }
 
 // 跳转到 Home 

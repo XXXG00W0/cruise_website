@@ -17,41 +17,71 @@ const router = useRouter()
 async function login() {
   // 基础校验
   if (!checkUsername() || !checkPassword()) {
-    alert('Please fix the errors before login.')
-    return
+    alert('Please fix the errors before login.');
+    console.log('Validation failed: Username or password is incorrect.');
+    return;
   }
 
   try {
+    console.log('Sending login request with username:', loginUser.username);
+
+    // 发送请求
     const response = await request.post('/api/login', {
       username: loginUser.username,
-      password: loginUser.password
-    })
+      password: loginUser.password,
+    });
 
-    // response成功返回时的结构：status 200表示成功，否则失败
-    if (response.status === 200) {
-      alert('Login successfully')
+    // 打印完整的响应数据
+    console.log('Login API response:', response);
 
-      // 从返回数据中提取 token 和 user 信息
-      const token = response.data.token
-      const user = response.data.user
+    // 检查状态码或响应内容
+    if (response && response.message === 'Login successful') {
+      alert('Login successfully');
+      console.log('Login successful, extracting token and user data.');
 
-      // 将token存储在localStorage中，供后续API请求使用
-      localStorage.setItem('token', token)
+      // 提取 token 和 user 数据
+      const { token, user } = response; // 假设拦截器已处理返回值
+      console.log('Extracted token:', token);
+      console.log('Extracted user data:', user);
 
-      // 根据用户角色跳转
-      if (user.user_type === 'admin') {
-        router.push('/Board')
-      } else {
-        router.push('/Main')
+      // 确保 user 和 user.user_type 存在
+      if (!user || !user.user_type) {
+        console.error('User data is missing or invalid:', user);
+        alert('Login response is invalid. Please try again.');
+        return;
+      }
+
+      // 将 token 存储到 localStorage 中
+      localStorage.setItem('token', token);
+      localStorage.setItem('username', user.username);
+      console.log('Token stored in localStorage.');
+      console.log(user.username);
+
+
+      // 打印跳转路径
+      const navigatePath = user.user_type === 'admin' ? '/Board' : '/Main';
+      console.log('Navigating to:', navigatePath);
+
+      // 跳转到对应页面
+      try {
+        await router.push(navigatePath);
+        console.log('Navigation successful to:', navigatePath);
+      } catch (navigationError) {
+        console.error('Navigation error:', navigationError);
+        alert('Failed to navigate. Please try again.');
       }
     } else {
-      alert(response.message || 'Login failed')
+      // 如果状态码或 message 不符合预期，处理错误
+      console.error('Unexpected response:', response);
+      alert(response.message || 'Login failed');
     }
   } catch (err) {
-    console.error(err)
-    alert('An error occurred. Please try again.')
+    // 捕获请求或其他错误
+    console.error('Error during login:', err.response ? err.response.data : err.message);
+    alert('An error occurred. Please try again.');
   }
 }
+
 
 // 验证用户名方法
 function checkUsername() {

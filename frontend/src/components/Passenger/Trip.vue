@@ -96,7 +96,7 @@
         hasSearched.value = true
         trips.value = []
         try {
-          const response = await request.get('/api/search-trip-by-date', {
+          const response = await request.get('/api/Passenger/Trip', {
             params: {
               startDate: searchForm.startDate,
               endDate: searchForm.endDate

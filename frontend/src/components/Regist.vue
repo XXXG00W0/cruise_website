@@ -128,7 +128,7 @@ function checkGender() {
   genderMsg.value = checkField(
     registUser.gender,
     'Please select a gender',
-    ['Male', 'Female','other'].includes(registUser.gender)
+    ['male', 'female','other'].includes(registUser.gender)
   )
   return genderMsg.value === 'Valid'
 }
@@ -352,8 +352,8 @@ async function regist() {
               <td>
                 <select class="input" v-model="registUser.gender" @blur="checkGender()">
                   <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="male">male</option>
+                  <option value="female">female</option>
                   <option value="other">Other</option>
                 </select>
               </td>

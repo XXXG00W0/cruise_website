@@ -72,7 +72,7 @@ const router = createRouter({
       component: Regist 
     },
     {
-      path: '/admin',
+      path: '/Board',
       component: Board 
     }
   ]
