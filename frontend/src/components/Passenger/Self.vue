@@ -8,9 +8,8 @@
         </div>
         <div v-else class="info-box">
           <h3>Personal Information</h3>
-          <p><strong>Name (read-only):</strong> {{ passenger.name }}</p>
-          <p><strong>Email (read-only):</strong> {{ passenger.email }}</p>
-          <p><strong>User ID (read-only):</strong> {{ passenger.user_id }}</p>
+          <p><strong>Name (read-only):</strong>{{ passenger.first_name }} {{ passenger.last_name }}</p>
+          <p><strong>User ID (read-only):</strong> {{ passenger.id }}</p>
   
           <h3>Editable Fields</h3>
           <div class="field">
@@ -74,21 +73,20 @@
       async function fetchPassengerInfo() {
         isLoading.value = true
         try {
-          const response = await request.get('/api/passenger-info')
+          const response = await request.get('/api/Passenger/Self')
           isLoading.value = false
-          if (response.code === 200) {
-            passenger.value = response.data.passenger
-            address.value = response.data.address
-            if (passenger.value) {
-              editForm.phone = passenger.value.phone || ''
-            }
-            if (address.value) {
-              editForm.street = address.value.street || ''
-              editForm.city = address.value.city || ''
-              editForm.state_province = address.value.state_province || ''
-              editForm.postal_code = address.value.postal_code || ''
-              editForm.country = address.value.country || ''
-            }
+          passenger.value = response.passenger
+          address.value = passenger.value.address
+          if (passenger.value) {
+            editForm.phone = passenger.value.phone || ''
+          }
+          if (address.value) {
+            editForm.street = address.value.street || ''
+            editForm.city = address.value.city || ''
+            editForm.state_province = address.value.state_province || ''
+            editForm.postal_code = address.value.postal_code || ''
+            editForm.country = address.value.country || ''
+            
           } else {
             alert('Failed to fetch passenger info')
           }
@@ -101,7 +99,7 @@
   
       async function updatePersonalInfo() {
         try {
-          const response = await request.put('/api/update-passenger-info', {
+          const response = await request.put('/api/Passenger/Self', {
             phone: editForm.phone,
             address: {
               street: editForm.street,

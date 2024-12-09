@@ -2,8 +2,8 @@
     <div class="my-trip-container">
       <h2 class="header">My Booked Trips</h2>
   
-      <div v-if="isLoading" class="loading">Loading your bookings...</div>
-      <div v-else-if="bookings.length === 0">
+      <div v-if="isLoading.value" class="loading">Loading your bookings...</div>
+      <div v-else-if="bookings === {}">
         <el-empty description="No bookings found"></el-empty>
       </div>
       <div v-else>
@@ -64,15 +64,10 @@
       async function fetchMyBookings() {
         isLoading.value = true
         try {
-          const response = await request.get('/api/my-bookings')
+          const response = await request.get('/api/Passenger/MyTrip')
           isLoading.value = false
-          if (response.code === 200) {
-            // Assume response.data.bookings is an array of booking objects
-            // Each booking includes stateroom and trip info
-            bookings.value = response.data.bookings
-          } else {
-            alert(response.message || 'Failed to fetch bookings')
-          }
+          bookings.value = response.bookings
+          
         } catch (err) {
           console.error(err)
           alert('Error fetching bookings')

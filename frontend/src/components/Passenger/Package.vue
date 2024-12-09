@@ -1,60 +1,79 @@
-<template>
-    <div class="package-container">
-      <h2 class="header">Available Packages</h2>
-  
-      <div v-if="isLoading" class="loading">Loading packages...</div>
-      <div v-else-if="packages.length === 0">
-        <el-empty description="No package information available"></el-empty>
-      </div>
-      <div v-else class="package-list">
-        <ul>
-          <li v-for="pkg in packages" :key="pkg.package_id" class="package-item">
-            <h3>{{ pkg.pkg_name }}</h3>
-            <p><strong>Charge Type:</strong> {{ pkg.pkg_charge_type }}</p>
-            <p><strong>Price:</strong> ${{ pkg.pkg_price }}</p>
-            <button class="btn order-btn" @click="goToPackageOrder(pkg.package_id)">Purchase</button>
-          </li>
-        </ul>
-      </div>
+<template> 
+  <div class="package-container">
+    <h2 class="header">Available Packages</h2>
+
+    <div v-if="isLoading" class="loading">Loading packages...</div>
+    <div v-else-if="packages.length === 0">
+      <el-empty description="No package information available"></el-empty>
     </div>
-  </template>
-  
-  <script>
-  import { ref, onMounted } from 'vue'
-  import request from '../../utils/request'
-  import { useRouter } from 'vue-router'
-  
-  export default {
-    name: 'Package',
-    setup() {
-      const packages = ref([])
-      const isLoading = ref(false)
-      const router = useRouter()
-  
-      onMounted(() => {
-        fetchPackages()
-      })
-  
-      async function fetchPackages() {
-        isLoading.value = true
-        try {
-          const response = await request.get('/api/packages')
-          isLoading.value = false
-          if (response.code === 200) {
-            packages.value = response.data.packages
-          } else {
-            alert(response.message || 'Failed to fetch package information')
-          }
-        } catch (err) {
-          console.error(err)
-          alert('Error fetching package information')
-          isLoading.value = false
-        }
+    <div v-else class="package-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Package Name</th>
+            <th>Charge Type</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="pkg in packages" :key="pkg.package_id">
+            <td>{{ pkg.pkg_name }}</td>
+            <td>{{ pkg.pkg_charge_type }}</td>
+            <td>${{ pkg.pkg_price }}</td>
+            <td>
+              <button class="btn order-btn" @click="goToPackageOrder(pkg.package_id)">Purchase</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from 'vue'
+import request from '../../utils/request'
+import { useRouter } from 'vue-router'
+
+export default {
+  name: 'Package',
+  setup() {
+    const packages = ref([]) // 存储套餐信息
+    const isLoading = ref(false) // 加载状态
+    const router = useRouter()
+
+    onMounted(() => {
+      fetchPackages() // 页面加载时获取数据
+    })
+
+    async function fetchPackages() {
+      isLoading.value = true
+      try {
+        const response = await request.get('/api/Passenger/Package')
+        isLoading.value = false
+
+        // 打印调试信息，逐个输出每个字段
+
+          // 遍历 response
+          packages.value = response.map(pkg =>({
+            package_id: pkg.package_id,
+            pkg_name: pkg.pkg_name,
+            pkg_charge_type: pkg.pkg_charge_type,
+            pkg_price: pkg.pkg_price,
+          }));
+          
+
+      } catch (err) {
+        isLoading.value = false
+        console.error('Error fetching package information:', err)
+        alert('Error fetching package information');
       }
+    }
   
       function goToPackageOrder(packageId) {
         // 跳转到 PackageOrder.vue，并传入 packageId 作为 query 参数
-        router.push({ path: '/Main/PackageOrder', query: { packageId } })
+        router.push({ path: '/Main/PackageOrder' }, { query: { packageId } })
       }
   
       return {

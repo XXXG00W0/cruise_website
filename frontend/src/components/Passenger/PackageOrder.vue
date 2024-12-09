@@ -86,7 +86,7 @@
   
       async function fetchPackageInfo() {
         try {
-          const response = await request.get(`/api/package/${packageId}`)
+          const response = await request.get(`/api/Passenger/PurchasePackage`)
           isLoading.value = false
           if (response.code === 200) {
             pkgInfo.value = response.data.package

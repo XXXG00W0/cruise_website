@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+// 引入 Passenger Management 组件
+import PassengerManage from './PassengerManage.vue'
+import RoomManage from './RoomManage.vue'
 
 // 当前选中的菜单项
 const activeMenu = ref('dashboard') // 默认显示 Dashboard
@@ -28,7 +31,7 @@ onMounted(() => {
       <h3 class="sidebar-header">Admin Menu</h3>
       <ul class="menu">
         <li
-          v-for="menu in ['dashboard', 'manageUsers', 'manageTrips', 'settings']"
+          v-for="menu in ['dashboard', 'ManagePassengers', 'ManageTrips', 'ManageRooms']"
           :key="menu"
           :class="{ active: activeMenu === menu }"
           @click="switchMenu(menu)"
@@ -48,25 +51,20 @@ onMounted(() => {
         <p>Here you can view an overview of the system.</p>
       </div>
 
-      <!-- Manage Users -->
-      <div v-if="activeMenu === 'manageUsers'">
-        <h2>Manage Users</h2>
-        <p>Here you can add, edit, or delete users.</p>
-        <!-- 后续可以在这里放置用户管理功能 -->
+      <!-- Manage passengers -->
+      <div v-if="activeMenu === 'ManagePassengers'">
+        <PassengerManage /> <!-- 引入 Passenger Management 功能 -->
       </div>
 
       <!-- Manage Trips -->
-      <div v-if="activeMenu === 'manageTrips'">
+      <div v-if="activeMenu === 'ManageTrips'">
         <h2>Manage Trips</h2>
         <p>Here you can add, edit, or delete trips.</p>
         <!-- 后续可以在这里放置行程管理功能 -->
       </div>
-
-      <!-- Settings -->
-      <div v-if="activeMenu === 'settings'">
-        <h2>Settings</h2>
-        <p>Here you can configure admin settings.</p>
-        <!-- 后续可以在这里放置设置功能 -->
+      <!-- Manage Rooms -->
+      <div v-if="activeMenu === 'ManageRooms'">
+        <RoomManage /> 
       </div>
     </main>
   </div>
