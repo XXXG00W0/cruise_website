@@ -4,7 +4,7 @@
     <div class="grid-container">
       <!-- Trip -->
       <div class="card" @click="goTo('/Main/Trip')">
-        <img class="card-image" src="https://example.com/images/trip.jpg" alt="Trip Image" />
+        <img class="card-image" src="..\..\assets\img\Trip.png" alt="Trip Image" />
         <h3 class="card-title">Trip</h3>
         <p class="card-desc">Find and explore your cruise trips.</p>
         <button class="btn" @click="goTo('/Main/Trip')">View Trips</button>
@@ -12,7 +12,7 @@
 
       <!-- Self -->
       <div class="card" @click="goTo('/Main/Self')">
-        <img class="card-image" src="https://example.com/images/self.jpg" alt="Profile Image" />
+        <img class="card-image" src="..\..\assets\img\Self.png" alt="Profile Image" />
         <h3 class="card-title">My Profile</h3>
         <p class="card-desc">View and update your personal info.</p>
         <button class="btn" @click="goTo('/Main/Self')">My Profile</button>
@@ -20,7 +20,7 @@
 
       <!-- MyTrip -->
       <div class="card" @click="goTo('/Main/MyTrip')">
-        <img class="card-image" src="https://example.com/images/mytrip.jpg" alt="My Trips Image" />
+        <img class="card-image" src="..\..\assets\img\MyTrip.png" alt="My Trips Image" />
         <h3 class="card-title">My Trips</h3>
         <p class="card-desc">Check out your booked rooms and trips.</p>
         <button class="btn" @click="goTo('/Main/MyTrip')">My Booked Trips</button>
@@ -28,7 +28,7 @@
 
       <!-- Package -->
       <div class="card" @click="goTo('/Main/Package')">
-        <img class="card-image" src="https://example.com/images/package.jpg" alt="Package Image" />
+        <img class="card-image" src="..\..\assets\img\pack.png" alt="Package Image" />
         <h3 class="card-title">Packages</h3>
         <p class="card-desc">Browse and purchase available packages.</p>
         <button class="btn" @click="goTo('/Main/Package')">View Packages</button>
@@ -36,7 +36,7 @@
 
       <!-- Restraunt -->
       <div class="card" @click="goTo('/Main/Restraunt')">
-        <img class="card-image" src="https://example.com/images/restaurant.jpg" alt="Restaurant Image" />
+        <img class="card-image" src="..\..\assets\img\Rest.png" alt="Restaurant Image" />
         <h3 class="card-title">Restaurants</h3>
         <p class="card-desc">Check out onboard dining options.</p>
         <button class="btn" @click="goTo('/Main/Restraunt')">View Restaurants</button>
@@ -44,7 +44,7 @@
 
       <!-- Entertainment -->
       <div class="card" @click="goTo('/Main/Entertainment')">
-        <img class="card-image" src="https://example.com/images/entertainment.jpg" alt="Entertainment Image" />
+        <img class="card-image" src="..\..\assets\img\Enter.png" alt="Entertainment Image" />
         <h3 class="card-title">Entertainment</h3>
         <p class="card-desc">Discover fun and activities onboard.</p>
         <button class="btn" @click="goTo('/Main/Entertainment')">View Entertainment</button>

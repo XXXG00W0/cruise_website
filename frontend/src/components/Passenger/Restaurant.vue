@@ -21,8 +21,8 @@
           <tr v-for="restaurant in restaurants" :key="restaurant.restaurant_id">
             <td>{{ restaurant.restaurant_name }}</td>
             <td>{{ restaurant.serve_type }}</td>
-            <td>{{ formatDateTime(restaurant.opening_time) }}</td>
-            <td>{{ formatDateTime(restaurant.closing_time) }}</td>
+            <td>{{ restaurant.opening_time }}</td>
+            <td>{{ restaurant.closing_time }}</td>
             <td>{{ restaurant.at_floor }}</td>
           </tr>
         </tbody>
