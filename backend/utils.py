@@ -52,6 +52,8 @@ def sanitize_input(input_str=None, max_len=100):
     """
     if input_str is None:
         return None
+    elif type(input_str)!=str:
+        return input_str
 
     # Use regex to remove special symbols
     sanitized_str = re.sub(r'[<>&"\'`;|{}$]', '', input_str)

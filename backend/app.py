@@ -467,6 +467,53 @@ def admin_manage_room_prices():
 
         return jsonify({"stateroom_prices": stateroom_prices_data}), 200
 
+@app.route('/Admin/ManageTrip', methods=['GET', 'PUT'])
+def admin_manage_trip():
+    # Ensure only admins can access this route
+    if session.get('user_type') != 'admin':
+        return jsonify({"message": "Access denied. Admins only."}), 403
+
+    # Handle the PUT request to update a trip's start and end dates
+    if request.method == 'PUT':
+        data = request.json
+        trip_id = sanitize_input(data.get('trip_id'))
+        new_start_date = sanitize_input(data.get('start_date'))
+        new_end_date = sanitize_input(data.get('end_date'))
+
+        trip = Trip.query.get(trip_id)
+
+        if not trip:
+            return jsonify({"message": f"Trip with ID {trip_id} not found."}), 404
+
+        try:
+            # assuming dates are in "YYYY-MM-DD" format
+            if new_start_date is not None:
+                trip.start_date = datetime_to_unix(new_start_date)
+            if new_end_date is not None:
+                trip.end_date = datetime_to_unix(new_end_date)
+
+            db.session.commit()
+            return jsonify({"message": f"Trip with ID {trip_id} updated successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+
+    # Handle the GET request to retrieve all trips
+    if request.method == 'GET':
+        trips = Trip.query.all()
+        trips_data = [
+            {
+                "trip_id": trip.trip_id,
+                "start_date": unix_to_datetime(trip.start_date),
+                "end_date": unix_to_datetime(trip.end_date),
+                "start_port_id": trip.start_port_id,
+                "end_port_id": trip.end_port_id
+            }
+            for trip in trips
+        ]
+
+        return jsonify({"trips": trips_data}), 200
+
 
 @app.route('/Passenger/Trip', methods=['GET'])
 def get_trips_by_date():
