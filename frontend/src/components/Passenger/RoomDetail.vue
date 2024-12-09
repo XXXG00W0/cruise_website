@@ -1,72 +1,91 @@
 <template>
-  <div class="container">
-    <div class="item" v-if="stateroom">
-      <div class="name">Stateroom Number: {{ stateroom.room_number }}</div>
-      <div class="info">
-        <span class="detail-item">Location: {{ stateroom.location }}</span>
-        <span class="detail-item">Beds: {{ stateroom.num_bed }}</span>
-        <span class="detail-item">Bathrooms: {{ stateroom.num_bathroom }}</span>
-        <span class="detail-item">Balconies: {{ stateroom.num_balcony }}</span>
-        <span class="detail-item">Size: {{ stateroom.size_sqft }} sqft</span>
-      </div>
-      <img :src="coverImage" alt="Stateroom Image" />
-      <div class="extra-info">
-        <span class="address">Stateroom detail information above.</span>
-      </div>
-      <button class="order-button" @click="goToRoomOrder">Go to Order Page</button>
+  <div class="restaurant-container">
+    <h2 class="header">Staterooms Detail</h2>
+
+    <div v-if="isLoading" class="loading">Loading staterooms...</div>
+    <div v-else-if="stateroom.length === 0">
+      <el-empty description="No staterooms information available"></el-empty>
     </div>
-    <div v-else>
-      <div class="loading">Loading stateroom information...</div>
+    <div v-else class="staterooms-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Room Number</th>
+            <th>Location</th>
+            <th>Bed Number</th>
+            <th>Bathroom Number</th>
+            <th>Balcony Number</th>
+            <th>Size (sqft)</th>
+            <th>Price per Night</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="room in stateroom" :key="room.stateroom_id">
+            <td>{{ room.room_number }}</td>
+            <td>{{ room.location }}</td>
+            <td>{{ room.num_bed }}</td>
+            <td>{{ room.num_bathroom }}</td>
+            <td>{{ room.num_balcony }}</td>
+            <td>{{ room.size_sqft }}</td>
+            <td>{{ room.price_per_night }}</td>
+            <td>
+              <button class="order-button" @click="goToRoomOrder(room)">Order</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
+import request from "../../utils/request";
 
 export default {
   name: "RoomDetail",
   setup() {
     const route = useRoute();
     const router = useRouter();
-
-    const stateroom = reactive({});
-    const coverImage = "https://example.com/stateroom_default.jpg"; // Replace if needed
-    const isLoading = ref(true);
+    const trip_id = route.query.trip_id || "";
+    const stateroom = ref([]);
+    const isLoading = ref(false);
 
     onMounted(() => {
-      const trip_id = route.query.trip_id; // 从路由参数中获取 trip_id
-      if (trip_id) {
-        fetchStateroomDetails(trip_id);
-      }
+      fetchStateroomDetails(trip_id);
     });
 
-    function fetchStateroomDetails(trip_id) {
-      axios
-        .get(`/Passenger/RoomDetail`, { params: { trip_id } })
-        .then((res) => {
-          if (res.status === 200) {
-            Object.assign(stateroom, res.data); // 将获取的数据存入 stateroom
-            isLoading.value = false;
-          } else {
-            alert("Failed to fetch stateroom details.");
-            isLoading.value = false;
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error fetching stateroom details.");
-          isLoading.value = false;
+    async function fetchStateroomDetails(trip_id) {
+      isLoading.value = true;
+      try {
+        const response = await request.get("/api/Passenger/RoomDetail", {
+          params: { trip_id },
         });
+        stateroom.value = response.map((room) => ({
+          stateroom_id: room.stateroom_id,
+          room_number: room.room_number,
+          location: room.location,
+          num_bed: room.num_bed,
+          num_bathroom: room.num_bathroom,
+          num_balcony: room.num_balcony,
+          size_sqft: room.size_sqft,
+          price_per_night: room.price_per_night,
+        }));
+      } catch (err) {
+        console.error("Error fetching stateroom details:", err);
+        alert("Error fetching stateroom details.");
+      } finally {
+        isLoading.value = false;
+      }
     }
 
-    function goToRoomOrder() {
+    function goToRoomOrder(room) {
       router.push({
         path: "/Main/RoomOrder",
         query: {
-          stateroomId: stateroom.stateroom_id,
+          stateroomId: room.stateroom_id,
           tripId: route.query.trip_id,
         },
       });
@@ -74,7 +93,6 @@ export default {
 
     return {
       stateroom,
-      coverImage,
       isLoading,
       goToRoomOrder,
     };
@@ -83,64 +101,58 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 800px;
+.restaurant-container {
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.item {
-  background-color: rgb(248, 246, 246);
-  padding: 16px;
-  border-radius: 5px;
+.header {
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.name {
-  font-size: 36px;
-  margin-block: 10px;
-  font-weight: 800;
+.staterooms-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
 }
 
-.info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+.staterooms-table th,
+.staterooms-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
 }
 
-.detail-item {
-  font-size: 14px;
-  color: #333;
+.staterooms-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
 }
 
-.extra-info {
-  margin-block: 10px;
-}
-
-.address {
-  font-size: 14px;
-  color: rgb(28, 89, 186);
+.staterooms-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
 .order-button {
-  padding: 10px 20px;
-  background-color: rgb(75, 105, 207);
+  padding: 8px 12px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .order-button:hover {
-  background-color: rgb(29, 64, 179);
+  background-color: #45a049;
 }
 
 .loading {
   text-align: center;
+  font-size: 16px;
   color: #666;
-  font-size: 14px;
   margin: 20px 0;
 }
 </style>

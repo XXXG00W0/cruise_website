@@ -645,23 +645,32 @@ def get_room_details_by_trip():
     """
     # Check if the user is logged in
     if 'user_id' not in session:
+        print("User is not logged in.")
         return jsonify({"message": "You need to log in first."}), 401
 
-    # Get  trip_id from the request arguments
+    # Get trip_id from the request arguments
     trip_id = request.args.get('trip_id', type=int)
+    print(f"Received trip_id: {trip_id}")
+    
     if not trip_id:
+        print("No trip_id provided in the request.")
         return jsonify({"message": "Trip ID is required."}), 400
 
     try:
         # Query the staterooms and their prices for the given trip ID
+        print("Querying stateroom prices...")
         stateroom_prices = db.session.query(Stateroom, StateroomPrice).join(
             StateroomPrice, Stateroom.stateroom_id == StateroomPrice.stateroom_id
         ).filter(StateroomPrice.trip_id == trip_id).all()
-
+        
+        print(f"Query result: {stateroom_prices}")
+        
         if not stateroom_prices:
+            print(f"No staterooms found for trip ID {trip_id}.")
             return jsonify({"message": f"No staterooms found for trip ID {trip_id}."}), 404
 
         # Convert the results into a structured list
+        print("Formatting query results...")
         stateroom_list = [
             {
                 "stateroom_id": stateroom.stateroom_id,
@@ -678,11 +687,18 @@ def get_room_details_by_trip():
             for stateroom, price in stateroom_prices
         ]
 
+        print(f"Formatted stateroom list: {stateroom_list}")
+
         # Return the room details as a JSON response
         return jsonify(stateroom_list), 200
     except Exception as e:
         # Handle any errors during the process
+        print(f"Exception occurred: {e}")
+        import traceback
+        print("Traceback:")
+        print(traceback.format_exc())
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.route('/Passenger/PurchasePackage', methods=['GET', 'POST'])
