@@ -6,8 +6,8 @@
     <div v-else-if="packages.length === 0">
       <el-empty description="No package information available"></el-empty>
     </div>
-    <div v-else class="package-table">
-      <table>
+    <div v-else class="package-table-container">
+      <table class="package-table">
         <thead>
           <tr>
             <th>Package Name</th>
@@ -30,7 +30,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref, onMounted } from 'vue'
 import request from '../../utils/request'
@@ -71,9 +70,9 @@ export default {
       }
     }
   
-      function goToPackageOrder(packageId) {
+    function goToPackageOrder(package_id) {
         // 跳转到 PackageOrder.vue，并传入 packageId 作为 query 参数
-        router.push({ path: '/Main/PackageOrder' }, { query: { packageId } })
+        router.push({ path: '/Main/PackageOrder', query: { package_id } })
       }
   
       return {
@@ -87,9 +86,10 @@ export default {
   
   <style scoped>
   .package-container {
-    width: 800px;
+    max-width: 900px;
     margin: 50px auto;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
   }
   
   .header {
@@ -97,52 +97,69 @@ export default {
     font-size: 24px;
     margin-bottom: 20px;
     font-weight: bold;
-    text-align: center;
   }
   
   .loading {
-    text-align:center;
-    color:#666;
-    font-size:14px;
-    margin:20px 0;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 20px 0;
   }
   
-  .package-list {
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  .package-table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
   }
   
-  .package-list ul {
-    list-style:none;
-    padding:0;
+  .package-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
   
-  .package-item {
-    background:#f9f9f9;
-    padding:15px;
-    border-radius:5px;
-    margin-bottom:10px;
+  .package-table th,
+  .package-table td {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
   }
   
-  .package-item h3 {
-    color:#007acc;
-    margin-bottom:10px;
+  .package-table th {
+    background-color: #007acc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .package-table td {
+    color: #333;
+  }
+  
+  .package-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .package-table tbody tr:hover {
+    background-color: #f1f8ff;
   }
   
   .order-btn {
-    background:#28a745;
-    color:#fff;
-    border:none;
-    border-radius:20px;
-    padding:8px 15px;
-    cursor:pointer;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
     transition: background 0.3s;
   }
   
   .order-btn:hover {
-    background:#218838;
+    background: #218838;
   }
   </style>
-  

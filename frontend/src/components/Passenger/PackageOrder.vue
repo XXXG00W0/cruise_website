@@ -8,12 +8,12 @@
         </div>
         <div v-else>
           <div class="info-box">
-            <p><strong>Package ID:</strong> {{ packageId }}</p>
-            <p><strong>Name:</strong> {{ pkgInfo.pkg_name }}</p>
-            <p><strong>Charge Type:</strong> {{ pkgInfo.pkg_charge_type }}</p>
-            <p><strong>Price:</strong> ${{ pkgInfo.pkg_price }}</p>
+            <p><strong>Package ID:</strong> {{ pkgInfo.package_id }}</p>
+            <p><strong>Name:</strong> {{ pkgInfo.name }}</p>
+            <p><strong>Charge Type:</strong> {{ pkgInfo.charge_type }}</p>
+            <p><strong>Price:</strong> ${{ pkgInfo.price }}</p>
           </div>
-  
+
           <div class="form-section">
             <h3>Payment Information</h3>
             <div class="field">
@@ -69,7 +69,7 @@
       const route = useRoute()
       const router = useRouter()
   
-      const packageId = route.query.packageId || ''
+      const package_id = route.query.package_id || ''
       const isLoading = ref(true)
       const pkgInfo = ref(null)
       const invoice = ref(null)
@@ -82,23 +82,25 @@
   
       onMounted(() => {
         fetchPackageInfo()
+        fetchPackageInfo(package_id) // 在这里传入 packageId
       })
   
-      async function fetchPackageInfo() {
-        try {
-          const response = await request.get(`/api/Passenger/PurchasePackage`)
-          isLoading.value = false
-          if (response.code === 200) {
-            pkgInfo.value = response.data.package
-          } else {
-            alert(response.message || 'Failed to load package information')
+      async function fetchPackageInfo(package_id) {
+          isLoading.value = true
+          try {
+            const response = await request.get('/api/Passenger/PurchasePackage', {
+              params: { package_id: package_id } 
+            })
+            isLoading.value = false
+            pkgInfo.value = response.package
+            console.log('Package information:', pkgInfo.value)
+            
+          } catch (err) {
+            console.error(err)
+            alert('Error loading package information')
+            isLoading.value = false
           }
-        } catch (err) {
-          console.error(err)
-          alert('Error loading package information')
-          isLoading.value = false
         }
-      }
   
       async function confirmOrder() {
         if (!orderForm.payment_method || !orderForm.pay_amount) {
@@ -107,23 +109,21 @@
         }
   
         try {
-          const response = await request.post('/api/purchase-package', {
+          const response = await request.post('/api/Passenger/PurchasePackage', {
             packageId,
             pay_amount: orderForm.pay_amount,
             payment_method: orderForm.payment_method
             // group_id can be handled by backend based on current user
           })
-          if (response.code === 200) {
-            alert('Purchase successful!')
-            invoice.value = response.data.invoice
-            packageSale.value = response.data.packageSale
+            
+          alert('Purchase successful!')
+          invoice.value = response.invoice
+          packageSale.value = response.packageSale
   
-            setTimeout(() => {
-              router.push('/Main')
-            }, 3000)
-          } else {
-            alert(response.message || 'Purchase failed')
-          }
+          setTimeout(() => {
+            router.push('/Main')
+          }, 3000)
+
         } catch (err) {
           console.error(err)
           alert('Error purchasing package')
@@ -137,7 +137,7 @@
       }
   
       return {
-        packageId,
+        package_id,
         isLoading,
         pkgInfo,
         invoice,

@@ -636,32 +636,61 @@ def purchase_package():
         return jsonify({"message": "You need to log in first."}), 401
 
     user_id = session['user_id']
-    if request.method=='GET':
+    if request.method == 'GET':
         try:
             # Fetch passenger details
             passenger = Passenger.query.filter_by(user_id=user_id).first()
             if not passenger:
                 return jsonify({"message": "Passenger not found for the given user ID."}), 404
+            
+            package_id = request.args.get('package_id', None)
+            print("Received package_id:", package_id)
 
-            # Fetch available packages
-            available_packages = Package.query.all()
-            packages_info = [
-                {
-                    "package_id": pkg.package_id,
-                    "name": pkg.name,
-                    "description": pkg.description,
-                    "price": pkg.pkg_price,
+
+            if package_id:
+                # 返回指定 package_id 对应的套餐信息
+                print(Package.query.filter_by(package_id=package_id).first())
+                pkg = Package.query.filter_by(package_id=package_id).first()
+                
+                if not pkg:
+                    return jsonify({"message": "Package not found."}), 404
+
+                package_info = {
+                        "package_id": pkg.package_id,
+                        "name": pkg.pkg_name,
+                        "charge_type": pkg.pkg_charge_type,
+                        "price": pkg.pkg_price,
                 }
-                for pkg in available_packages
-            ]
 
-            return jsonify({
-                "message": "Available packages retrieved successfully.",
-                "packages": packages_info
-            }), 200
+                return jsonify({
+                    "message": "Package retrieved successfully.",
+                    "package": package_info
+                }), 200
+            else:
+                # 返回对应package_id套餐信息
+                available_packages = Package.query.all()
+                packages_info = [
+                    {
+                        "package_id": pkg.package_id,
+                        "name": pkg.pkg_name,
+                        "charge_type": pkg.pkg_charge_type,
+                        "price": pkg.pkg_price,
+                    }
+                    for pkg in available_packages
+                ]
+
+                return jsonify({
+                    "message": "Available packages retrieved successfully.",
+                    "packages": packages_info
+                }), 200
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            # Log error with traceback for better debugging
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Error occurred in GET /Passenger/PurchasePackage: {error_details}")
+            return jsonify({"error": "An unexpected error occurred.", "details": str(e)}), 500
+
 
     if request.method == 'POST':
         data = request.get_json()

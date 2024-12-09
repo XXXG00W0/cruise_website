@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 // 引入 Passenger Management 组件
 import PassengerManage from './PassengerManage.vue'
 import RoomManage from './RoomManage.vue'
+import TripManage from './TripManage.vue';
 
 // 当前选中的菜单项
 const activeMenu = ref('dashboard') // 默认显示 Dashboard
@@ -60,7 +61,7 @@ onMounted(() => {
       <div v-if="activeMenu === 'ManageTrips'">
         <h2>Manage Trips</h2>
         <p>Here you can add, edit, or delete trips.</p>
-        <!-- 后续可以在这里放置行程管理功能 -->
+        <TripManage /> <!-- 引入 Passenger Management 功能 -->
       </div>
       <!-- Manage Rooms -->
       <div v-if="activeMenu === 'ManageRooms'">
