@@ -912,11 +912,13 @@ def handle_room_order():
     elif request.method == 'POST':
         # Handle POST: Book a stateroom
         try:
-            # Retrieve and sanitize inputs
-            stateroom_id = sanitize_input(request.args.get('stateroomId'))
-            trip_id = sanitize_input(request.args.get('tripId'))
-            pay_amount = sanitize_input(request.args.get('pay_amount'))
-            payment_method = sanitize_input(request.args.get('payment_method'))
+            data = request.get_json()  # JSON 
+            print(data)
+            print(data.get('stateroomId'))
+            stateroom_id = sanitize_input(data.get('stateroomId'))
+            trip_id = sanitize_input(data.get('tripId'))
+            pay_amount = sanitize_input(data.get('pay_amount'))
+            payment_method = sanitize_input(data.get('payment_method'))
             
             # Ensure required fields are provided
             required_fields = {'stateroomId': stateroom_id, 'tripId': trip_id, 'pay_amount': pay_amount, 'payment_method': payment_method}
@@ -924,10 +926,11 @@ def handle_room_order():
             if missing_fields:
                 return jsonify({"message": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
-            # Convert numeric fields to appropriate types
+            # Converpt numeric fields to appropriate tyes
             try:
                 trip_id = int(trip_id)
                 pay_amount = float(pay_amount)
+                print(trip_id, pay_amount)
             except ValueError:
                 return jsonify({"message": "Invalid data format for numeric fields."}), 400
 
@@ -937,6 +940,7 @@ def handle_room_order():
                 return jsonify({"message": "Trip not found."}), 400
 
             trip_length = trip.end_date - trip.start_date
+            print("trip length", trip_length)
             if trip_length <= 0:
                 return jsonify({"message": "Invalid trip dates."}), 400
 
@@ -948,6 +952,7 @@ def handle_room_order():
 
             # Calculate total cost
             calculated_cost = stateroom_price.price_per_night * trip_length
+            print("calculated cost", calculated_cost)
             if abs(pay_amount - calculated_cost) > 1e-2:  # Allow minor rounding differences
                 return jsonify({
                     "message": f"Payment amount mismatch. Expected: {calculated_cost}, Provided: {pay_amount}"

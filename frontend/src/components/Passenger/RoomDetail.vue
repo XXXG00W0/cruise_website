@@ -77,7 +77,7 @@ export default {
         console.error("Error fetching stateroom details:", err);
         alert("Error fetching stateroom details.");
       } finally {
-        isLoading.value = false;s
+        isLoading.value = false;
       }
     }
 
