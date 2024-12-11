@@ -1005,9 +1005,15 @@ def handle_room_order():
             db.session.add(new_invoice)
             db.session.flush()  # Generate invoice ID
 
+            # Fetch group_id from database
+            user_id = session.get('user_id')  # Assuming the user's ID is stored in the session
+            user = User.query.filter_by(user_id=user_id).first()
+            if not user or not user.group_id:
+                return jsonify({"message": "Group ID for the user not found."}), 400
+
             # Create stateroom booking
             new_booking = StateroomBooking(
-                group_id=session['user_id'],  # Assuming user_id represents group_id
+                group_id=user.group_id,
                 invoice_id=new_invoice.invoice_id,
                 price_id=stateroom_price.price_id,
             )
