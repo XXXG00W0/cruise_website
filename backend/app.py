@@ -723,7 +723,7 @@ def purchase_package():
 
 
             if package_id:
-                # 返回指定 package_id 对应的套餐信息
+                # Return the package information corresponding to the specified package_id
                 print(Package.query.filter_by(package_id=package_id).first())
                 pkg = Package.query.filter_by(package_id=package_id).first()
                 
@@ -742,7 +742,7 @@ def purchase_package():
                     "package": package_info
                 }), 200
             else:
-                # 返回对应package_id套餐信息
+                # Return the package information for all packages
                 available_packages = Package.query.all()
                 packages_info = [
                     {
@@ -845,9 +845,12 @@ def handle_room_order():
 
     if request.method == 'GET':
         # Handle GET: Fetch stateroom price details
-        trip_id = request.args.get('tripId', type=int)
-        if not trip_id:
-            return jsonify({"message": "tripId is required."}), 400
+        trip_id = sanitize_input(request.args.get('tripId', type=int))
+        stateroom_id = sanitize_input(request.args.get('stateroomId', type=int))
+        print(trip_id,type(trip_id))
+
+        if not trip_id or not stateroom_id:
+            return jsonify({"message": "Both tripId and stateroomId are required."}), 400
 
         try:
             # Fetch trip details to calculate trip length
@@ -858,10 +861,11 @@ def handle_room_order():
             # Calculate trip length (in days)
             trip_length = (trip.end_date - trip.start_date) // (24 * 60 * 60)  # Convert seconds to days
 
-            # Fetch stateroom prices for the trip
-            stateroom_prices = StateroomPrice.query.filter_by(trip_id=trip_id).all()
+            # Fetch stateroom prices for the trip and stateroom
+            stateroom_prices = StateroomPrice.query.filter_by(trip_id=trip_id, stateroom_id=stateroom_id).all()
+
             if not stateroom_prices:
-                return jsonify({"message": "No stateroom prices found for this trip."}), 404
+                return jsonify({"message": "No stateroom prices found for this trip or stateroom."}), 404
 
             # Compile stateroom details
             staterooms_data = []
