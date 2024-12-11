@@ -1,101 +1,87 @@
 <template>
-    <div class="my-trip-container">
-      <h2 class="header">My Booked Trips</h2>
-  
-      <div v-if="isLoading.value" class="loading">Loading your bookings...</div>
-      <div v-else-if="bookings === {}">
-        <el-empty description="No bookings found"></el-empty>
-      </div>
-      <div v-else>
-        <div v-for="(booking, index) in bookings" :key="index" class="booking-item">
-          <h3>Booking ID: {{ booking.bookingId }}</h3>
-          <div class="info-section">
-            <h4>Stateroom Information:</h4>
-            <p><strong>Room Number:</strong> {{ booking.stateroom.room_number }}</p>
-            <p><strong>Location:</strong> {{ booking.stateroom.location }}</p>
-            <p><strong>Beds:</strong> {{ booking.stateroom.num_bed }}</p>
-            <p><strong>Bathrooms:</strong> {{ booking.stateroom.num_bathroom }}</p>
-            <p><strong>Balconies:</strong> {{ booking.stateroom.num_balcony }}</p>
-            <p><strong>Size:</strong> {{ booking.stateroom.size_sqft }} sqft</p>
-  
-            <h4>Trip Information:</h4>
-            <p><strong>Trip ID:</strong> {{ booking.trip.trip_id }}</p>
-            <p><strong>Start Date:</strong> {{ formatDate(booking.trip.start_date) }}</p>
-            <p><strong>End Date:</strong> {{ formatDate(booking.trip.end_date) }}</p>
-  
-            <h4>Ports (Itinerary):</h4>
-            <div v-if="booking.trip.ports && booking.trip.ports.length > 0">
-              <div v-for="port in booking.trip.ports" :key="port.port_id" class="port-item">
-                <p><strong>Port Name:</strong> {{ port.port_name }}</p>
-                <p><strong>Nearest Airport:</strong> {{ port.nearest_airport }}</p>
-                <p><strong>Parking Spots:</strong> {{ port.num_parking_spots }}</p>
-                <h5>Itineraries:</h5>
-                <ul>
-                  <li v-for="itinerary in port.itineraries" :key="itinerary.itinerary_id">
-                    <p><strong>Arrival:</strong> {{ formatDateTime(itinerary.arrival_date_time) }}</p>
-                    <p><strong>Departure:</strong> {{ formatDateTime(itinerary.leaving_date_time) }}</p>
-                  </li>
-                </ul>
-              </div>
+  <div class="my-trip-container">
+    <h2 class="header">My Booked Trips</h2>
+
+    <div v-if="isLoading" class="loading">Loading your bookings...</div>
+    <div v-else-if="!bookings || bookings.length === 0">
+      <el-empty description="No bookings found"></el-empty>
+    </div>
+    <div v-else>
+      <div v-for="(booking, index) in bookings" :key="index" class="booking-item">
+        <h3>Trip ID: {{ booking.trip_id }}</h3>
+        
+        <div class="info-section">
+          <h4>Stateroom Information:</h4>
+          <!-- 由于 stateroom_information 是个数组，这里需要遍历 -->
+          <div v-for="(stateroom, sIndex) in booking.stateroom_information" :key="sIndex">
+            <p><strong>Room Number:</strong> {{ stateroom.room_number }}</p>
+            <p><strong>Location:</strong> {{ stateroom.location }}</p>
+            <p><strong>Beds:</strong> {{ stateroom.num_bed }}</p>
+            <p><strong>Bathrooms:</strong> {{ stateroom.num_bathroom }}</p>
+            <p><strong>Balconies:</strong> {{ stateroom.num_balcony }}</p>
+            <p><strong>Size:</strong> {{ stateroom.size_sqft }} sqft</p>
+            <p><strong>Stateroom Type:</strong> {{ stateroom.stateroom_type }}</p>
+          </div>
+
+          <h4>Trip Information:</h4>
+          <p><strong>Trip ID:</strong> {{ booking.trip_id }}</p>
+          <p><strong>Start Date:</strong> {{ booking.start_date }}</p>
+          <p><strong>End Date:</strong> {{ booking.end_date }}</p>
+
+          <h4>Ports (Itinerary):</h4>
+          <!-- 根据你的返回数据结构，如果 ports 是一个数组，那么这里直接遍历 -->
+          <div v-if="booking.ports && booking.ports.length > 0">
+            <div v-for="(port, pIndex) in booking.ports" :key="pIndex" class="port-item">
+              <p><strong>Port Name:</strong> {{ port.port_name }}</p>
+              <p><strong>Arrival:</strong> {{ port.arrival_date_time }}</p>
+              <p><strong>Departure:</strong> {{ port.leaving_date_time }}</p>
             </div>
-            <div v-else>
-              <p>No port/itinerary information available for this trip.</p>
-            </div>
+          </div>
+          <div v-else>
+            <p>No port/itinerary information available for this trip.</p>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
-  import { ref, onMounted } from 'vue'
-  import request from '../../utils/request'
-  
-  export default {
-    name: 'MyTrip',
-    setup() {
-      const bookings = ref([])
-      const isLoading = ref(false)
-  
-      onMounted(() => {
-        fetchMyBookings()
-      })
-  
-      async function fetchMyBookings() {
-        isLoading.value = true
-        try {
-          const response = await request.get('/api/Passenger/MyTrip')
-          isLoading.value = false
-          bookings.value = response.bookings
-          
-        } catch (err) {
-          console.error(err)
-          alert('Error fetching bookings')
-          isLoading.value = false
-        }
-      }
-  
-      function formatDate(dateStr) {
-        if (!dateStr) return ''
-        const date = new Date(dateStr)
-        return date.toLocaleDateString()
-      }
-  
-      function formatDateTime(dtStr) {
-        if (!dtStr) return ''
-        const date = new Date(dtStr)
-        return date.toLocaleString()
-      }
-  
-      return {
-        bookings,
-        isLoading,
-        formatDate,
-        formatDateTime
+<script>
+import { ref, onMounted } from 'vue'
+import request from '../../utils/request'
+
+export default {
+  name: 'MyTrip',
+  setup() {
+    const bookings = ref([])
+    const isLoading = ref(false)
+
+    onMounted(() => {
+      fetchMyBookings()
+    })
+
+    async function fetchMyBookings() {
+      isLoading.value = true
+      try {
+        const response = await request.get('/api/Passenger/MyTrip')
+        isLoading.value = false
+        bookings.value = response.trips
+        console.log("My bookings:", bookings.value)
+      } catch (err) {
+        console.error(err)
+        alert('Error fetching bookings')
+        isLoading.value = false
       }
     }
+
+    // 一定要return出去，否则模板无法访问这些变量
+    return {
+      bookings,
+      isLoading
+    }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .my-trip-container {
