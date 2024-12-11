@@ -28,7 +28,7 @@ function goToHome() {
 
 // 跳转到 Admin 
 function goToAdmin() {
-  router.push('/Admin')
+  router.push('/Board')
 }
 
 // 登出功能
