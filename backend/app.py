@@ -467,12 +467,50 @@ def admin_manage_room_prices():
 
         return jsonify({"stateroom_prices": stateroom_prices_data}), 200
 
-@app.route('/Admin/ManageTrip', methods=['GET', 'PUT'])
+@app.route('/Admin/ManageTrip', methods=['GET', 'PUT', 'POST','DELETE'])
 def admin_manage_trip():
     # Ensure only admins can access this route
     if session.get('user_type') != 'admin':
         return jsonify({"message": "Access denied. Admins only."}), 403
 
+     # Handle the POST request to add a new trip
+    if request.method == 'POST':
+        data = request.json
+
+        new_trip = Trip(
+            start_date=datetime_to_unix(sanitize_input(data.get('start_date'))),
+            end_date=datetime_to_unix(sanitize_input(data.get('end_date'))),
+            start_port_id=sanitize_input(data.get('start_port_id')),
+            end_port_id=sanitize_input(data.get('end_port_id'))
+        )
+
+        try:
+            db.session.add(new_trip)
+            db.session.commit()
+            return jsonify({"message": f"New trip added with ID {new_trip.trip_id}."}), 201
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+        
+    # Handle the DELETE request to delete a trip and its itineraries
+    if request.method == 'DELETE':
+        data = request.json
+        trip_id = sanitize_input(data.get('trip_id'))
+        trip = Trip.query.get(trip_id)
+        if not trip:
+            return jsonify({"message": f"Trip with ID {trip_id} not found."}), 404
+
+        try:
+            # Delete all itineraries associated with the trip
+            Itinerary.query.filter_by(trip_id=trip_id).delete()
+            # Delete the trip itself
+            db.session.delete(trip)
+            db.session.commit()
+            return jsonify({"message": f"Trip with ID {trip_id} and its itineraries deleted successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+        
     # Handle the PUT request to update a trip's start and end dates
     if request.method == 'PUT':
         data = request.json
