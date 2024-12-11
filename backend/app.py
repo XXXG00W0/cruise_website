@@ -939,7 +939,8 @@ def handle_room_order():
             if not trip:
                 return jsonify({"message": "Trip not found."}), 400
 
-            trip_length = trip.end_date - trip.start_date
+            # Calculate trip length (in days)
+            trip_length = (trip.end_date - trip.start_date) // (24 * 60 * 60)  # Convert seconds to days
             print("trip length", trip_length)
             if trip_length <= 0:
                 return jsonify({"message": "Invalid trip dates."}), 400
