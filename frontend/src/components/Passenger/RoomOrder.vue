@@ -60,12 +60,12 @@
       <p>Your room has been booked and paid successfully!</p>
       <h4>Invoice Details:</h4>
       <p><strong>Invoice ID:</strong> {{ invoice.invoice_id }}</p>
-      <p><strong>Billing Date/Time:</strong> {{ formatDateTime(invoice.billing_date_time) }}</p>
+      <p><strong>Billing Date/Time:</strong> {{ invoice.billing_date_time }}</p>
       <p><strong>Payment Due:</strong> ${{ invoice.payment_due }}</p>
 
       <h4>Payment Details:</h4>
       <p><strong>Payment ID:</strong> {{ payment.payment_id }}</p>
-      <p><strong>Payment Date:</strong> {{ formatDateTime(payment.payment_date) }}</p>
+      <p><strong>Payment Date:</strong> {{ payment.payment_date }}</p>
       <p><strong>Amount:</strong> ${{ payment.pay_amount }}</p>
       <p><strong>Method:</strong> {{ payment.payment_method }}</p>
 
@@ -170,9 +170,12 @@ export default {
         })
         console.log('Order confirmation response:', response)
           alert('Payment successful!')
-          invoice.value = response.invoice
-          payment.value = response.payment
-          group.value = response.group // Assume backend returns group info after order
+          invoice.value = response.data.invoice
+          payment.value = response.data.payment
+          group.value = response.data.group 
+          console.log('Invoice:', invoice.value)
+          console.log('Payment:', payment.value)
+          console.log('Group:', group.value)  
 
           // Redirect back to Main after a short delay
           setTimeout(() => {
