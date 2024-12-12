@@ -14,6 +14,7 @@ import RoomOrder from '../components/Passenger/RoomOrder.vue'
 import Restraunt from '../components/Passenger/Restaurant.vue' 
 import Self from '../components/Passenger/Self.vue'
 
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -74,7 +75,8 @@ const router = createRouter({
     {
       path: '/Board',
       component: Board 
-    }
+    },
+    
   ]
 })
 

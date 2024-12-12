@@ -59,8 +59,6 @@ onMounted(() => {
 
       <!-- Manage Trips -->
       <div v-if="activeMenu === 'ManageTrips'">
-        <h2>Manage Trips</h2>
-        <p>Here you can add, edit, or delete trips.</p>
         <TripManage /> <!-- 引入 Passenger Management 功能 -->
       </div>
       <!-- Manage Rooms -->

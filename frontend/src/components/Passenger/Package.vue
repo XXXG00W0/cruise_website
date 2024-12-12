@@ -13,7 +13,7 @@
             <th>Package Name</th>
             <th>Charge Type</th>
             <th>Price</th>
-            <th>Action</th>
+            <th>Buy</th>
           </tr>
         </thead>
         <tbody>
