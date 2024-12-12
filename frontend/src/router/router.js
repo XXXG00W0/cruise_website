@@ -13,6 +13,7 @@ import PackageOrder from '../components/Passenger/PackageOrder.vue'
 import RoomOrder from '../components/Passenger/RoomOrder.vue'
 import Restraunt from '../components/Passenger/Restaurant.vue' 
 import Self from '../components/Passenger/Self.vue'
+import itineraryManage from '../components/Admin/itineraryManage.vue'
 
 
 const router = createRouter({
@@ -76,7 +77,10 @@ const router = createRouter({
       path: '/Board',
       component: Board 
     },
-    
+    {
+      path: '/itineraryManage',
+      component: itineraryManage
+    }
   ]
 })
 
