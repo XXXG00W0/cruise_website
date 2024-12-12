@@ -5,6 +5,7 @@
   
     <div>
       <button class="add-button" @click="openCreateDialog">Add New Trip</button>
+      <button class="manage-itinerary-button" @click="navigateToItineraryManage">Manage Itineraries</button>
     </div>
 
     <div v-if="isLoading" class="loading">Loading trips...</div>
@@ -91,6 +92,7 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import request from '../../utils/request'
+import { useRouter } from 'vue-router'
 
 const trips = ref([])
 const isLoading = ref(false)
@@ -111,6 +113,12 @@ const editForm = reactive({
   start_date: '',
   end_date: ''
 })
+
+const router = useRouter()
+
+function navigateToItineraryManage() {
+  router.push('/Itinerary')
+}
 
 onMounted(() => {
   fetchTrips()
@@ -298,6 +306,19 @@ async function deleteTrip(trip_id) {
   cursor: pointer;
 }
 .add-button:hover {
+  background: #005fa3;
+}
+
+.manage-itinerary-button {
+  margin: 10px 0;
+  padding: 8px 10px;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.manage-itinerary-button:hover {
   background: #005fa3;
 }
 </style>
