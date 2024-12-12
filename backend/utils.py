@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 
 # NOTE: Remember to add function name here!
-__all__ = ['datetime_to_unix', 'unix_to_datetime','sanitize_input']
+__all__ = ['datetime_to_unix', 'unix_to_datetime','sanitize_input','validate_itinerary_times']
 
 # Function to convert datetime string to Unix time (INTEGER)
 def datetime_to_unix(datetime_str):
@@ -62,3 +62,44 @@ def sanitize_input(input_str=None, max_len=100):
     sanitized_str = sanitized_str[:max_len]
 
     return sanitized_str
+
+def validate_itinerary_times(new_itin_start,new_itin_end, trip_start_time, trip_end_time, existing_itineraries):
+    """
+    Validates the start and end times of a new itinerary against a trip's start and end times,
+    and against the existing itineraries for that trip.
+
+    Args:
+        new_itinerary: A dictionary containing the new itinerary's start and end times.
+        trip_start_time: The start time of the trip.
+        trip_end_time: The end time of the trip.
+        existing_itineraries: A list of existing itineraries, each represented as a dictionary
+                               with 'start_time' and 'end_time' keys.
+
+    Returns:
+        True if the new itinerary's times are valid, False otherwise.
+    """
+    new_itin_start=datetime_to_unix(new_itin_start) if type(new_itin_start)==str else new_itin_start
+    new_itin_end=datetime_to_unix(new_itin_end) if type(new_itin_end)==str else new_itin_end
+
+    # Check if the new itinerary's start time is after the trip's start time
+    if new_itin_start < trip_start_time:
+        print("new_itin_start < trip_start_time")
+        return False
+
+    # Check if the new itinerary's end time is before the trip's end time
+    if new_itin_end > trip_end_time:
+        print("new_itin_end > new_itin_start")
+        return False
+
+    # Check if the new itinerary's end time is after its start time
+    if new_itin_end <= new_itin_start:
+        print("new_itin_end <= new_itin_start")
+        return False
+
+    # Check for conflicts with existing itineraries
+    for (existing_start_time,existing_end_time) in existing_itineraries:
+        if (new_itin_start >= existing_start_time and new_itin_start < existing_end_time) or \
+           (new_itin_end > existing_start_time and new_itin_end <= existing_end_time):
+            return False
+
+    return True

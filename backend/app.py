@@ -552,6 +552,47 @@ def admin_manage_trip():
 
         return jsonify({"trips": trips_data}), 200
 
+@app.route('/Admin/ManageItinerary', methods=['POST'])
+def admin_manage_itinerary():
+    # Ensure only admins can access this route
+    if session.get('user_type') != 'admin':
+        return jsonify({"message": "Access denied. Admins only."}), 403
+
+    if request.method == 'POST':
+        data = request.json
+        arrival_date_time = sanitize_input(data.get('arrival_date_time'))
+        leaving_date_time = sanitize_input(data.get('leaving_date_time'))
+        trip_id = sanitize_input(data.get('trip_id'))
+        port_id = sanitize_input(data.get('port_id'))
+
+        # check if time conflicts exist
+        existing_itineraries = Itinerary.query.filter_by(trip_id=trip_id).all()
+        existing_itin_times = [(itinerary.arrival_date_time, itinerary.leaving_date_time) for itinerary in existing_itineraries]
+        print(existing_itin_times)
+        trip = Trip.query.get(trip_id)
+        if not trip:
+            return jsonify({"error": "Trip not found."}), 404
+        trip_start_time = trip.start_date
+        trip_end_time = trip.end_date
+        print(validate_itinerary_times(arrival_date_time, leaving_date_time, trip_start_time, trip_end_time, existing_itin_times))
+        if not validate_itinerary_times(arrival_date_time, leaving_date_time, trip_start_time, trip_end_time, existing_itin_times):
+            return jsonify({"error": "Invalid itinerary times: Time conflict(s) with existing itineraries found!"}), 400
+        
+        # Create a new Itinerary instance
+        new_itinerary = Itinerary(
+            arrival_date_time=datetime_to_unix(arrival_date_time),
+            leaving_date_time=datetime_to_unix(leaving_date_time),
+            trip_id=trip_id,
+            port_id=port_id
+        )
+
+        try:
+            db.session.add(new_itinerary)
+            db.session.commit()
+            return jsonify({"message": "Itinerary added successfully."}), 201
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
 
 @app.route('/Passenger/Trip', methods=['GET'])
 def get_trips_by_date():
