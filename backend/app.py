@@ -395,12 +395,15 @@ def admin_dashboard():
         total_bookings_count = StateroomBooking.query.count()
         # Count total trips
         total_trips_count = Trip.query.count()
+        # Count total package sale
+        total_package_count = PackageSale.query.count()
         # Prepare data for visualization
         dashboard_data = {
             "registered_users": registered_users_count,
             "listed_staterooms": listed_staterooms_count,
             "total_bookings": total_bookings_count,
             "total_trips": total_trips_count,
+            "total_package":total_package_count,
         }
 
         return jsonify({"dashboard_data": dashboard_data}), 200
