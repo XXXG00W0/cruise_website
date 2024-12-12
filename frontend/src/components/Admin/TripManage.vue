@@ -117,7 +117,7 @@ const editForm = reactive({
 const router = useRouter()
 
 function navigateToItineraryManage() {
-  router.push('/Itinerary')
+  router.push('/itineraryManage')
 }
 
 onMounted(() => {
