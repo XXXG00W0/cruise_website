@@ -10,6 +10,7 @@ from utils import *
 from datetime import datetime, timezone
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_talisman import Talisman
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a strong secret key
@@ -1265,4 +1266,16 @@ def create_tables():
 
 if __name__ == '__main__':
     create_tables()
-    app.run(debug=True)
+    print("Cert Path:", os.path.abspath('cert.pem'))
+    print("Key Path:", os.path.abspath('key.pem'))
+    # Enforce HTTPS with Talisman
+    Talisman(app)
+    app.run(
+    ssl_context=(
+        os.path.abspath('cert.pem'),
+        os.path.abspath('key.pem')
+    ),
+    host='127.0.0.1',
+    port=5000,
+    debug=True
+)
