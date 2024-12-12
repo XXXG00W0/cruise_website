@@ -85,8 +85,6 @@ async function logout() {
       </template>
       <template v-else>
         <span class="greeting">Hello, {{ username }}</span>
-        <button class="btn" @click="goToHome">Main</button>
-        <button class="btn" @click="goToAdmin">Admin</button>
         <button class="logout-btn" @click="logout">Logout</button>
       </template>
     </div>
