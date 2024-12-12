@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue'
 import PassengerManage from './PassengerManage.vue'
 import RoomManage from './RoomManage.vue'
 import TripManage from './TripManage.vue';
+import Statistic from './Statistic.vue';
 
 // 当前选中的菜单项
 const activeMenu = ref('dashboard') // 默认显示 Dashboard
@@ -32,7 +33,7 @@ onMounted(() => {
       <h3 class="sidebar-header">Admin Menu</h3>
       <ul class="menu">
         <li
-          v-for="menu in ['dashboard', 'ManagePassengers', 'ManageTrips', 'ManageRooms']"
+          v-for="menu in ['dashboard', 'Statistic','ManagePassengers', 'ManageTrips', 'ManageRooms']"
           :key="menu"
           :class="{ active: activeMenu === menu }"
           @click="switchMenu(menu)"
@@ -51,6 +52,12 @@ onMounted(() => {
         <p>Email: {{ adminInfo.email }}</p>
         <p>Here you can view an overview of the system.</p>
       </div>
+
+      <!-- Manage passengers -->
+      <div v-if="activeMenu === 'Statistic'">
+        <Statistic/> <!-- 引入 Passenger Management   功能 -->
+      </div>
+
 
       <!-- Manage passengers -->
       <div v-if="activeMenu === 'ManagePassengers'">
