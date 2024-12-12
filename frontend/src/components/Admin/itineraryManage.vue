@@ -143,7 +143,7 @@
         } catch (err) {
           console.error(err)
           this.error = (err.response && (err.response.error || err.response.message)) 
-                       || 'Operation failed. Please check your input.'
+                       || 'Operation failed. Please check your input to make sure no conflict between times.'
         }
       },
       async deleteItinerary(itinerary_id) {
