@@ -25,10 +25,6 @@
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div class="field">
-              <label>Payment Amount (USD):</label>
-              <input type="number" v-model.number="orderForm.pay_amount" placeholder="Enter amount" />
-            </div>
           </div>
   
           <div class="buttons">
@@ -76,7 +72,6 @@
       const packageSale = ref(null)
   
       const orderForm = reactive({
-        pay_amount: '',
         payment_method: ''
       })
   
@@ -103,7 +98,7 @@
         }
   
       async function confirmOrder() {
-        if (!orderForm.payment_method || !orderForm.pay_amount) {
+        if (!orderForm.payment_method) {
           alert('Please fill in all required fields.')
           return
         }
@@ -111,7 +106,7 @@
         try {
           const response = await request.post('/api/Passenger/PurchasePackage', {
             package_id,
-            pay_amount: orderForm.pay_amount,
+            pay_amount: pkgInfo.value.price,
             payment_method: orderForm.payment_method
             // group_id can be handled by backend based on current user
           })
@@ -265,4 +260,3 @@
     color:#666;
   }
   </style>
-  

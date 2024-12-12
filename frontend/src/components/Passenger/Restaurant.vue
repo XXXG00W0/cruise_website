@@ -10,6 +10,7 @@
       <table>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Restaurant Name</th>
             <th>Serve Type</th>
             <th>Opening Time</th>
@@ -18,7 +19,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="restaurant in restaurants" :key="restaurant.restaurant_id">
+          <tr v-for="(restaurant, index) in restaurants" :key="restaurant.restaurant_id">
+            <td><img :src="getImage(index)" alt="Restaurant Image" class="restaurant-image"/></td>
             <td>{{ restaurant.restaurant_name }}</td>
             <td>{{ restaurant.serve_type }}</td>
             <td>{{ restaurant.opening_time }}</td>
@@ -34,6 +36,15 @@
 <script>
 import { ref, onMounted } from 'vue'
 import request from '../../utils/request'
+import CommonBuffett from '../../assets/img/Rest/Common_Buffett.jpg'
+import Italian from '../../assets/img/Rest/Italian.jpg'
+import Mexcican from '../../assets/img/Rest/Mexican.jpg'
+import La_carte from '../../assets/img/Rest/La-carte.jpg'
+import Tokyo from '../../assets/img/Rest/Tokyo.jpg'
+import Chinese from '../../assets/img/Rest/Chinese.jpg'
+import Cafe from '../../assets/img/Rest/Cafe.jpg'
+import Poolbar from '../../assets/img/Rest/Poolbar.jpg'
+import Stout from '../../assets/img/Rest/Stout.jpg'
 
 export default {
   name: 'Restaurant',
@@ -67,6 +78,22 @@ export default {
       }
     }
 
+    const imageUrls = [
+      CommonBuffett,
+      Italian,
+      Mexcican,
+      La_carte,
+      Tokyo,
+      Chinese,
+      Cafe,
+      Poolbar,
+      Stout
+    ]
+
+    function getImage(index) {
+      return imageUrls[index % imageUrls.length]
+    }
+
     function formatDateTime(dateTimeStr) {
       if (!dateTimeStr) return ''
       const date = new Date(dateTimeStr)
@@ -77,6 +104,7 @@ export default {
       restaurants,
       isLoading,
       formatDateTime,
+      getImage
     }
   }
 }
@@ -136,5 +164,12 @@ tbody td {
 
 tbody tr:nth-child(even) {
   background: #f9f9f9;
+}
+
+.restaurant-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 </style>
