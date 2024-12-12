@@ -1220,7 +1220,7 @@ def handle_room_order():
                 pay_amount=pay_amount,
                 payment_method=payment_method,
                 trip_id=trip_id,
-                group_id=session['user_id'],
+                group_id=user.group_id,
                 invoice_id=new_invoice.invoice_id
             )
             db.session.add(new_payment)
