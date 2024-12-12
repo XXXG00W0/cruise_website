@@ -10,6 +10,7 @@
       <table class="package-table">
         <thead>
           <tr>
+            <th>Image</th>
             <th>Package Name</th>
             <th>Charge Type</th>
             <th>Price</th>
@@ -17,7 +18,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="pkg in packages" :key="pkg.package_id">
+          <tr v-for="(pkg, index) in packages" :key="pkg.package_id">
+            <td><img :src="getImage(index)" alt="Package Image" class="package-image"/></td>
             <td>{{ pkg.pkg_name }}</td>
             <td>{{ pkg.pkg_charge_type }}</td>
             <td>${{ pkg.pkg_price }}</td>
@@ -34,6 +36,12 @@
 import { ref, onMounted } from 'vue'
 import request from '../../utils/request'
 import { useRouter } from 'vue-router'
+
+import Drink from '../../assets/img/Pack/Drink_Nona.jpg'
+import Bar from '../../assets/img/Pack/bar.jpg'
+import Wifi_limited from '../../assets/img/Pack/wifi_limited.jpg'
+import Wifi_unlimited from '../../assets/img/Pack/wifi_ul.jpg'
+import Dinner from '../../assets/img/Pack/Dinner.jpg'
 
 export default {
   name: 'Package',
@@ -52,37 +60,46 @@ export default {
         const response = await request.get('/api/Passenger/Package')
         isLoading.value = false
 
-        // 打印调试信息，逐个输出每个字段
-
-          // 遍历 response
-          packages.value = response.map(pkg =>({
-            package_id: pkg.package_id,
-            pkg_name: pkg.pkg_name,
-            pkg_charge_type: pkg.pkg_charge_type,
-            pkg_price: pkg.pkg_price,
-          }));
-          
-
+        // 遍历解析数据并推送到 packages 列表
+        packages.value = response.map(pkg => ({
+          package_id: pkg.package_id,
+          pkg_name: pkg.pkg_name,
+          pkg_charge_type: pkg.pkg_charge_type,
+          pkg_price: pkg.pkg_price,
+        }))
       } catch (err) {
         isLoading.value = false
         console.error('Error fetching package information:', err)
         alert('Error fetching package information');
       }
     }
-  
+
+    const imageUrls = [
+      Drink,
+      Bar,
+      Wifi_limited,
+      Wifi_unlimited,
+      Dinner
+    ]
+
+    function getImage(index) {
+      return imageUrls[index % imageUrls.length]
+    }
+
     function goToPackageOrder(package_id) {
-        // 跳转到 PackageOrder.vue，并传入 packageId 作为 query 参数
-        router.push({ path: '/Main/PackageOrder', query: { package_id } })
-      }
-  
-      return {
-        packages,
-        isLoading,
-        goToPackageOrder
-      }
+      // 跳转到 PackageOrder.vue，并传入 packageId 作为 query 参数
+      router.push({ path: '/Main/PackageOrder', query: { package_id } })
+    }
+
+    return {
+      packages,
+      isLoading,
+      goToPackageOrder,
+      getImage
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .package-container {
@@ -161,5 +178,12 @@ export default {
   
   .order-btn:hover {
     background: #218838;
+  }
+
+  .package-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
   }
   </style>
