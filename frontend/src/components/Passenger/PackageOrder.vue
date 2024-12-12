@@ -110,7 +110,7 @@
   
         try {
           const response = await request.post('/api/Passenger/PurchasePackage', {
-            packageId,
+            package_id,
             pay_amount: orderForm.pay_amount,
             payment_method: orderForm.payment_method
             // group_id can be handled by backend based on current user
