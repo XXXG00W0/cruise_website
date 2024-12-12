@@ -552,7 +552,7 @@ def admin_manage_trip():
 
         return jsonify({"trips": trips_data}), 200
 
-@app.route('/Admin/ManageItinerary', methods=['POST'])
+@app.route('/Admin/ManageItinerary', methods=['GET','POST','PUT','DELETE'])
 def admin_manage_itinerary():
     # Ensure only admins can access this route
     if session.get('user_type') != 'admin':
@@ -590,6 +590,80 @@ def admin_manage_itinerary():
             db.session.add(new_itinerary)
             db.session.commit()
             return jsonify({"message": "Itinerary added successfully."}), 201
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+    
+    if request.method == 'GET':
+        try:
+            # Query all itineraries from the database
+            itineraries = Itinerary.query.all()
+            # Format the itineraries into a list of dictionaries
+            itinerary_list = [
+                {
+                    "itinerary_id": itinerary.itinerary_id,
+                    "arrival_date_time": unix_to_datetime(itinerary.arrival_date_time,True),
+                    "leaving_date_time": unix_to_datetime(itinerary.leaving_date_time,True),
+                    "trip_id": itinerary.trip_id,
+                    "port_id": itinerary.port_id
+                }
+                for itinerary in itineraries
+            ]
+
+            return jsonify({"itineraries": itinerary_list}), 200
+        except Exception as e:
+            return jsonify({"message": f"Error: {e}"}), 500
+        
+    if request.method == 'PUT':
+        data = request.json
+        itinerary_id = sanitize_input(data.get('itinerary_id'))
+        arrival_date_time = sanitize_input(data.get('arrival_date_time'))
+        leaving_date_time = sanitize_input(data.get('leaving_date_time'))
+        trip_id = sanitize_input(data.get('trip_id'))
+        port_id = sanitize_input(data.get('port_id'))
+
+        # Find the itinerary to update
+        itinerary = Itinerary.query.get(itinerary_id)
+        if not itinerary:
+            return jsonify({"error": "Itinerary not found."}), 404
+
+        # Check for time conflicts
+        existing_itineraries = Itinerary.query.filter_by(trip_id=trip_id).filter(Itinerary.itinerary_id != itinerary_id).all()
+        existing_itin_times = [(it.arrival_date_time, it.leaving_date_time) for it in existing_itineraries]
+        trip = Trip.query.get(trip_id)
+        if not trip:
+            return jsonify({"error": "Trip not found."}), 404
+        trip_start_time = trip.start_date
+        trip_end_time = trip.end_date
+        if not validate_itinerary_times(arrival_date_time, leaving_date_time, trip_start_time, trip_end_time, existing_itin_times):
+            return jsonify({"error": "Invalid itinerary times: Time conflict(s) with existing itineraries found!"}), 400
+
+        # Update the itinerary
+        itinerary.arrival_date_time = datetime_to_unix(arrival_date_time)
+        itinerary.leaving_date_time = datetime_to_unix(leaving_date_time)
+        itinerary.trip_id = trip_id
+        itinerary.port_id = port_id
+
+        try:
+            db.session.commit()
+            return jsonify({"message": "Itinerary updated successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+        
+    if request.method == 'DELETE':
+        data = request.json
+        itinerary_id = data.get('itinerary_id')
+
+        # Find the itinerary to delete
+        itinerary = Itinerary.query.get(itinerary_id)
+        if not itinerary:
+            return jsonify({"error": "Itinerary not found."}), 404
+
+        try:
+            db.session.delete(itinerary)
+            db.session.commit()
+            return jsonify({"message": "Itinerary deleted successfully."}), 200
         except Exception as e:
             db.session.rollback()
             return jsonify({"message": f"Error: {e}"}), 500
@@ -1055,7 +1129,7 @@ def handle_room_order():
 
             # Fetch group_id from database
             user_id = session.get('user_id')  # Assuming the user's ID is stored in the session
-            user = User.query.filter_by(user_id=user_id).first()
+            user = Passenger.query.filter_by(user_id=user_id).first()
             if not user or not user.group_id:
                 return jsonify({"message": "Group ID for the user not found."}), 400
 
