@@ -421,7 +421,7 @@ def admin_manage_users():
         return jsonify({"passengers": passengers_data}), 200
 
 
-@app.route('/Admin/RoomPriceManage', methods=['GET', 'PUT'])
+@app.route('/Admin/RoomPriceManage', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def admin_manage_room_prices():
     # Ensure only admins can access this route
     if session.get('user_type') != 'admin':
@@ -466,6 +466,52 @@ def admin_manage_room_prices():
         ]
 
         return jsonify({"stateroom_prices": stateroom_prices_data}), 200
+    
+    # Handle the POST request to create a new stateroom price
+    if request.method == 'POST':
+        data = request.json
+        stateroom_id = sanitize_input(data.get('stateroom_id'))
+        price_per_night = sanitize_input(data.get('price_per_night'))
+        trip_id = sanitize_input(data.get('trip_id'))
+        is_vacant = sanitize_input(data.get('is_vacant'))
+
+        if not all([stateroom_id, price_per_night, trip_id, is_vacant]):
+            return jsonify({"message": "Missing required fields."}), 400
+
+        try:
+            new_stateroom_price = StateroomPrice(
+                stateroom_id=stateroom_id,
+                price_per_night=price_per_night,
+                trip_id=trip_id,
+                is_vacant=is_vacant
+            )
+            db.session.add(new_stateroom_price)
+            db.session.commit()
+            return jsonify({"message": "New stateroom price created successfully.", "price_id": new_stateroom_price.price_id}), 201
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
+        
+    # Handle the DELETE request to delete a stateroom price
+    if request.method == 'DELETE':
+        data = request.json
+        price_id = sanitize_input(data.get('price_id'))
+
+        if not price_id:
+            return jsonify({"message": "price_id is required."}), 400
+
+        stateroom_price = StateroomPrice.query.get(price_id)
+
+        if not stateroom_price:
+            return jsonify({"message": f"Stateroom price with ID {price_id} not found."}), 404
+
+        try:
+            db.session.delete(stateroom_price)
+            db.session.commit()
+            return jsonify({"message": f"Stateroom price with ID {price_id} deleted successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"message": f"Error: {e}"}), 500
 
 @app.route('/Admin/ManageTrip', methods=['GET', 'PUT', 'POST','DELETE'])
 def admin_manage_trip():
