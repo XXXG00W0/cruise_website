@@ -379,6 +379,33 @@ def view_my_trip():
     except Exception as e:
         return jsonify({"message": f"An error occurred while retrieving trip information: {e}"}), 500
 
+@app.route('/Admin/Board',methods=["GET"])
+def admin_dashboard():
+    # Ensure only admins can access this route
+    if session.get('user_type') != 'admin':
+        return jsonify({"message": "Access denied. Admins only."}), 403
+    
+    try:
+        # Count registered users
+        registered_users_count = Passenger.query.count()
+        # Count listed staterooms
+        listed_staterooms_count = StateroomPrice.query.count()
+        # Count total bookings
+        total_bookings_count = StateroomBooking.query.count()
+        # Count total trips
+        total_trips_count = Trip.query.count()
+        # Prepare data for visualization
+        dashboard_data = {
+            "registered_users": registered_users_count,
+            "listed_staterooms": listed_staterooms_count,
+            "total_bookings": total_bookings_count,
+            "total_trips": total_trips_count,
+        }
+
+        return jsonify({"dashboard_data": dashboard_data}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 
 @app.route('/Admin/UserManage', methods=['GET', 'DELETE'])
 def admin_manage_users():
