@@ -850,14 +850,21 @@ def purchase_package():
         data = request.get_json()
 
         # Validate input
-        required_fields = ["package_id", "trip_id"]
+        required_fields = ["package_id"]
         for field in required_fields:
             if field not in data:
                 return jsonify({"message": f"Missing required field: {field}"}), 400
 
         package_id = sanitize_input(data["package_id"])
-        trip_id = sanitize_input(data["trip_id"])
         payment_method = sanitize_input(data.get("payment_method", "Unknown"))
+        # Get group ID from Passenger model
+        group_id = Passenger.query.filter_by(user_id=user_id).first().group_id
+        # Get booking ID from StateroomBooking model, filtering by group ID
+        booking_id = StateroomBooking.query.filter_by(group_id=group_id).first().booking_id
+        # Get price ID from StateroomBooking model, using the obtained booking ID
+        price_id = StateroomBooking.query.filter_by(booking_id=booking_id).first().price_id
+        # Get trip ID from StateroomPrice model, using the obtained price ID
+        trip_id = StateroomPrice.query.filter_by(price_id=price_id).first().trip_id
 
         try:
             # Fetch group_id based on the user_id
