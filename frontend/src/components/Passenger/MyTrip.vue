@@ -83,61 +83,118 @@ export default {
 }
 </script>
   
-  <style scoped>
+<style scoped>
+.my-trip-container {
+  max-width: 900px;
+  margin: 50px auto;
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.header {
+  color: #007acc;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.booking-item {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+  margin-bottom: 30px;
+  transition: box-shadow 0.3s ease;
+}
+
+.booking-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.booking-item h3 {
+  color: #005f8f;
+  margin-bottom: 10px;
+  font-size: 20px;
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 5px;
+}
+
+.info-section {
+  margin-top: 20px;
+}
+
+.info-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+  border-left: 4px solid #007acc;
+  padding-left: 8px;
+}
+
+.info-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  margin: 4px 0;
+}
+
+.port-item {
+  background: #eef7ff;
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border-left: 4px solid #007acc;
+}
+
+.port-item p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.el-empty__description {
+  color: #888;
+}
+
+@media (max-width: 600px) {
   .my-trip-container {
-    width: 800px;
-    margin: 50px auto;
-    font-family: 'Roboto', sans-serif;
+    width: 95%;
+    margin: 20px auto;
+    padding: 15px;
   }
-  
+
   .header {
-    color: #007acc;
     font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-align: center;
   }
-  
-  .loading {
-    text-align:center;
-    color:#666;
-    font-size:14px;
-    margin:20px 0;
-  }
-  
+
   .booking-item {
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 1px 5px rgba(0,0,0,0.1);
-    margin-bottom:20px;
+    padding: 15px;
   }
-  
+
   .booking-item h3 {
-    color:#007acc;
-    margin-bottom:10px;
+    font-size: 18px;
   }
-  
-  .info-section {
-    margin-top:10px;
-  }
-  
+
   .info-section h4 {
-    font-size:16px;
-    font-weight:bold;
-    margin-top:20px;
-    margin-bottom:10px;
+    font-size: 15px;
   }
-  
-  .port-item {
-    background:#f0f9ff;
-    padding:10px;
-    border-radius:5px;
-    margin-bottom:10px;
+
+  .info-section p, .port-item p {
+    font-size: 13px;
   }
-  
-  .port-item p {
-    margin:3px 0;
-  }
-  </style>
+}
+</style>
+
   
