@@ -76,7 +76,7 @@ async function logout() {
         </svg>
       </div>
       <!-- SVG Logo End -->
-      <h1 class="title">ROYAL CRUISE</h1>
+      <h1 class="title">NICE CRUISE</h1>
     </div>
     <div class="user-info">
       <template v-if="isAuthPage">
