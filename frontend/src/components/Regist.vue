@@ -5,57 +5,10 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const validCountries = [
-  'China',
-  'India',
-  'United States',
-  'Canada',
-  'France',
-  'Germany',
-  'Japan',
-  'United Kingdom',
-  'Australia',
-  'Mexico',
-  'Russia',
-  'South Korea',
-  'Italy',
-  'Spain',
-  'Indonesia',
-  'Netherlands',
-  'Turkey',
-  'Saudi Arabia',
-  'Switzerland',
-  'Sweden',
-  'Poland',
-  'Belgium',
-  'Norway',
-  'Austria',
-  'Denmark',
-  'Singapore',
-  'Finland',
-  'Chile',
-  'Brazil',
-  'Argentina',
-  'South Africa',
-  'Egypt',
-  'Nigeria',
-  'Kenya',
-  'Morocco',
-  'Ghana',
-  'Tunisia',
-  'Vietnam',
-  'Thailand',
-  'Philippines',
-  'Malaysia',
-  'New Zealand',
-  'Pakistan',
-  'Bangladesh',
-  'Sri Lanka',
-  'Myanmar',
-  'Cambodia',
-  'Laos'
-];
+// 国家列表（示例）
+const validCountries = ['China', 'United States', 'Canada', 'France', 'Germany', 'Japan', 'United Kingdom', 'Australia']
 
+// 添加地址相关字段
 let registUser = reactive({
   username: '',
   email: '',
@@ -63,7 +16,7 @@ let registUser = reactive({
   confirm_password: '',
   first_name: '',
   last_name: '',
-  birth_date: '', // YYYY-MM-DD 格式
+  birth_date: '',  // YYYY-MM-DD 格式
   gender: '', // 下拉框选择
   nationality: '',
   phone: '',
@@ -75,7 +28,7 @@ let registUser = reactive({
   state_province: '',
   postal_code: '',
   country: ''
-});
+})
 
 let usernameMsg = ref('')
 let emailMsg = ref('')
@@ -85,6 +38,7 @@ let firstNameMsg = ref('')
 let lastNameMsg = ref('')
 let birthDateMsg = ref('')
 let genderMsg = ref('')
+let nationalityMsg = ref('')
 let phoneMsg = ref('')
 // 地址相关信息
 let streetMsg = ref('')
@@ -93,8 +47,7 @@ let neighborhoodMsg = ref('')
 let cityMsg = ref('')
 let stateProvinceMsg = ref('')
 let postalCodeMsg = ref('')
-let nationalityMsg = ref('');
-let countryMsg = ref('');
+let countryMsg = ref('')
 
 let isPasswordVisible = ref(false)
 
@@ -180,6 +133,15 @@ function checkGender() {
   return genderMsg.value === 'Valid'
 }
 
+function checkNationality() {
+  // 检查输入的国籍是否在已知国家列表中
+  nationalityMsg.value = checkField(
+    registUser.nationality,
+    'Invalid nationality. Please enter a real country name.',
+    validCountries.includes(registUser.nationality)
+  )
+  return nationalityMsg.value === 'Valid'
+}
 
 function checkPhone() {
   const phoneReg = /^\+?\d{10,15}$/
@@ -232,22 +194,12 @@ function checkPostalCode() {
   return postalCodeMsg.value === 'Valid'
 }
 
-function checkNationality() {
-  nationalityMsg.value = checkField(
-    registUser.nationality,
-    'Please select a nationality',
-    validCountries.includes(registUser.nationality)
-  );
-  return nationalityMsg.value === 'Valid';
-}
-
 function checkCountry() {
   countryMsg.value = checkField(
     registUser.country,
-    'Please select a country',
-    validCountries.includes(registUser.country)
-  );
-  return countryMsg.value === 'Valid';
+    'Country cannot be empty'
+  )
+  return countryMsg.value === 'Valid'
 }
 
 // 切换密码可见性
@@ -412,12 +364,7 @@ async function regist() {
             <tr>
               <td class="label">Nationality:</td>
               <td>
-                <select class="input" v-model="registUser.nationality" @blur="checkNationality()">
-                  <option value="">Select Nationality</option>
-                  <option v-for="country in validCountries" :key="country" :value="country">
-                    {{ country }}
-                  </option>
-                </select>
+                <input class="input" type="text" v-model="registUser.nationality" @blur="checkNationality()" placeholder="Enter nationality (e.g. China, United States...)" />
               </td>
             </tr>
             <tr><td colspan="2"><span :class="['message', nationalityMsg === 'Valid' ? 'valid' : 'invalid']">{{ nationalityMsg }}</span></td></tr>
@@ -488,12 +435,7 @@ async function regist() {
             <tr>
               <td class="label">Country:</td>
               <td>
-                <select class="input" v-model="registUser.country" @blur="checkCountry()">
-                  <option value="">Select Country</option>
-                  <option v-for="country in validCountries" :key="country" :value="country">
-                    {{ country }}
-                  </option>
-                </select>
+                <input class="input" type="text" v-model="registUser.country" @blur="checkCountry()" placeholder="Enter country" />
               </td>
             </tr>
             <tr><td colspan="2"><span :class="['message', countryMsg === 'Valid' ? 'valid' : 'invalid']">{{ countryMsg }}</span></td></tr>
@@ -523,14 +465,14 @@ async function regist() {
 </template>
 
 <style scoped>
+/* 样式同之前版本，不再重复解释 */
 .page-background {
   width: 100vw;
   height: 100vh;
   background: url('../assets/img/register_background.png') no-repeat center center/cover; 
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* 修改位置，避免与 header 冲突 */
-  padding-top: 80px; /* 添加顶部间距 */
+  align-items: center;
   position: relative;
   font-family: 'Roboto', sans-serif;
 }
