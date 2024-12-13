@@ -33,12 +33,8 @@ CREATE TABLE cyz_entertainment_trip (
     FOREIGN KEY ( trip_id ) REFERENCES cyz_trip ( trip_id )
 );
 
-CREATE INDEX idx_entertainment_trip_id ON cyz_entertainment_trip(trip_id);
-
 CREATE TABLE cyz_group (
-    group_id INTEGER PRIMARY KEY,
-    trip_id  INTEGER NOT NULL,
-    FOREIGN KEY ( trip_id ) REFERENCES cyz_trip ( trip_id )
+    group_id INTEGER PRIMARY KEY
 );
 
 CREATE TABLE cyz_invoice (
@@ -56,8 +52,6 @@ CREATE TABLE cyz_itinerary (
     FOREIGN KEY (trip_id) REFERENCES cyz_trip (trip_id),
     FOREIGN KEY (port_id) REFERENCES cyz_port (port_id)
 );
-
-CREATE INDEX idx_itin_trip_id ON cyz_itinerary(trip_id);
 
 CREATE TABLE cyz_package (
     package_id      INTEGER PRIMARY KEY,
@@ -92,8 +86,6 @@ CREATE TABLE cyz_passenger (
     FOREIGN KEY (user_id) REFERENCES cyz_user (user_id)
 );
 
-CREATE INDEX idx_passenger_group_id ON cyz_passenger(group_id);
-
 CREATE TABLE cyz_payment (
     payment_id         INTEGER PRIMARY KEY,
     payment_date       INTEGER NOT NULL,
@@ -106,8 +98,6 @@ CREATE TABLE cyz_payment (
     FOREIGN KEY (group_id) REFERENCES cyz_group (group_id),
     FOREIGN KEY (invoice_id) REFERENCES cyz_invoice (invoice_id)
 );
-
-CREATE INDEX idx_payment_trip_id ON cyz_payment(trip_id, group_id);
 
 CREATE TABLE cyz_port (
     port_id             INTEGER PRIMARY KEY,
@@ -134,8 +124,6 @@ CREATE TABLE cyz_restaurant_trip (
     FOREIGN KEY (restaurant_id) REFERENCES cyz_restaurant (restaurant_id),
     FOREIGN KEY (trip_id) REFERENCES cyz_trip (trip_id)
 );
-
-CREATE INDEX idx_restaurant_trip_trip_id ON cyz_restaurant_trip(trip_id);
 
 CREATE TABLE cyz_stateroom (
     stateroom_id INTEGER PRIMARY KEY,
@@ -168,8 +156,6 @@ CREATE TABLE cyz_stateroom_price (
     FOREIGN KEY (trip_id) REFERENCES cyz_trip (trip_id)
 );
 
-CREATE INDEX idx_stateroom_price_trip_id_stateroom_id ON cyz_stateroom_price(trip_id, stateroom_id);
-
 CREATE TABLE cyz_trip (
     trip_id       INTEGER PRIMARY KEY,
     start_date    INTEGER NOT NULL,
@@ -179,9 +165,6 @@ CREATE TABLE cyz_trip (
     FOREIGN KEY (start_port_id) REFERENCES cyz_port (port_id),
     FOREIGN KEY (end_port_id) REFERENCES cyz_port (port_id)
 );
-
-CREATE INDEX idx_trip_start_port_id ON cyz_trip(start_port_id);
-CREATE INDEX idx_trip_end_port_id ON cyz_trip(end_port_id);
 
 CREATE TABLE cyz_user (
     user_id   INTEGER PRIMARY KEY,
@@ -265,13 +248,9 @@ VALUES
 INSERT INTO cyz_trip (trip_id, start_date, end_date, start_port_id, end_port_id)
 VALUES
 (1, 1735707600, 1736053200, 1, 5),
-(2, 1736139600, 1736485200, 5, 1),
-(3, 1736582400, 1736618400, 2, 4),
-(4, 1736841600, 1737050400, 4, 2);
+(2, 1736139600, 1736485200, 5, 1);
 -- (1, '2025-01-01', '2025-01-05', 1, 5),
 -- (2, '2025-01-06', '2025-01-10', 5, 1);
--- (3, '2025-01-11 08:00:00', '2025-01-13', 2, 4);
--- (4, '2025-01-14 08:00:00', '2025-01-16', 4, 2);
 
 INSERT INTO cyz_port (port_id, nearest_airport, num_parking_spots, addr_id, port_name)
 VALUES
@@ -305,13 +284,7 @@ VALUES
 (7, 1736254800, 1736290800, 2, 4),
 (8, 1736341200, 1736377200, 2, 3),
 (9, 1736427600, 1736463600, 2, 2),
-(10, 1736582400, 1736550000, 2, 1),
-(11, 1736668800, 1736618400, 3, 2),
-(12, 1705046400, 1736704800, 3, 3),
-(13, 1736755200, 1736791200, 3, 4),
-(14, 1736841600, 1736877600, 4, 4),
-(15, 1736928000, 1736964000, 4, 3),
-(16, 1737014400, 1737050400, 4, 5);
+(10, 1736514000, 1736550000, 2, 1);
 -- (1, '2025-01-01 08:00:00', '2025-01-01 18:00:00', 1, 1),
 -- (2, '2025-01-02 08:00:00', '2025-01-02 18:00:00', 1, 2),
 -- (3, '2025-01-03 08:00:00', '2025-01-03 18:00:00', 1, 3),
@@ -321,13 +294,7 @@ VALUES
 -- (7, '2025-01-07 08:00:00', '2025-01-07 18:00:00', 2, 4),
 -- (8, '2025-01-08 08:00:00', '2025-01-08 18:00:00', 2, 3),
 -- (9, '2025-01-09 08:00:00', '2025-01-09 18:00:00', 2, 2),
--- (10, '2025-01-10 08:00:00', '2025-01-10 18:00:00', 2, 1),
--- (11, '2025-01-11 08:00:00', '2025-01-11 18:00:00', 3, 2),
--- (12, '2025-01-12 08:00:00', '2025-01-12 18:00:00', 3, 3),
--- (13, '2025-01-13 08:00:00', '2025-01-13 18:00:00', 3, 4),
--- (14, '2025-01-14 08:00:00', '2025-01-14 18:00:00', 4, 4),
--- (15, '2025-01-15 08:00:00', '2025-01-15 18:00:00', 4, 3),
--- (16, '2025-01-16 08:00:00', '2025-01-16 18:00:00', 4, 2);
+-- (10, '2025-01-10 08:00:00', '2025-01-10 18:00:00', 2, 1);
 
 INSERT INTO cyz_stateroom_price (price_id, stateroom_id, price_per_night, trip_id, is_vacant)
 VALUES
@@ -386,63 +353,7 @@ VALUES
 (53, 25, 150, 2, 1),
 (54, 26, 150, 2, 1),
 (55, 27, 150, 2, 1),
-(56, 28, 150, 2, 1),
-(57, 1, 900, 3, 1),
-(58, 2, 900, 3, 1),
-(59, 3, 900, 3, 1),
-(60, 4, 900, 3, 1),
-(61, 5, 750, 3, 1),
-(62, 6, 750, 3, 1),
-(63, 7, 750, 3, 1),
-(64, 8, 750, 3, 1),
-(65, 9, 500, 3, 1),
-(66, 10, 500, 3, 1),
-(67, 11, 500, 3, 1),
-(68, 12, 500, 3, 1),
-(69, 13, 350, 3, 1),
-(70, 14, 350, 3, 1),
-(71, 15, 350, 3, 1),
-(72, 16, 350, 3, 1),
-(73, 17, 250, 3, 1),
-(74, 18, 250, 3, 1),
-(75, 19, 250, 3, 1),
-(76, 20, 250, 3, 1),
-(77, 21, 175, 3, 1),
-(78, 22, 175, 3, 1),
-(79, 23, 175, 3, 1),
-(80, 24, 175, 3, 1),
-(81, 25, 125, 3, 1),
-(82, 26, 125, 3, 1),
-(83, 27, 125, 3, 1),
-(84, 28, 125, 3, 1),
-(85, 1, 950, 4, 1),
-(86, 2, 950, 4, 1),
-(87, 3, 950, 4, 1),
-(88, 4, 950, 4, 1),
-(89, 5, 750, 4, 1),
-(90, 6, 750, 4, 1),
-(91, 7, 750, 4, 1),
-(92, 8, 750, 4, 1),
-(93, 9, 550, 4, 1),
-(94, 10, 550, 4, 1),
-(95, 11, 550, 4, 1),
-(96, 12, 550, 4, 1),
-(97, 13, 350, 4, 1),
-(98, 14, 350, 4, 1),
-(99, 15, 350, 4, 1),
-(100, 16, 350, 4, 1),
-(101, 17, 275, 4, 1),
-(102, 18, 275, 4, 1),
-(103, 19, 275, 4, 1),
-(104, 20, 275, 4, 1),
-(105, 21, 175, 4, 1),
-(106, 22, 175, 4, 1),
-(107, 23, 175, 4, 1),
-(108, 24, 175, 4, 1),
-(109, 25, 150, 4, 1),
-(110, 26, 150, 4, 1),
-(111, 27, 150, 4, 1),
-(112, 28, 150, 4, 1);
+(56, 28, 150, 2, 1);
 
 INSERT INTO cyz_admin (admin_id, admin_phone, user_id, admin_fname, admin_lname)
 VALUES
@@ -465,21 +376,20 @@ VALUES
 (2, 487656000, 'male', 'Canada', '2345678901', 2, 1, 'John', 'Smith', 4),
 (3, 953528400, 'other', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
 (4, 1608872400, 'female', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 6);
--- (5, 999316800, 'male', 'USA', '6111111112', 15, 3, 'Iron', 'Man', 8);
 -- (1, '1990-01-01', 'F', 'USA', '1234567890', 1, 1, 'Jane', 'Doe', 3),
 -- (2, '1985-06-15', 'M', 'Canada', '2345678901', 2, 1, 'John', 'Smith', 4),
 -- (3, '2000-03-20', 'O', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
 -- (4, '2020-12-25', 'F', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 6);
 
-INSERT INTO cyz_group (group_id, trip_id)
+INSERT INTO cyz_group (group_id)
 VALUES
-(1,1),
-(2,2);
+(1),
+(2);
 
 INSERT INTO cyz_stateroom_booking (booking_id, group_id, invoice_id, price_id)
 VALUES
 (1, 1, 1, 1),
-(2, 2, 2, 29);
+(2, 2, 2, 2);
 
 INSERT INTO cyz_invoice (invoice_id, payment_due, billing_date_time)
 VALUES
@@ -530,41 +440,7 @@ VALUES
 (14, 2),
 (15, 2),
 (16, 2),
-(17, 2),
-(1, 3),
-(2, 3),
-(3, 3),
-(4, 3),
-(5, 3),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 3),
-(11, 3),
-(12, 3),
-(13, 3),
-(14, 3),
-(15, 3),
-(16, 3),
-(17, 3),
-(1, 4),
-(2, 4),
-(3, 4),
-(4, 4),
-(5, 4),
-(6, 4),
-(7, 4),
-(8, 4),
-(9, 4),
-(10, 4),
-(11, 4),
-(12, 4),
-(13, 4),
-(14, 4),
-(15, 4),
-(16, 4),
-(17, 4);
+(17, 2);
 
 INSERT INTO cyz_restaurant_trip (restaurant_id, trip_id)
 VALUES
@@ -585,23 +461,5 @@ VALUES
 (6, 2),
 (7, 2),
 (8, 2),
-(9, 2),
-(1, 3),
-(2, 3),
-(3, 3),
-(4, 3),
-(5, 3),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(1, 4),
-(2, 4),
-(3, 4),
-(4, 4),
-(5, 4),
-(6, 4),
-(7, 4),
-(8, 4),
-(9, 4);
+(9, 2);
 
