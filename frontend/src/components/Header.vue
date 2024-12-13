@@ -76,13 +76,12 @@ async function logout() {
         </svg>
       </div>
       <!-- SVG Logo End -->
-      <h1 class="title">Cruise Management System</h1>
+      <h1 class="title">N I C E </h1>
     </div>
     <div class="user-info">
       <template v-if="isAuthPage">
       </template>
-      <template v-else>
-        <span class="greeting">Hello, {{ username }}</span>
+      <template v-else> 
         <button class="logout-btn" @click="logout">Logout</button>
       </template>
     </div>
