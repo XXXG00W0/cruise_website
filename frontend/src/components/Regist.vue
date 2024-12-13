@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// 国家列表（示例）
 const validCountries = [
   'China',
   'India',
