@@ -36,7 +36,9 @@ CREATE TABLE cyz_entertainment_trip (
 CREATE INDEX idx_entertainment_trip_id ON cyz_entertainment_trip(trip_id);
 
 CREATE TABLE cyz_group (
-    group_id INTEGER PRIMARY KEY
+    group_id INTEGER PRIMARY KEY,
+    trip_id  INTEGER NOT NULL,
+    FOREIGN KEY ( trip_id ) REFERENCES cyz_trip ( trip_id )
 );
 
 CREATE TABLE cyz_invoice (
@@ -469,10 +471,10 @@ VALUES
 -- (3, '2000-03-20', 'O', 'UK', '3456789012', 3, 2, 'Alex', 'Taylor', 5),
 -- (4, '2020-12-25', 'F', 'France', '4567890123', 4, 2, 'Sophia', 'Brown', 6);
 
-INSERT INTO cyz_group (group_id)
+INSERT INTO cyz_group (group_id, trip_id)
 VALUES
-(1),
-(2);
+(1,1),
+(2,2);
 
 INSERT INTO cyz_stateroom_booking (booking_id, group_id, invoice_id, price_id)
 VALUES
