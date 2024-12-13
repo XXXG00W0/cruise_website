@@ -327,121 +327,195 @@ async function regist() {
       <div class="register-container">
         <h3 class="header">Register</h3>
         <div class="form-container">
-          <div class="form-row">
-            <div class="form-column">
-              <!-- Username -->
-              <div class="form-group">
-                <label class="label">Username:</label>
+          <table class="form-table">
+
+            <!-- 用户名 -->
+            <tr>
+              <td class="label">Username:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.username" @blur="checkUsername()" placeholder="Enter username" />
-                <span :class="['message', usernameMsg === 'Valid' ? 'valid' : 'invalid']">{{ usernameMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', usernameMsg === 'Valid' ? 'valid' : 'invalid']">{{ usernameMsg }}</span></td></tr>
 
-              <!-- Email -->
-              <div class="form-group">
-                <label class="label">Email:</label>
+            <!-- 邮箱 -->
+            <tr>
+              <td class="label">Email:</td>
+              <td>
                 <input class="input" type="email" v-model="registUser.email" @blur="checkEmail()" placeholder="Enter email" />
-                <span :class="['message', emailMsg === 'Valid' ? 'valid' : 'invalid']">{{ emailMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', emailMsg === 'Valid' ? 'valid' : 'invalid']">{{ emailMsg }}</span></td></tr>
 
-              <!-- Password -->
-              <div class="form-group">
-                <label class="label">Password:</label>
-                <div class="password-field">
-                  <input class="input" :type="isPasswordVisible ? 'text' : 'password'" v-model="registUser.password" @blur="checkPassword()" placeholder="Enter password" />
-                  <button class="toggle-visibility-btn" @click="togglePasswordVisibility()">{{ isPasswordVisible ? 'Hide' : 'Show' }}</button>
-                </div>
-                <span :class="['message', passwordMsg === 'Valid' ? 'valid' : 'invalid']">{{ passwordMsg }}</span>
-              </div>
+            <!-- 密码 -->
+            <tr>
+              <td class="label">Password:</td>
+              <td class="password-field">
+                <input class="input" :type="isPasswordVisible ? 'text' : 'password'" v-model="registUser.password" @blur="checkPassword()" placeholder="Enter password" />
+                <button class="toggle-visibility-btn" @click="togglePasswordVisibility()">{{ isPasswordVisible ? 'Hide' : 'Show' }}</button>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', passwordMsg === 'Valid' ? 'valid' : 'invalid']">{{ passwordMsg }}</span></td></tr>
 
-              <!-- Confirm Password -->
-              <div class="form-group">
-                <label class="label">Confirm Password:</label>
+            <!-- 确认密码 -->
+            <tr>
+              <td class="label">Confirm Password:</td>
+              <td>
                 <input class="input" type="password" v-model="registUser.confirm_password" @blur="checkConfirmPassword()" placeholder="Confirm password" />
-                <span :class="['message', confirmPasswordMsg === 'Valid' ? 'valid' : 'invalid']">{{ confirmPasswordMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', confirmPasswordMsg === 'Valid' ? 'valid' : 'invalid']">{{ confirmPasswordMsg }}</span>
+            </td></tr>
 
-              <!-- First Name -->
-              <div class="form-group">
-                <label class="label">First Name:</label>
+            <!-- First Name -->
+            <tr>
+              <td class="label">First Name:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.first_name" @blur="checkFirstName()" placeholder="Enter first name" />
-                <span :class="['message', firstNameMsg === 'Valid' ? 'valid' : 'invalid']">{{ firstNameMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', firstNameMsg === 'Valid' ? 'valid' : 'invalid']">{{ firstNameMsg }}</span></td></tr>
 
-              <!-- Last Name -->
-              <div class="form-group">
-                <label class="label">Last Name:</label>
+            <!-- Last Name -->
+            <tr>
+              <td class="label">Last Name:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.last_name" @blur="checkLastName()" placeholder="Enter last name" />
-                <span :class="['message', lastNameMsg === 'Valid' ? 'valid' : 'invalid']">{{ lastNameMsg }}</span>
-              </div>
-            </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', lastNameMsg === 'Valid' ? 'valid' : 'invalid']">{{ lastNameMsg }}</span></td></tr>
 
-            <div class="form-column">
-              <!-- Birth Date -->
-              <div class="form-group">
-                <label class="label">Birth Date:</label>
+            <!-- Birth Date -->
+            <tr>
+              <td class="label">Birth Date:</td>
+              <td>
                 <input class="input" type="date" v-model="registUser.birth_date" @blur="checkBirthDate()" placeholder="YYYY-MM-DD" />
-                <span :class="['message', birthDateMsg === 'Valid' ? 'valid' : 'invalid']">{{ birthDateMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', birthDateMsg === 'Valid' ? 'valid' : 'invalid']">{{ birthDateMsg }}</span></td></tr>
 
-              <!-- Gender -->
-              <div class="form-group">
-                <label class="label">Gender:</label>
+            <!-- Gender 下拉框选择 -->
+            <tr>
+              <td class="label">Gender:</td>
+              <td>
                 <select class="input" v-model="registUser.gender" @blur="checkGender()">
                   <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value="male">male</option>
+                  <option value="female">female</option>
                   <option value="other">Other</option>
                 </select>
-                <span :class="['message', genderMsg === 'Valid' ? 'valid' : 'invalid']">{{ genderMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', genderMsg === 'Valid' ? 'valid' : 'invalid']">{{ genderMsg }}</span></td></tr>
 
-              <!-- Nationality -->
-              <div class="form-group">
-                <label class="label">Nationality:</label>
+            <!-- Nationality -->
+            <tr>
+              <td class="label">Nationality:</td>
+              <td>
                 <select class="input" v-model="registUser.nationality" @blur="checkNationality()">
                   <option value="">Select Nationality</option>
                   <option v-for="country in validCountries" :key="country" :value="country">
                     {{ country }}
                   </option>
                 </select>
-                <span :class="['message', nationalityMsg === 'Valid' ? 'valid' : 'invalid']">{{ nationalityMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', nationalityMsg === 'Valid' ? 'valid' : 'invalid']">{{ nationalityMsg }}</span></td></tr>
 
-              <!-- Phone -->
-              <div class="form-group">
-                <label class="label">Phone:</label>
+            <!-- Phone -->
+            <tr>
+              <td class="label">Phone:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.phone" @blur="checkPhone()" placeholder="Enter phone number" />
-                <span :class="['message', phoneMsg === 'Valid' ? 'valid' : 'invalid']">{{ phoneMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', phoneMsg === 'Valid' ? 'valid' : 'invalid']">{{ phoneMsg }}</span></td></tr>
 
-              <!-- Street -->
-              <div class="form-group">
-                <label class="label">Street:</label>
+            <!-- Street -->
+            <tr>
+              <td class="label">Street:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.street" @blur="checkStreet()" placeholder="Enter street" />
-                <span :class="['message', streetMsg === 'Valid' ? 'valid' : 'invalid']">{{ streetMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', streetMsg === 'Valid' ? 'valid' : 'invalid']">{{ streetMsg }}</span></td></tr>
 
-              <!-- City -->
-              <div class="form-group">
-                <label class="label">City:</label>
+            <!-- Addr_line_2 (可选) -->
+            <tr>
+              <td class="label">Address Line 2 (optional):</td>
+              <td>
+                <input class="input" type="text" v-model="registUser.addr_line_2" placeholder="Enter address line 2 if any" />
+              </td>
+            </tr>
+
+            <!-- Neighborhood -->
+            <tr>
+              <td class="label">Neighborhood:</td>
+              <td>
+                <input class="input" type="text" v-model="registUser.neighborhood" @blur="checkNeighborhood()" placeholder="Enter neighborhood" />
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', neighborhoodMsg === 'Valid' ? 'valid' : 'invalid']">{{ neighborhoodMsg }}</span></td></tr>
+
+            <!-- City -->
+            <tr>
+              <td class="label">City:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.city" @blur="checkCity()" placeholder="Enter city" />
-                <span :class="['message', cityMsg === 'Valid' ? 'valid' : 'invalid']">{{ cityMsg }}</span>
-              </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', cityMsg === 'Valid' ? 'valid' : 'invalid']">{{ cityMsg }}</span></td></tr>
 
-              <!-- State/Province -->
-              <div class="form-group">
-                <label class="label">State/Province:</label>
+            <!-- State Province -->
+            <tr>
+              <td class="label">State/Province:</td>
+              <td>
                 <input class="input" type="text" v-model="registUser.state_province" @blur="checkStateProvince()" placeholder="Enter state or province" />
-                <span :class="['message', stateProvinceMsg === 'Valid' ? 'valid' : 'invalid']">{{ stateProvinceMsg }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="button-container">
-            <button class="btn register-btn" @click="regist">Register</button>
-            <router-link to="/login">
-              <button class="btn login-btn">Back to Login</button>
-            </router-link>
-          </div>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', stateProvinceMsg === 'Valid' ? 'valid' : 'invalid']">{{ stateProvinceMsg }}</span></td></tr>
+
+            <!-- Postal Code -->
+            <tr>
+              <td class="label">Postal Code:</td>
+              <td>
+                <input class="input" type="text" v-model="registUser.postal_code" @blur="checkPostalCode()" placeholder="Enter postal code" />
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', postalCodeMsg === 'Valid' ? 'valid' : 'invalid']">{{ postalCodeMsg }}</span></td></tr>
+
+            <!-- Country -->
+            <tr>
+              <td class="label">Country:</td>
+              <td>
+                <select class="input" v-model="registUser.country" @blur="checkCountry()">
+                  <option value="">Select Country</option>
+                  <option v-for="country in validCountries" :key="country" :value="country">
+                    {{ country }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr><td colspan="2"><span :class="['message', countryMsg === 'Valid' ? 'valid' : 'invalid']">{{ countryMsg }}</span></td></tr>
+
+            <!-- Group ID (可选) -->
+            <tr>
+              <td class="label">Group ID (optional):</td>
+              <td>
+                <input class="input" type="number" v-model="registUser.group_id" placeholder="Enter group ID if any" />
+              </td>
+            </tr>
+
+            <!-- 按钮 -->
+            <tr>
+              <td colspan="2" class="button-container">
+                <button class="btn register-btn" @click="regist()">Register</button>
+                <router-link to="/login">
+                  <button class="btn login-btn">Back to Login</button>
+                </router-link>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -479,8 +553,7 @@ async function regist() {
   background: rgba(255, 255, 255, 0.9); 
   padding: 30px;
   border-radius: 15px;
-  width: 80%;
-  max-width: 900px;
+  width: 450px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 10;
@@ -498,36 +571,29 @@ async function regist() {
   width: 100%;
 }
 
-.form-row {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.form-column {
-  flex: 1;
-  min-width: 300px;
-  margin: 10px;
-}
-
-.form-group {
-  margin-bottom: 15px;
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .label {
-  display: block;
+  text-align: right;
+  padding-right: 10px;
   font-size: 16px;
   color: #333;
-  margin-bottom: 5px;
+  width: 30%;
+  white-space: nowrap;
+  vertical-align: top;
 }
 
 .input {
-  width: 100%;
+  width: 80%;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .input:focus {
@@ -561,6 +627,7 @@ async function regist() {
   font-size: 13px;
   margin-top: 5px;
   display: block;
+  text-align: left;
   font-weight: bold;
 }
 
@@ -574,7 +641,7 @@ async function regist() {
 
 .button-container {
   text-align: center;
-  margin-top: 20px;
+  padding-top: 15px;
 }
 
 .btn {
@@ -611,21 +678,35 @@ async function regist() {
 }
 
 @media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
-
-  .form-column {
-    min-width: 100%;
-  }
-
   .register-container {
     width: 90%;
     padding: 20px;
   }
 
+  .label {
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .form-table tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .form-table td {
+    width: 100%;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .btn {
     width: 100%;
+    margin-bottom: 10px;
   }
 }
 </style>
