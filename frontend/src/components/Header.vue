@@ -81,8 +81,7 @@ async function logout() {
     <div class="user-info">
       <template v-if="isAuthPage">
       </template>
-      <template v-else>
-        <span class="greeting">Hello, {{ username }}</span>
+      <template v-else> 
         <button class="logout-btn" @click="logout">Logout</button>
       </template>
     </div>
