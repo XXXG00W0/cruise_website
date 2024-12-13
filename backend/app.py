@@ -253,8 +253,6 @@ def get_or_modify_passenger():
             # Get new address details
             new_address_data = {
                 'street': sanitize_input(data.get('street')),
-                'addr_line_2': sanitize_input(data.get('addr_line_2')),
-                'neighborhood': sanitize_input(data.get('neighborhood')),
                 'city': sanitize_input(data.get('city')),
                 'state_province': sanitize_input(data.get('state_province')),
                 'postal_code': sanitize_input(data.get('postal_code')),

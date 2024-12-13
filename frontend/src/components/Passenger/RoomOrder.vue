@@ -30,7 +30,7 @@
           </div>
           <!-- 如果 olderMembers > numBed，则显示提示信息 -->
           <div v-if="needMoreRooms" class="alert-message">
-            Your room is insufficient. Please consider booking additional rooms to accommodate all group members.。
+            Your room is insufficient. Please consider booking additional rooms to accommodate all group members.
           </div>
 
           <h3>Payment Information</h3>
